@@ -39,7 +39,7 @@
     <!-- Your HTML content, titles, etc. -->
     <header>
         <img id="profile-pic" src="your_profile_pic.jpg" alt="Profile Picture">
-        <h1>Your Name</h1>
+        <h1>Your Name: Akash</h1>
         <p id="description">Short description about yourself goes here.</p>
         <div id="social-icons">
             <a href="https://github.com/yourusername" target="_blank"><img src="github-icon.png" alt="GitHub"></a>
