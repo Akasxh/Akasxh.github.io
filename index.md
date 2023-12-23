@@ -49,7 +49,7 @@
     </header>
 
     <!-- Include your JavaScript file at the end to ensure the DOM is fully loaded -->
-    <script src="your-animation-script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
 
