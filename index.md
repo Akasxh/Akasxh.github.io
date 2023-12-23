@@ -31,6 +31,7 @@
             margin: 0;
         }
     </style>
+    <script src="script.js"></script>
 </head>
 <body>
     <canvas id="myCanvas" width="1250" height="1000"></canvas>
