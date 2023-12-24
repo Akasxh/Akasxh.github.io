@@ -42,9 +42,9 @@
         <h1>Akash</h1>
         <p id="description">Short description about yourself goes here.</p>
         <div id="social-icons">
-            <a href="https://github.com/Akasxh" target="_blank"><img src="github-icon.png" alt="GitHub"></a>
-            <a href="https://linkedin.com/in/s-akash-project-gia" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
-            <a href="https://instagram.com/akaxsh.x" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="https://github.com/Akasxh" target="_blank"><img src="github-icon.png" alt="GitHub" width="32" height="32"></a>
+            <a href="https://linkedin.com/in/s-akash-project-gia" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn" width="32" height="32"></a>
+            <a href="https://instagram.com/akaxsh.x" target="_blank"><img src="instagram-icon.png" alt="Instagram" width="32" height="32"></a>
         </div>
     </header>
 
