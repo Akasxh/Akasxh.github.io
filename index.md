@@ -39,12 +39,12 @@
     <!-- Your HTML content, titles, etc. -->
     <header>
         <img id="profile-pic" src="your_profile_pic.jpg" alt="Profile Picture">
-        <h1>Your Name: Akash</h1>
+        <h1>Akash</h1>
         <p id="description">Short description about yourself goes here.</p>
         <div id="social-icons">
-            <a href="https://github.com/yourusername" target="_blank"><img src="github-icon.png" alt="GitHub"></a>
-            <a href="https://linkedin.com/in/yourusername" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
-            <a href="https://instagram.com/yourusername" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="https://github.com/Akasxh" target="_blank"><img src="github-icon.png" alt="GitHub"></a>
+            <a href="https://linkedin.com/in/s-akash-project-gia" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+            <a href="https://instagram.com/akaxsh.x" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
         </div>
     </header>
 
