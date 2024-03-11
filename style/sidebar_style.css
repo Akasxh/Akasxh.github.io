@@ -15,3 +15,20 @@
   color: inherit;  /* Inherit text color from sidebar */
   font-weight: bold;  /* Make links bolder */
 }
+
+.birthday-button {
+  display: inline-block;  /* Make the button display as an inline element */
+  padding: 10px 20px;  /* Add some padding for better look */
+  background-color: black;
+  color: white;
+  text-decoration: none;  /* Remove underline from link */
+  font-weight: bold;
+  border: none;  /* Remove default border */
+  border-radius: 5px;  /* Add some rounded corners */
+  cursor: pointer;  /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease;  /* Add smooth transition effect */
+}
+
+.birthday-button:hover {
+  background-color: #333;  /* Change background color on hover */
+}
