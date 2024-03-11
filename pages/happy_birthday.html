@@ -6,6 +6,28 @@
   <title>Happy Birthday, [Name]!</title>
   <style>
     /* Your CSS styles here */
+
+    /* Styles for all devices (default styles) */
+.container {
+    width: 80%; /* Example width for all devices */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Styles for screens smaller than 768px wide (e.g., smartphones) */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+}
+
+/* Styles for screens larger than 992px wide (e.g., tablets) */
+@media (min-width: 992px) {
+    .container {
+        width: 70%; /* Adjust width for larger screens */
+    }
+}
+
+    
     body {
       font-family: sans-serif;
       background-color: #f0ebeb;
