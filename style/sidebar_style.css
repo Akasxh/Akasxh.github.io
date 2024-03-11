@@ -1,0 +1,17 @@
+.sidebar {
+  position: fixed;  /* Fix the sidebar to the left side */
+  top: 0;
+  left: 0;
+  width: 150px;  /* Adjust width as needed */
+  height: 100vh;  /* Set sidebar height to 100% viewport height */
+  background-color: rgba(0, 0, 0, 0.5);  /* Set transparent black background */
+  color: white;  /* Set text color to white */
+  list-style: none;  /* Remove default bullet points */
+  padding: 20px;  /* Add some padding for better look */
+}
+
+.sidebar a {
+  text-decoration: none;  /* Remove underline from links */
+  color: inherit;  /* Inherit text color from sidebar */
+  font-weight: bold;  /* Make links bolder */
+}
