@@ -5,6 +5,28 @@
   <meta name="viewport" content= "width=device-width, user-scalable=no">
   <title>Secret Sudoku Access</title>
   <style>
+
+    /* Styles for all devices (default styles) */
+.container {
+    width: 80%; /* Example width for all devices */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Styles for screens smaller than 768px wide (e.g., smartphones) */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+}
+
+/* Styles for screens larger than 992px wide (e.g., tablets) */
+@media (min-width: 992px) {
+    .container {
+        width: 70%; /* Adjust width for larger screens */
+    }
+}
+
+    
     body {
       margin: 0;
       padding: 0;
@@ -67,7 +89,7 @@
 <body>
   <div class="container">
     <div class="image-wrapper">
-      <img src="sudoku.jpg" alt="Sudoku Image">
+      <img src="sudoku.png" alt="Sudoku Image">
     </div>
     <div class="form-wrapper">
       <h1>Enter Secret Key:</h1>
