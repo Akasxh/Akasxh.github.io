@@ -1,6 +1,6 @@
 const form = document.getElementById('text-form');
 const message = document.getElementById('message');
-const secretText = 'akash'; // Replace with your actual secret text
+const secretText = 'ILOVEY0U9'; // Replace with your actual secret text
 
 form.addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission behavior
