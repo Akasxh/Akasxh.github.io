@@ -4,17 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday, [Name]!</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Your CSS styles here */
+    body {
+      font-family: sans-serif;
+      background-color: #f0ebeb;
+      margin: 0;
+      padding: 0;
+      display: flex; /* Center content vertically */
+      justify-content: center; /* Center content horizontally */
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 600px; /* Adjust width as needed */
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center; /* Remove if heading needs left alignment */
+    }
+
+    .left-content {
+      flex: 1;
+      color: #333;
+    }
+
+    .left-content h1 {
+      font-size: 2.5em; /* Adjust heading size for widget aesthetics */
+      margin-bottom: 10px;
+      color: #f05959; /* Change color as desired */
+    }
+
+    .left-content p {
+      font-size: 1.1em; /* Adjust paragraph size for widget aesthetics */
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .right-content {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .right-content img {
+      width: 250px; /* Adjust image width for widget aesthetics */
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    p { /* Remove or adjust if heading doesn't need center alignment */
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>Happy Birthday, <span id="birthday-name">[Name]!</span></h1>
-    <div class="image-grid">
-      <img src="images/image1.jpg" alt="Birthday Picture 1">
-      <img src="images/image2.jpg" alt="Birthday Picture 2">
-      <img src="images/image3.jpg" alt="Birthday Picture 3">
+    <div class="left-content">
+      <h1>Happy Birthday, <span id="birthday-name">Gargoo!</span></h1>
+      <p>On this sun-kissed morn, My Queen, banish worldly fears like a falcon sheds a feather – may your heart forever shine.</p>
     </div>
-    <p>Wishing you a day filled with joy, laughter, and all the things you love.</p>
+    <div class="right-content">
+      <img src="images/gargoo.jpg" alt="Birthday Photo">
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
