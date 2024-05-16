@@ -15,6 +15,17 @@
             height: 100vh; /* Ensure the body takes up the full height of the viewport */
         }
 
+        button {
+            background-color: #000;
+            font-size: calc(0.4 * var(--m));
+            border: none;
+            color: #e5e5e5;
+            font-family: "IBM Plex Sans";
+            font-weight: 400;
+            padding: calc(0.35 * var(--m)) calc(0.8 * var(--m));
+            border-radius: calc(0.3 * var(--m));
+        }
+
         #myCanvas {
             position: absolute;
             top: 0;
@@ -51,6 +62,8 @@
 </style>
         
         <img id="profile-pic" src="image/your_profile_pic.png" alt="Profile Picture">
+        <br>
+        
         <button><a href="https://akasxh.github.io/pages/new_page.html"><h1>S Akash</h1></a></button>
         <p id="description">IITP B.Tech student <br> Passionate about ML and software development.</p>
         <div id="social-icons">
