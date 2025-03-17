@@ -10,6 +10,7 @@ interface Achievement {
   description: string
   year: string
   icon: string
+  link?: string
 }
 
 export default function AchievementCard({ achievement }: { achievement: Achievement }) {
@@ -30,6 +31,7 @@ export default function AchievementCard({ achievement }: { achievement: Achievem
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
+      className="cursor-pointer"
     >
       <Card className="bg-white/[0.03] border-white/10 overflow-hidden hover:bg-white/[0.05] transition-colors">
         <CardHeader className="flex flex-row items-center gap-4">

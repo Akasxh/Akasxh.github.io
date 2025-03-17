@@ -1,5 +1,6 @@
 import TransparentCard from "@/components/ui/transparent-card"
 import ProjectCard from "@/components/sections/project-card"
+import Link from "next/link"
 
 const projects = [
   {
@@ -9,6 +10,7 @@ const projects = [
       "A reinforcement learning system that enables robots to learn complex manipulation tasks with minimal human intervention.",
     tags: ["Reinforcement Learning", "Robotics", "PyTorch"],
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
   {
     id: 2,
@@ -17,6 +19,7 @@ const projects = [
       "A multi-agent system where AI agents develop their own communication protocols to solve collaborative tasks.",
     tags: ["Multi-Agent RL", "NLP", "TensorFlow"],
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
   {
     id: 3,
@@ -25,6 +28,7 @@ const projects = [
       "Combining neural networks with symbolic reasoning to create AI systems capable of logical inference and abstraction.",
     tags: ["Neuro-Symbolic AI", "Knowledge Graphs", "JAX"],
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
   {
     id: 4,
@@ -33,6 +37,7 @@ const projects = [
       "A platform that dynamically adjusts difficulty based on learner performance using reinforcement learning algorithms.",
     tags: ["Education Tech", "Adaptive Learning", "Python"],
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
 ]
 
@@ -45,7 +50,9 @@ export default function ProjectsPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white/90">Projects</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+                <Link key={project.id} href={project.link} target="_blank" rel="noopener noreferrer">
+                  <ProjectCard key={project.id} project={project} />
+                </Link>
               ))}
             </div>
           </div>

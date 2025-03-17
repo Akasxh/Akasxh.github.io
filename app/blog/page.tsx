@@ -12,6 +12,7 @@ const blogPosts = [
     date: "March 10, 2024",
     readTime: "8 min read",
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const blogPosts = [
     date: "February 22, 2024",
     readTime: "12 min read",
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ const blogPosts = [
     date: "January 15, 2024",
     readTime: "10 min read",
     image: "/placeholder.svg?height=300&width=600",
+    link: "https://github.com/Akasxh",
   },
 ]
 
@@ -44,7 +47,7 @@ export default function BlogPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white/90">Blog</h1>
             <div className="space-y-6">
               {blogPosts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.slug}`}>
+                <Link key={post.id} href={post.link} target="_blank" rel="noopener noreferrer">
                   <BlogCard post={post} />
                 </Link>
               ))}

@@ -8,11 +8,12 @@ interface Project {
   description: string
   tags: string[]
   image: string
+  link?: string
 }
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <Card className="bg-white/[0.03] border-white/10 overflow-hidden hover:bg-white/[0.05] transition-colors">
+    <Card className="bg-white/[0.03] border-white/10 overflow-hidden hover:bg-white/[0.05] transition-colors cursor-pointer">
       <div className="relative h-48 w-full">
         <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
       </div>

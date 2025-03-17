@@ -13,11 +13,12 @@ interface BlogPost {
   date: string
   readTime: string
   image: string
+  link?: string
 }
 
 export default function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
+    <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }} className="cursor-pointer">
       <Card className="bg-white/[0.03] border-white/10 overflow-hidden hover:bg-white/[0.05] transition-colors">
         <div className="flex flex-col md:flex-row">
           <div className="relative h-48 md:h-auto md:w-1/3">
