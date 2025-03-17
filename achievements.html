@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S Akash - Achievements</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/lucide-icons@latest/dist/umd/lucide.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    body {
+      background-color: #030303;
+      color: white;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .elegant-shape {
+      position: absolute;
+      border-radius: 9999px;
+      backdrop-filter: blur(2px);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .elegant-shape::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+    }
+
+    .shape1 {
+      width: 600px;
+      height: 140px;
+      left: -10%;
+      top: 15%;
+      background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent);
+      transform: rotate(12deg);
+      animation: float 12s infinite ease-in-out;
+    }
+
+    .shape2 {
+      width: 500px;
+      height: 120px;
+      right: -5%;
+      top: 70%;
+      background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent);
+      transform: rotate(-15deg);
+      animation: float 12s infinite ease-in-out 1s;
+    }
+
+    .shape3 {
+      width: 300px;
+      height: 80px;
+      left: 5%;
+      bottom: 5%;
+      background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent);
+      transform: rotate(-8deg);
+      animation: float 12s infinite ease-in-out 2s;
+    }
+
+    .shape4 {
+      width: 200px;
+      height: 60px;
+      right: 15%;
+      top: 10%;
+      background: linear-gradient(to right, rgba(251, 191, 36, 0.15), transparent);
+      transform: rotate(20deg);
+      animation: float 12s infinite ease-in-out 3s;
+    }
+
+    .shape5 {
+      width: 150px;
+      height: 40px;
+      left: 20%;
+      top: 5%;
+      background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent);
+      transform: rotate(-25deg);
+      animation: float 12s infinite ease-in-out 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+      50% { transform: translateY(15px) rotate(var(--rotate, 0deg)); }
+    }
+
+    .shape1 { --rotate: 12deg; }
+    .shape2 { --rotate: -15deg; }
+    .shape3 { --rotate: -8deg; }
+    .shape4 { --rotate: 20deg; }
+    .shape5 { --rotate: -25deg; }
+
+    .transparent-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+      transition: background-color 0.3s;
+    }
+
+    .transparent-card:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .achievement-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .achievement-card:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: translateY(-5px);
+    }
+
+    .icon-circle {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      background-color: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 0.5s; }
+    .delay-2 { animation-delay: 0.7s; }
+    .delay-3 { animation-delay: 0.9s; }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="fixed inset-0 z-0 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl"></div>
+    
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="elegant-shape shape1"></div>
+      <div class="elegant-shape shape2"></div>
+      <div class="elegant-shape shape3"></div>
+      <div class="elegant-shape shape4"></div>
+      <div class="elegant-shape shape5"></div>
+    </div>
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-6 fade-in">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-center">
+        <div class="flex items-center gap-1 md:gap-2 p-1 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/[0.08]">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="achievements.html" class="nav-link active">Achievements</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="min-h-screen w-full overflow-x-hidden relative z-10">
+    <div class="container mx-auto px-4 py-20">
+      <div class="transparent-card min-h-[80vh] p-8 fade-in delay-1">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-5xl font-bold mb-8 text-white/90">Achievements</h1>
+          
+          <div class="space-y-6">
+            <!-- Achievement 1 -->
+            <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="achievement-card p-4">
+                <div class="flex flex-row items-center gap-4">
+                  <div class="icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-white/90">Best Paper Award</h3>
+                    <p class="text-white/40">2023</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-white/70">Received the Best Paper Award at the International Conference on Machine Learning (ICML) for research on novel reinforcement learning algorithms.</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- Achievement 2 -->
+            <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="achievement-card p-4">
+                <div class="flex flex-row items-center gap-4">
+                  <div class="icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-banknote"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-white/90">Research Grant</h3>
+                    <p class="text-white/40">2022</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-white/70">Awarded a $500,000 research grant from the National Science Foundation to explore advanced AI systems for robotic control.</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- Achievement 3 -->
+            <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="achievement-card p-4">
+                <div class="flex flex-row items-center gap-4">
+                  <div class="icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-white/90">PhD in Computer Science</h3>
+                    <p class="text-white/40">2021</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-white/70">Completed doctoral studies with a focus on Reinforcement Learning and Artificial Intelligence at Stanford University.</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- Achievement 4 -->
+            <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="achievement-card p-4">
+                <div class="flex flex-row items-center gap-4">
+                  <div class="icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake"><path d="M11 17s.3-2 2-2 2 2 2 2"/><path d="m8.5 14.5-.15.68a2 2 0 0 0 1.3 2.3l1.5.5c.5.17 1.03.17 1.54 0l1.5-.5a2 2 0 0 0 1.3-2.3L15.5 14"/><path d="m2 2 8 8"/><path d="m22 2-8 8"/><path d="M2 14h.01"/><path d="M22 14h.01"/><path d="M8 8a2 2 0 0 1 2 2"/><path d="M14 8a2 2 0 0 0-2 2"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-white/90">Industry Partnership</h3>
+                    <p class="text-white/40">2022</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-white/70">Established a research partnership with leading robotics company to implement RL algorithms in industrial automation.</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- Achievement 5 -->
+            <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer" class="block">
+              <div class="achievement-card p-4">
+                <div class="flex flex-row items-center gap-4">
+                  <div class="icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0  stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1.4-3.4c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6a4.8 4.8 0 0 0-1.4 3.4v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-white/90">Open Source Contribution</h3>
+                    <p class="text-white/40">2020-Present</p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-white/70">Created and maintained a popular open-source library for reinforcement learning with over 5,000 GitHub stars.</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Simple animation for fade-in elements
+    document.addEventListener('DOMContentLoaded', function() {
+      const fadeElements = document.querySelectorAll('.fade-in');
+      fadeElements.forEach(element => {
+        setTimeout(() => {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 100);
+      });
+    });
+  </script>
+</body>
+</html>
+
