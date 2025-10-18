@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Musings by S Akash</h1>
+    <nav>
+      <a href="archive.html">Archive</a>
+      <a href="about.html">About</a>
+      <a href="../index.html">Main Site</a>
+    </nav>
+  </header>
+  <main>
+    <!-- Article 1 -->
+    <article>
+      <h2><a href="post1.html">Learning to Build a Testing Framework</a></h2>
+      <div class="meta">Oct 05, 2025</div>
+      <div class="categories"><span>Research</span></div>
+      <p>A story about how I developed a framework to test translations between programming languages.</p>
+      <a class="read-more" href="post1.html">Read more</a>
+    </article>
+    <!-- Article 2 -->
+    <article>
+      <h2><a href="post2.html">Tackling Ambiguities in Protocols</a></h2>
+      <div class="meta">Sep 13, 2025</div>
+      <div class="categories"><span>Essay</span><span>Technology</span></div>
+      <p>Reflections on discovering ambiguities in protocol specifications and why it matters.</p>
+      <a class="read-more" href="post2.html">Read more</a>
+    </article>
+    <!-- Article 3 -->
+    <article>
+      <h2><a href="post3.html">Why I Deactivated My Social Accounts</a></h2>
+      <div class="meta">Apr 20, 2025</div>
+      <div class="categories"><span>Digital Wellbeing</span></div>
+      <p>A conversation about leaving messaging apps and focusing on real life.</p>
+      <a class="read-more" href="post3.html">Read more</a>
+    </article>
+  </main>
+  <footer>
+    &copy; 2025 Musings by S Akash
+  </footer>
+</body>
+</html>
+
+

@@ -1,235 +1,173 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S Akash - AI & RL Researcher</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background-color: #030303;
-      color: white;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    .pacifico {
-      
-      font-family: 'Pacifico', cursive;
-    }
-
-    .elegant-shape {
-      position: absolute;
-      border-radius: 9999px;
-      backdrop-filter: blur(2px);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .elegant-shape::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
-    }
-
-    .shape1 {
-      width: 600px;
-      height: 140px;
-      left: -10%;
-      top: 15%;
-      background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent);
-      transform: rotate(12deg);
-      animation: float 12s infinite ease-in-out;
-    }
-
-    .shape2 {
-      width: 500px;
-      height: 120px;
-      right: -5%;
-      top: 70%;
-      background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent);
-      transform: rotate(-15deg);
-      animation: float 12s infinite ease-in-out 1s;
-    }
-
-    .shape3 {
-      width: 300px;
-      height: 80px;
-      left: 5%;
-      bottom: 5%;
-      background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent);
-      transform: rotate(-8deg);
-      animation: float 12s infinite ease-in-out 2s;
-    }
-
-    .shape4 {
-      width: 200px;
-      height: 60px;
-      right: 15%;
-      top: 10%;
-      background: linear-gradient(to right, rgba(251, 191, 36, 0.15), transparent);
-      transform: rotate(20deg);
-      animation: float 12s infinite ease-in-out 3s;
-    }
-
-    .shape5 {
-      width: 150px;
-      height: 40px;
-      left: 20%;
-      top: 5%;
-      background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent);
-      transform: rotate(-25deg);
-      animation: float 12s infinite ease-in-out 4s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
-      50% { transform: translateY(15px) rotate(var(--rotate, 0deg)); }
-    }
-
-    .shape1 { --rotate: 12deg; }
-    .shape2 { --rotate: -15deg; }
-    .shape3 { --rotate: -8deg; }
-    .shape4 { --rotate: 20deg; }
-    .shape5 { --rotate: -25deg; }
-
-    .transparent-card {
-      background-color: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
-      transition: background-color 0.3s;
-    }
-
-    .transparent-card:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .gradient-text-white {
-      background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0.8));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .gradient-text-colored {
-      background: linear-gradient(to right, rgb(196, 181, 253), rgba(255, 255, 255, 0.9), rgb(251, 207, 232));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .nav-link {
-      color: rgba(255, 255, 255, 0.6);
-      padding: 0.375rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.875rem;
-      transition: all 0.2s;
-    }
-
-    .nav-link:hover {
-      color: white;
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-link.active {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .delay-1 { animation-delay: 0.5s; }
-    .delay-2 { animation-delay: 0.7s; }
-    .delay-3 { animation-delay: 0.9s; }
-  </style>
+  <title>S Akash</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Background -->
-  <div class="fixed inset-0 z-0 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl"></div>
-      
-    <div class="absolute inset-0 overflow-hidden">
-      <div class="elegant-shape shape1"></div>
-      <div class="elegant-shape shape2"></div>
-      <div class="elegant-shape shape3"></div>
-      <div class="elegant-shape shape4"></div>
-      <div class="elegant-shape shape5"></div>
-    </div>
-    
-    <div class="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none"></div>
-  </div>
-
-  <!-- Navbar -->
-  <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-6 fade-in">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex justify-center">
-        <div class="flex items-center gap-1 md:gap-2 p-1 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/[0.08]">
-          <a href="index.html" class="nav-link active">Home</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="achievements.html" class="nav-link">Achievements</a>
-          <a href="blog.html" class="nav-link">Blog</a>
-        </div>
-      </div>
+  <!-- A simple preloader that fades out when the page loads -->
+  <div id="preloader" class="fadeOut"></div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="index.html" class="floating-nav__link floating-nav__link--active" aria-current="page">Home</a>
+      <a href="projects.html" class="floating-nav__link">Projects</a>
+      <a href="achievements.html" class="floating-nav__link">Achievements</a>
+      <a href="blog.html" class="floating-nav__link">Blog</a>
     </div>
   </nav>
-
-  <!-- Main Content -->
-  <main class="min-h-screen w-3/4 mx-auto overflow-x-hidden relative z-10">
-    <div class="container mx-auto px-4 py-20">
-      <div class="transparent-card min-h-[80vh] flex items-center justify-center fade-in delay-1">
-        <div class="max-w-3xl mx-auto text-center px-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-8 md:mb-12 fade-in delay-1">
-            <div class="w-5 h-5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500"></div>
-            <span class="text-sm text-white/60 tracking-wide">UG Researcher</span>
-          </div>
-
-          <div class="fade-in delay-2">
-            
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 md:mb-8 tracking-tight">
-              <span class="gradient-text-white">S Akash</span>
-              <br />
-              <span class="gradient-text-colored pacifico pr-4">Shaping the Future</span>
-            </h1>
-          </div>
-          
-          <div class="fade-in delay-3">
-            <p class="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto">
-              Bringing Concepts to Life, building systems AI can't.
-            </p>
-          </div>
+  <div class="wrapper">
+    <div class="row">
+      <!-- Profile photo -->
+      <div class="col photo">
+        <img src="images/profile.png" alt="Profile placeholder">
+      </div>
+      <!-- Name and basic details -->
+      <div class="col">
+        <h1>S Akash</h1>
+        <h2>Undergraduate Student<br>Electrical and Electronics Engineering</h2>
+        <h3>Indian Institute of Technology Patna</h3>
+        <!-- Social links -->
+        <div id="social">
+          <a href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer">
+            <img src="images/github.png" alt="GitHub profile">
+          </a>
+          <a href="https://www.linkedin.com/in/s-akash-project-gia/" target="_blank" rel="noopener noreferrer">
+            <img src="images/linkedin.png" alt="LinkedIn profile">
+          </a>
+        </div>
+        <!-- Call to actions -->
+        <div id="cta">
+          <a href="musings/index.html">Visit Blog</a>
+          <a href="https://drive.google.com/file/d/10tO_wArFye_y8JjF7ivC7ENipO6DaCNc/view?usp=drive_link">View CV</a>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+  <!-- Window banner -->
+  <div id="window"></div>
+  <div class="wrapper">
+    <div class="statement quote">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am S Akash, a senior pursuing <a href="https://www.iitp.ac.in/departments/engineering-technology/electrical-engineering">Electrical and Electronics Engineering</a> at the <a href="https://www.iitp.ac.in/">Indian Institute of Technology Patna</a>. I am interested in research involving GPU computing and faster ML Inference techniques.</p>
+      <p>A significant portion of my recent work has been through <a href="https://summerofcode.withgoogle.com/programs/2025/projects/WbEjJL5j">Google Summer of Code (CERN–HSF)</a>, contributing GPU-accelerated inference to <a href="https://hepsoftwarefoundation.org/gsoc/2025/proposal_TMVA-SOFIE-GPU.html">TMVA SOFIE</a> within ROOT. I collaborated closely with <a href="https://github.com/sanjibansg">Sanjiban Sengupta</a> and <a href="https://inspirehep.net/authors/997007">Lorenzo Moneta</a> on GPU backends (CUDA, ROCm, Alpaka) and fast, minimal-dependency C++ code generation for ML inference.</p>
 
+      <p>During my visit to <a href="https://www.shanhaiwoo.com/">ShanHaiWoo (Singapore)</a>, co-hosted with <a href="https://www.ethereum.sg/">Ethereum Singapore Week 2025</a> I built <a href="https://www.flowlink.ink/">FlowLink</a>, “Crypto Payments You Can Trust”. Our team was selected as a <a href="https://x.com/shanhaiwoo/status/1973029548196536705">top‑5 winner</a> at the Ethereum Singapore, and we were invited to present during <a href="https://week.token2049.com/">TOKEN2049 Week</a> at the <a href="https://cryptonomads.org/TOKEN2049SideEvents2025/shanhaiwoo-closing-ceremony-gtO">ShanHaiWoo Winners’ Showcase</a>.</p>
+
+      <h3>Scalable AI deployment at Unit of Measure</h3>
+      <p>Worked with <a href="https://dk.linkedin.com/in/martinkjeldsen">Martin Kjeldsen</a> at <a href="https://unitofmeasure.com/">Unit of Measure</a> on multimodal embeddings and large‑scale product retrieval/deduplication along with sharded vector stores to serve millions of SKUs with low latency.</p>
+
+      <h3>Learning‑to‑Rerank & Efficient LLM Inference</h3>
+      <p>With <a href="https://www.iitp.ac.in/~sriparna/">Dr Sriparna Saha</a>, I explored LLM re‑ranking using preference‑based fine‑tuning (DPO) and RL‑based tuning (PPO) for better retrieval and quality control. I’m now investigating KV‑cache methods for long‑context inference and throughput, with adjacent safety considerations around controlled decoding.</p>
+
+      <section class="news-section" aria-labelledby="news-heading">
+        <div class="news-section__header">
+          <h3 id="news-heading">News</h3>
+          <span class="news-section__subhead">Recent highlights</span>
+        </div>
+        <div class="news-list-wrapper" role="region" aria-live="polite">
+          <ul class="news-list" id="news-list">
+            <!-- News items injected via JavaScript -->
+          </ul>
+        </div>
+        <p class="news-section__fallback" id="news-fallback">Loading updates…</p>
+      </section>
+
+    </div>
+    <div id="footer">
+      Last updated on 17 October 2025.
+    </div>
+  </div>
+  <script src="news/news.js"></script>
+  <!-- Optional script placeholder for preloader fade out -->
   <script>
-    // Simple animation for fade-in elements
-    document.addEventListener('DOMContentLoaded', function() {
-      const fadeElements = document.querySelectorAll('.fade-in');
-      fadeElements.forEach(element => {
-        setTimeout(() => {
-          element.style.opacity = '1';
-          element.style.transform = 'translateY(0)';
-        }, 100);
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.classList.add('fadeOut');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const newsList = document.getElementById('news-list');
+      const newsFallback = document.getElementById('news-fallback');
+
+      if (!newsList || !newsFallback) {
+        return;
+      }
+
+      const hideFallback = (message) => {
+        if (message) {
+          newsFallback.textContent = message;
+        }
+        newsFallback.style.display = 'none';
+      };
+
+      const showFallback = (message) => {
+        newsFallback.textContent = message;
+        newsFallback.style.display = 'block';
+      };
+
+      const rawItems = Array.isArray(window.AKASH_NEWS) ? window.AKASH_NEWS : [];
+
+      if (rawItems.length === 0) {
+        showFallback('No updates yet. Check back soon!');
+        return;
+      }
+
+      const newsItems = rawItems
+        .filter((item) => item && item.date && item.summary)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if (newsItems.length === 0) {
+        showFallback('No updates yet. Check back soon!');
+        return;
+      }
+
+      const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
       });
+
+      const fragment = document.createDocumentFragment();
+      newsItems.forEach((item) => {
+        const listItem = document.createElement('li');
+        listItem.className = 'news-item';
+
+        const line = document.createElement('span');
+        line.className = 'news-item__summary';
+
+        const dateEl = document.createElement('time');
+        dateEl.className = 'news-item__date';
+        dateEl.dateTime = item.date;
+        dateEl.textContent = dateFormatter.format(new Date(item.date));
+
+        line.appendChild(dateEl);
+
+        const separator = document.createElement('span');
+        separator.className = 'news-item__separator';
+        separator.textContent = '•';
+        line.appendChild(separator);
+
+        const summary = document.createElement('span');
+        summary.className = 'news-item__text';
+        summary.innerHTML = item.summary || '';
+        line.appendChild(summary);
+
+        listItem.appendChild(line);
+        fragment.appendChild(listItem);
+      });
+
+      newsList.innerHTML = '';
+      newsList.appendChild(fragment);
+
+      if (newsList.childElementCount > 0) {
+        hideFallback();
+      } else {
+        showFallback('No updates yet. Check back soon!');
+      }
     });
   </script>
 </body>
