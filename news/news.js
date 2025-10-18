@@ -1,11 +1,11 @@
-window.AKASH_NEWS = [
+﻿window.AKASH_NEWS = [
   {
     date: "2025-10-27",
-    summary: "Received an <a href=\"https://llvm.swoogo.com/2025devmtg\" target=\"_blank\" rel=\"noopener\">LLVM Foundation student travel grant</a> to attend the US LLVM Developers’ Meeting at Santa Clara Marriott."
+    summary: "Received an <a href=\"https://llvm.swoogo.com/2025devmtg\" target=\"_blank\" rel=\"noopener\">LLVM Foundation student travel grant</a> to attend the US LLVM Developersâ€™ Meeting at Santa Clara Marriott."
   },
   {
     date: "2025-10-12",
-    summary: "Kicked off my bachelor’s thesis with <a href=\"https://www.iitp.ac.in/~sriparna/\" target=\"_blank\" rel=\"noopener\">Dr. Sriparna Saha</a>, exploring <a href=\"https://huggingface.co/blog/not-lain/kv-caching\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">KV‑cache</span> optimization</a> for long‑context transformers."
+    summary: "Kicked off my bachelorâ€™s thesis with <a href=\"https://www.iitp.ac.in/~sriparna/\" target=\"_blank\" rel=\"noopener\">Dr. Sriparna Saha</a>, exploring <a href=\"https://huggingface.co/blog/not-lain/kv-caching\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">KVâ€‘cache</span> optimization</a> for longâ€‘context transformers."
   },
   {
     date: "2025-10-04",
@@ -25,11 +25,11 @@ window.AKASH_NEWS = [
   },
   {
     date: "2025-09-12",
-    summary: "Spoke at <a href=\"https://www.nushackers.org/\" target=\"_blank\" rel=\"noopener\">NUS Hackers</a> Singapore on HPC for <a href=\"https://root.cern/doc/v632/md_tmva_2sofie_2README.html\" target=\"_blank\" rel=\"noopener\">SOFIE</a> and accelerator‑aware ML inference."
+    summary: "Spoke at <a href=\"https://www.nushackers.org/\" target=\"_blank\" rel=\"noopener\">NUS Hackers</a> Singapore on HPC for <a href=\"https://root.cern/doc/v632/md_tmva_2sofie_2README.html\" target=\"_blank\" rel=\"noopener\">SOFIE</a> and acceleratorâ€‘aware ML inference."
   },
   {
     date: "2025-09-02",
-    summary: "Selected for the 30‑day <a href=\"https://shanhaiwoo.com/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">ShanHaiWoo</span> blockchain residency</a> in Singapore."
+    summary: "Selected for the 30â€‘day <a href=\"https://shanhaiwoo.com/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">ShanHaiWoo</span> blockchain residency</a> in Singapore."
   },
   {
     date: "2025-10-17",
@@ -37,15 +37,15 @@ window.AKASH_NEWS = [
   },
   {
     date: "2025-06-10",
-    summary: "Joined <a href=\"https://unitofmeasure.com/about-us/\" target=\"_blank\" rel=\"noopener\">Unit of Measure</a> with Martin Kjeldsen as an AI intern, building scalable product‑image recommendation systems."
+    summary: "Joined <a href=\"https://unitofmeasure.com/about-us/\" target=\"_blank\" rel=\"noopener\">Unit of Measure</a> with Martin Kjeldsen as an AI intern, building scalable productâ€‘image recommendation systems."
   },
   {
     date: "2025-05-20",
-    summary: "Selected for <a href=\"https://summerofcode.withgoogle.com/programs/2025/projects/WbEjJL5j\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">GSoC ’25 at CERN‑HSF</span></a>, adding GPU support to ROOT TMVA’s <a href=\"https://root.cern/doc/v632/md_tmva_2sofie_2README.html\" target=\"_blank\" rel=\"noopener\">SOFIE</a>."
+    summary: "Selected for <a href=\"https://summerofcode.withgoogle.com/programs/2025/projects/WbEjJL5j\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">GSoC â€™25 at CERNâ€‘HSF</span></a>, adding GPU support to ROOT TMVAâ€™s <a href=\"https://root.cern/doc/v632/md_tmva_2sofie_2README.html\" target=\"_blank\" rel=\"noopener\">SOFIE</a>."
   },
   {
     date: "2025-02-12",
-    summary: "Won the <a href=\"https://www.crisil.com/content/crisilcom/en/home/what-we-do/crisil-ai-design/crisil-hosts-successful-innovation-hackathon-in-collaboration-with-iit-patna.html\" target=\"_blank\" rel=\"noopener\">CRISIL Hackathon</a> with <span class=\"news-highlight\">Defender</span>—a shield against enterprise data leaks from malicious URLs."
+    summary: "Won the <a href=\"https://www.crisil.com/content/crisilcom/en/home/what-we-do/crisil-ai-design/crisil-hosts-successful-innovation-hackathon-in-collaboration-with-iit-patna.html\" target=\"_blank\" rel=\"noopener\">CRISIL Hackathon</a> with <span class=\"news-highlight\">Defender</span>â€”a shield against enterprise data leaks from malicious URLs."
   },
   {
     date: "2025-01-25",
@@ -57,7 +57,7 @@ window.AKASH_NEWS = [
   },
   {
     date: "2024-09-10",
-    summary: "Won <span class=\"news-highlight\">Saras AI</span> with an <span class=\"news-highlight\">action‑recognition</span> system supporting deaf and mute communities (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7232079433669492736/\" target=\"_blank\" rel=\"noopener\">event</a>)."
+    summary: "Won <span class=\"news-highlight\">Saras AI</span> with an <span class=\"news-highlight\">actionâ€‘recognition</span> system supporting deaf and mute communities (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7232079433669492736/\" target=\"_blank\" rel=\"noopener\">event</a>)."
   },
   {
     date: "2024-03-02",
@@ -81,7 +81,7 @@ window.AKASH_NEWS = [
   },
   {
     date: "2023-08-28",
-    summary: "Open‑sourced my <span class=\"news-highlight\">Terrain Recognition</span> project for <a href=\"https://www.sih.gov.in/\" target=\"_blank\" rel=\"noopener\">Smart India Hackathon ’23</a> and onboarded 7+ contributors."
+    summary: "Openâ€‘sourced my <span class=\"news-highlight\">Terrain Recognition</span> project for <a href=\"https://www.sih.gov.in/\" target=\"_blank\" rel=\"noopener\">Smart India Hackathon â€™23</a> and onboarded 7+ contributors."
   },
   {
     date: "2023-04-12",
@@ -101,11 +101,11 @@ window.AKASH_NEWS = [
   },
   {
     date: "2019-02-16",
-    summary: "Finished <span class=\"news-highlight\">second (U‑18)</span> in the KRONOS <a href=\"https://racemart.in/events/kronos-liveinspired-10k-noida-2019\" target=\"_blank\" rel=\"noopener\">5 km sprint</a>."
+    summary: "Finished <span class=\"news-highlight\">second (Uâ€‘18)</span> in the KRONOS <a href=\"https://racemart.in/events/kronos-liveinspired-10k-noida-2019\" target=\"_blank\" rel=\"noopener\">5 km sprint</a>."
   },
   {
     date: "2018-11-03",
-    summary: "Only middle‑school finalist at the Genesis Global School <span class=\"news-highlight\">educational‑game</span> design challenge (<a href=\"https://genesisglobalschool.edu.in/\" target=\"_blank\" rel=\"noopener\">school</a>)."
+    summary: "Only middleâ€‘school finalist at the Genesis Global School <span class=\"news-highlight\">educationalâ€‘game</span> design challenge (<a href=\"https://genesisglobalschool.edu.in/\" target=\"_blank\" rel=\"noopener\">school</a>)."
   },
   {
     date: "2018-02-10",
@@ -116,3 +116,4 @@ window.AKASH_NEWS = [
     summary: "My curiosity about computers started with learning <span class=\"news-highlight\">C/C++ and QB64</span> during my early programming journey."
   }
 ];
+

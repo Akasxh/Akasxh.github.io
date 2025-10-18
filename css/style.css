@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Gloock&family=Montserrat:wght@100;200;400;500;600;700;800;900&family=Palanquin+Dark:wght@600&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Gloock&family=Montserrat:wght@100;200;400;500;600;700;800;900&family=Palanquin+Dark:wght@600&display=swap");
 
 /*
  * This stylesheet defines the overall look and feel for the recreated
@@ -248,7 +248,7 @@ body {
 
 #window {
   /* Use our custom banner image instead of the IISc photo */
-  background: url(../images/banner.png);
+  background: url(../image/banner.png);
   background-size: cover;
   background-attachment: fixed;
   height: 25vh;
@@ -257,7 +257,7 @@ body {
   margin: 25px 0;
   min-height: 100px;
   opacity: 0.4;
-  width: 100vw;
+  width: 100%;
 }
 
 .col {
@@ -471,3 +471,5 @@ span.new::before {
   color: #bdbdbd;
   padding: 50px 0 10px 0;
 }
+
+
