@@ -1,4 +1,8 @@
 ﻿window.AKASH_NEWS = [
+   {
+    "date": "2025-12-22",
+    "summary": "Our paper <a href=\"https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/\" target=\"_blank\" rel=\"noopener\">SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs</a>, co-authored with Nitish Kumar, Sannu Kumar, Manish Gupta, Ankith Karat, and Sriparna Saha, accepted to the main track of <a href=\"https://ecir2026.eu/\" target=\"_blank\" rel=\"noopener\">ECIR 2026</a>. <a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7408916104108027904/\" target=\"_blank\" rel=\"noopener\">Announcement</a>."
+  },
   {
     date: "2025-10-27",
     summary: "Received an <a href=\"https://llvm.swoogo.com/2025devmtg\" target=\"_blank\" rel=\"noopener\">LLVM Foundation student travel grant</a> to attend the US LLVM Developers' Meeting at Santa Clara Marriott."
