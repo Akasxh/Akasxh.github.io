@@ -1,6 +1,6 @@
 ﻿window.AKASH_NEWS = [
    {
-    "date": "2025-12-22",
+    "date": "2025-12-16",
     "summary": "Our paper <a href=\"https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/\" target=\"_blank\" rel=\"noopener\">SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs</a>, has been accepted to the main track of <a href=\"https://ecir2026.eu/\" target=\"_blank\" rel=\"noopener\">ECIR 2026</a>."
   },
   {
