@@ -1,7 +1,7 @@
 ﻿window.AKASH_NEWS = [
    {
     "date": "2025-12-22",
-    "summary": "Our paper <a href=\"https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/\" target=\"_blank\" rel=\"noopener\">SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs</a>, has been accepted to the main track of <a href=\"https://ecir2026.eu/\" target=\"_blank\" rel=\"noopener\">ECIR 2026</a>. <a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7408916104108027904/\" target=\"_blank\" rel=\"noopener\">Announcement</a>."
+    "summary": "Our paper <a href=\"https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/\" target=\"_blank\" rel=\"noopener\">SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs</a>, has been accepted to the main track of <a href=\"https://ecir2026.eu/\" target=\"_blank\" rel=\"noopener\">ECIR 2026</a>."
   },
   {
     date: "2025-10-27",
