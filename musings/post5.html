@@ -56,7 +56,7 @@
         <p>The best analogy I've seen: think of a prism. White light goes in, and a rainbow comes out. The prism doesn't create new colors. It separates what was already there into individual components. The STFT does the same thing to sound. A messy audio signal goes in, and you get a clean breakdown of which frequencies are present and how loud each one is.</p>
 
         <figure>
-          <img src="images/shazam-stft.svg" alt="Audio waveform transformed via STFT into frequency spectrum bars" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/shazam-stft.svg" alt="Audio waveform transformed via STFT into frequency spectrum bars" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>The Short-Time Fourier Transform decomposes a complex audio signal into its frequency components, one window at a time.</figcaption>
         </figure>
 
@@ -67,7 +67,7 @@
         <p>Stack all those frequency snapshots side by side and you get a spectrogram. It's a 2D grid where the x-axis is time, the y-axis is frequency, and the brightness or color at each point represents intensity (how loud that frequency is at that moment).</p>
 
         <figure>
-          <img src="images/shazam-spectrogram.svg" alt="Spectrogram heatmap showing frequency intensity over time" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/shazam-spectrogram.svg" alt="Spectrogram heatmap showing frequency intensity over time" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>A spectrogram is a visual fingerprint of a song. Each song produces a unique pattern of frequency intensities over time.</figcaption>
         </figure>
 
@@ -82,7 +82,7 @@
         <p>So you scan the spectrogram and keep only the local maxima. The bright spots. Everything else gets thrown away. What remains is a sparse scatter of points in time-frequency space.</p>
 
         <figure>
-          <img src="images/shazam-constellation.svg" alt="Dense spectrogram transformed into sparse constellation map of peak points" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/shazam-constellation.svg" alt="Dense spectrogram transformed into sparse constellation map of peak points" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>The constellation map: from a dense spectrogram to a sparse set of peaks. Each song's constellation is unique, like a fingerprint made of stars.</figcaption>
         </figure>
 
@@ -111,7 +111,7 @@
         <p>Each lookup is O(1). Constant time. The database could have 10 million songs or 100 million songs and the lookup time per hash does not change. Shazam doesn't search through 10 million songs. It looks up a hash. That's a fundamentally different operation.</p>
 
         <figure>
-          <img src="images/shazam-pipeline.svg" alt="Full Shazam pipeline flowchart from recording to match" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/shazam-pipeline.svg" alt="Full Shazam pipeline flowchart from recording to match" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>The full Shazam pipeline: from a noisy 10-second recording to an identified song, powered by hash table lookups.</figcaption>
         </figure>
 

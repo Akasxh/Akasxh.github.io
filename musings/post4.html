@@ -42,7 +42,7 @@
         <p>The core mechanism is elegant. You take your input and project it into three separate spaces: queries (Q), keys (K), and values (V). The attention score between any two positions is just the dot product of the query at one position with the key at another, scaled by 1/sqrt(d_k). That scaling factor matters more than people think. Without it, for large d_k, the dot products grow large in magnitude, pushing the softmax into regions with vanishingly small gradients. The softmax over these scores gives you attention weights, and you use those to take a weighted sum of the values.</p>
 
         <figure>
-          <img src="images/attention-mha.svg" alt="Multi-Head Attention architecture diagram showing input splitting into Q, K, V projections feeding 8 parallel attention heads, concatenated and projected through output linear layer" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/attention-mha.svg" alt="Multi-Head Attention architecture diagram showing input splitting into Q, K, V projections feeding 8 parallel attention heads, concatenated and projected through output linear layer" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>The multi-head attention mechanism runs h parallel attention functions, each with different learned projections</figcaption>
         </figure>
 
@@ -68,7 +68,7 @@ MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W^O
         <p>Tri Dao figured out that attention is not compute-bound. It is memory-bound. The bottleneck is not multiplication, it is moving data between GPU memory hierarchies. On an A100, you have 80GB of HBM (High Bandwidth Memory) running at about 2 TB/s, and then each streaming multiprocessor has about 192KB of SRAM that is dramatically faster. The naive attention implementation writes the entire N x N attention matrix to HBM, reads it back for the softmax, writes the result again, reads it back for the value multiplication. That is a lot of round trips to slow memory for a matrix that you only need transiently.</p>
 
         <figure>
-          <img src="images/attention-flash.svg" alt="GPU memory hierarchy pyramid showing SRAM (192KB, 19 TB/s) at top, L2 Cache (40MB) in middle, HBM (80GB, 2 TB/s) at bottom, with comparison of standard attention vs FlashAttention memory access patterns" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/attention-flash.svg" alt="GPU memory hierarchy pyramid showing SRAM (192KB, 19 TB/s) at top, L2 Cache (40MB) in middle, HBM (80GB, 2 TB/s) at bottom, with comparison of standard attention vs FlashAttention memory access patterns" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>FlashAttention exploits the GPU memory hierarchy by keeping intermediate computations in fast SRAM and never materializing the full N x N attention matrix in HBM</figcaption>
         </figure>
 
@@ -100,7 +100,7 @@ MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W^O
         <p>Noam Shazeer proposed Multi-Query Attention (MQA) back in 2019: what if all query heads share a single set of K and V heads? This slashes the KV cache size by a factor of h (the number of heads) and proportionally reduces the memory bandwidth required during decoding. The problem is that MQA degrades model quality. You are forcing all those query heads to work with the same key-value representation, and that is a significant information bottleneck.</p>
 
         <figure>
-          <img src="images/attention-gqa.svg" alt="Side-by-side comparison of MHA (8 KV heads, KV Cache 8x), GQA (2 KV groups, KV Cache 2x), and MQA (1 shared KV head, KV Cache 1x) showing the quality-efficiency spectrum" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/attention-gqa.svg" alt="Side-by-side comparison of MHA (8 KV heads, KV Cache 8x), GQA (2 KV groups, KV Cache 2x), and MQA (1 shared KV head, KV Cache 1x) showing the quality-efficiency spectrum" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>GQA sits between MHA and MQA on the spectrum: G groups of query heads each share one KV head, balancing quality and inference efficiency</figcaption>
         </figure>
 
@@ -127,7 +127,7 @@ MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W^O
         <p>The insight comes straight from operating systems. How does your OS handle the same problem for process memory? Virtual memory with paging. Each process thinks it has contiguous memory, but the OS maps virtual pages to physical frames that can be scattered anywhere in RAM, tracked by a page table.</p>
 
         <figure>
-          <img src="images/attention-paged.svg" alt="PagedAttention diagram showing logical KV cache blocks mapped through a block table to scattered physical GPU memory blocks, similar to OS virtual memory paging" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
+          <img loading="lazy" src="images/attention-paged.svg" alt="PagedAttention diagram showing logical KV cache blocks mapped through a block table to scattered physical GPU memory blocks, similar to OS virtual memory paging" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>PagedAttention maps logical KV cache blocks to non-contiguous physical GPU memory through a block table, eliminating both internal and external fragmentation</figcaption>
         </figure>
 
