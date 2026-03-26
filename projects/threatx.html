@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThreatX - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">ThreatX</h1>
+      <div class="post-categories"><span>BERT</span> <span>Chrome Extension</span> <span>Flask</span> <span>CRISIL Hackathon</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/Malicious-URL-Detector" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>Phishing URLs Are Getting Smarter</h2>
+
+        <p>Modern phishing URLs are not the obvious "totallylegitbank-login.xyz" domains anymore. Attackers use homograph attacks (replacing characters with visually similar Unicode), subdomain stuffing (login.secure.bank.attacker.com), and URL shorteners to hide the real destination. Traditional blacklist approaches cannot keep up because new phishing domains appear faster than anyone can catalog them. You need a model that understands the structure and semantics of URLs, not just pattern matching against known bad ones.</p>
+
+        <h2>Two Models, Two Perspectives</h2>
+
+        <p>ThreatX uses a dual model architecture. The first model is BERT, fine tuned on URL text. BERT sees the URL as a sequence of tokens and learns to detect semantic obfuscation: misleading subdomains, brand name impersonation, suspicious token combinations. It catches the attacks that look right to a human eye but are structurally wrong.</p>
+
+        <p>The second model is an MLP that evaluates hand engineered structural features: URL length, count of special characters, number of subdomains, presence of IP addresses, TLD reputation, path depth, query parameter count, and about a dozen more. This catches the attacks that are statistically anomalous even if they look plausible to a language model.</p>
+
+        <figure style="text-align:center; margin:32px 0;">
+          <svg viewBox="0 0 460 200" width="460" height="200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+            <rect x="150" y="5" width="160" height="35" rx="8" fill="#4f46e5" opacity="0.9"/>
+            <text x="230" y="27" text-anchor="middle" fill="white" font-size="12" font-family="monospace">URL Input</text>
+            <line x1="190" y1="40" x2="100" y2="70" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="270" y1="40" x2="360" y2="70" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="20" y="70" width="160" height="50" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="100" y="93" text-anchor="middle" fill="white" font-size="12" font-family="monospace">BERT</text>
+            <text x="100" y="108" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">semantic analysis</text>
+            <rect x="280" y="70" width="160" height="50" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="360" y="93" text-anchor="middle" fill="white" font-size="12" font-family="monospace">MLP</text>
+            <text x="360" y="108" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">structural features</text>
+            <line x1="100" y1="120" x2="230" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="360" y1="120" x2="230" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="150" y="150" width="160" height="40" rx="8" fill="#818cf8" opacity="0.85"/>
+            <text x="230" y="168" text-anchor="middle" fill="white" font-size="11" font-family="monospace">Flask API</text>
+            <text x="230" y="182" text-anchor="middle" fill="#e0e7ff" font-size="9" font-family="monospace">Chrome Extension</text>
+          </svg>
+          <figcaption style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">Dual model: BERT for semantics, MLP for structure, served via Flask to the browser</figcaption>
+        </figure>
+
+        <h2>Three Training Iterations</h2>
+
+        <p>The first version was just the MLP with basic features. It worked okay on obvious phishing URLs but missed the sophisticated ones. The second iteration added BERT, which dramatically improved detection of homograph attacks and brand impersonation. But it was slow. BERT inference on every URL click is not great for user experience.</p>
+
+        <p>The third iteration introduced a tiered approach. The MLP runs first as a fast filter. If it is confident (high or low probability), we use that result immediately. If it is uncertain (probability near the decision boundary), we escalate to BERT for a deeper analysis. This gives us BERT level accuracy with MLP level latency for the majority of URLs. The feature engineering across all three iterations was probably the most educational part of the project. Understanding which structural features actually carry signal for phishing detection versus which ones are just noise required a lot of experimentation.</p>
+
+        <h2>The Chrome Extension</h2>
+
+        <p>Both models are served from a Flask API, and the Chrome extension queries it on every page navigation. The extension shows a green badge for safe URLs, a yellow warning for suspicious ones, and a red alert for likely phishing. It is unobtrusive for normal browsing but loud when it detects something wrong.</p>
+
+        <p>The real time requirement was a hard constraint. Nobody is going to use a security extension that adds visible latency to their browsing. The tiered inference approach keeps response times under 100ms for 85% of URLs (the ones where the MLP is confident) and under 500ms for the rest (the ones that need BERT). Good enough that you do not notice it during normal use.</p>
+
+        <h2>1st Runner Up at CRISIL</h2>
+
+        <p>We presented this at the CRISIL hackathon and took 1st Runner Up. The judges were particularly interested in the dual model rationale. Most competing solutions used a single model, either a traditional ML classifier on features or a neural network on raw URLs. The argument that semantic and structural signals are complementary and should be evaluated independently before fusion resonated well. The tiered inference for latency optimization was the other piece that set us apart. Security tools that people actually use beat theoretically better tools that are too slow for real time use.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

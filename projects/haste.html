@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HASTE - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">HASTE</h1>
+      <div class="post-categories"><span>PyTorch</span> <span>Attention</span> <span>Sparsity</span> <span>Research</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/upgrade-flash-attention" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>Hierarchical Attention with Speculative Token Eviction</h2>
+
+        <p>Flash attention is fast because it is IO aware, but it still computes attention over every single KV block. For long contexts, most of those blocks contribute almost nothing to the output. The attention distribution is sparse. The question is whether you can figure out which blocks matter without actually computing full attention over all of them. That is what HASTE does.</p>
+
+        <p>HASTE is a 3 level cascade filter that sits inside the online softmax loop. Each level is cheaper than the next, and most blocks get rejected early. Only the blocks that survive all three stages get the full dot product treatment. The result: 57 to 65% of KV blocks are skipped entirely, with less than 1% accuracy loss.</p>
+
+        <h2>The Three Stages</h2>
+
+        <p>Stage 1 is a Cauchy Schwarz norm gate. This is the cheapest possible filter because it requires zero K loads. The idea is simple: the dot product Q*K is bounded by ||Q|| * ||K||. If the upper bound on the attention score is already below a threshold, there is no way this block matters. We precompute and cache ||K|| norms per block, so the gate is just a scalar multiply and compare. Most irrelevant blocks die here.</p>
+
+        <p>Stage 2 is a low dimensional sketch probe. For blocks that pass the norm gate, we project Q and K into a much smaller subspace, d' = 16 versus the full d = 128. The sketch gives a rough estimate of the actual attention score at 8x less compute than the full dot product. Blocks whose sketch score falls below threshold get evicted here.</p>
+
+        <p>Stage 3 is full attention, computed only for the surviving blocks. By this point, we have typically eliminated 57 to 65% of all blocks through the first two stages, so the full attention computation covers a much smaller working set.</p>
+
+        <svg viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="200" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="210" y="24" fill="#a5b4fc" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">HASTE 3-Level Cascade</text>
+          <!-- Stage 1 -->
+          <rect x="20" y="40" width="380" height="36" rx="6" fill="#4f46e5" opacity="0.25" stroke="#4f46e5" stroke-width="1"/>
+          <text x="30" y="62" fill="#c4b5fd" font-family="monospace" font-size="10" font-weight="bold">Stage 1: Norm Gate (Cauchy-Schwarz)</text>
+          <text x="355" y="62" fill="#f87171" font-family="monospace" font-size="10" text-anchor="end">~35% evicted</text>
+          <!-- Arrow -->
+          <polygon points="210,76 205,82 215,82" fill="#6366f1"/>
+          <!-- Stage 2 -->
+          <rect x="60" y="86" width="300" height="36" rx="6" fill="#6366f1" opacity="0.25" stroke="#6366f1" stroke-width="1"/>
+          <text x="70" y="108" fill="#c4b5fd" font-family="monospace" font-size="10" font-weight="bold">Stage 2: Sketch Probe (d'=16)</text>
+          <text x="325" y="108" fill="#fbbf24" font-family="monospace" font-size="10" text-anchor="end">~25% evicted</text>
+          <!-- Arrow -->
+          <polygon points="210,122 205,128 215,128" fill="#818cf8"/>
+          <!-- Stage 3 -->
+          <rect x="120" y="132" width="180" height="36" rx="6" fill="#818cf8" opacity="0.25" stroke="#818cf8" stroke-width="1"/>
+          <text x="130" y="154" fill="#c4b5fd" font-family="monospace" font-size="10" font-weight="bold">Stage 3: Full Attention</text>
+          <text x="265" y="154" fill="#34d399" font-family="monospace" font-size="10" text-anchor="end">35-43%</text>
+          <!-- Summary -->
+          <text x="210" y="186" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">57-65% total sparsity, &lt;1% accuracy loss</text>
+        </svg>
+
+        <h2>Temporal Coherence with EMA</h2>
+
+        <p>Attention patterns in autoregressive generation are not random. Consecutive tokens tend to attend to similar regions of the KV cache. HASTE exploits this with an exponential moving average (EMA) over block importance scores. If a block was important for the last few tokens, it is likely important for the next one too. The EMA provides a warm prior that biases the cascade: blocks with high historical importance get a lower eviction threshold, making them harder to skip. Blocks that have been consistently irrelevant get a higher threshold, making them easier to evict early.</p>
+
+        <p>This temporal coherence mechanism is what separates HASTE from static sparsity patterns. The sparsity adapts per token, per head, per layer. Some heads are sparse, some are dense. Some tokens attend broadly, some focus narrowly. The EMA lets HASTE track these dynamics without any overhead beyond a single scalar update per block per step.</p>
+
+        <h2>Error Bounded Correction</h2>
+
+        <p>Speculative eviction is inherently approximate. You are making decisions about block importance based on cheap proxies, and sometimes those proxies are wrong. A block might have a low norm gate score but contain a few keys that are critically important. To handle this, HASTE runs periodic correction passes that recompute attention over recently evicted blocks and measure the actual approximation error.</p>
+
+        <p>If the error exceeds a configurable bound, the correction pass is promoted: the block gets re included in the active set, and its EMA score is updated to prevent future false evictions. This gives HASTE a formal error guarantee. You can set the maximum allowable approximation error, and the correction mechanism ensures it is never exceeded over a rolling window.</p>
+
+        <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="120" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="20" y="24" fill="#a5b4fc" font-family="monospace" font-size="11" font-weight="bold">EMA Temporal Coherence</text>
+          <!-- Timeline -->
+          <line x1="40" y1="60" x2="380" y2="60" stroke="#4f46e5" stroke-width="1.5"/>
+          <circle cx="70" cy="60" r="6" fill="#4f46e5"/><text x="70" y="50" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">t-3</text>
+          <circle cx="140" cy="60" r="6" fill="#6366f1"/><text x="140" y="50" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">t-2</text>
+          <circle cx="210" cy="60" r="6" fill="#818cf8"/><text x="210" y="50" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">t-1</text>
+          <circle cx="280" cy="60" r="8" fill="#a5b4fc" stroke="#fff" stroke-width="1.5"/><text x="280" y="50" fill="#e0e7ff" font-family="monospace" font-size="8" text-anchor="middle">t</text>
+          <circle cx="350" cy="60" r="6" fill="#4f46e5" opacity="0.4"/><text x="350" y="50" fill="#64748b" font-family="monospace" font-size="8" text-anchor="middle">t+1</text>
+          <!-- Scores -->
+          <rect x="60" y="75" width="20" height="12" rx="2" fill="#34d399" opacity="0.7"/>
+          <rect x="130" y="75" width="20" height="16" rx="2" fill="#34d399" opacity="0.8"/>
+          <rect x="200" y="75" width="20" height="20" rx="2" fill="#34d399" opacity="0.9"/>
+          <rect x="270" y="75" width="20" height="24" rx="2" fill="#34d399"/>
+          <text x="210" y="112" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">Block importance accumulates via EMA, biasing future eviction</text>
+        </svg>
+
+        <h2>Results and Takeaways</h2>
+
+        <p>Across various sequence lengths and model sizes, HASTE consistently achieves 57 to 65% sparsity with under 1% degradation in downstream accuracy. The cascade overhead (norm gate + sketch probe) is small enough that net wall clock time decreases once sequences are long enough for the memory bandwidth savings to dominate. The sweet spot is around 4K tokens and above, where the KV cache is large enough that skipping 60% of it matters.</p>
+
+        <p>The key insight is that attention sparsity is not a fixed pattern you can hardcode. It varies per head, per layer, per token. Any scheme that tries to impose a static mask (local windows, stride patterns, fixed top k) will either be too aggressive for dense heads or too conservative for sparse ones. The cascade approach lets each block prove its own relevance at minimal cost, and the EMA ensures the system adapts over time without explicit re planning.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

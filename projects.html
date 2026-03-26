@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,7 +20,6 @@
     <div class="floating-nav__container">
       <a href="index.html" class="floating-nav__link">Home</a>
       <a href="projects.html" class="floating-nav__link floating-nav__link--active" aria-current="page">Projects</a>
-      <!-- <a href="achievements.html" class="floating-nav__link">Achievements</a> -->
       <a href="musings/index.html" class="floating-nav__link">Blog</a>
     </div>
   </nav>
@@ -29,70 +28,271 @@
     <section class="projects-shell">
       <h1 class="projects-title">Projects</h1>
       <div class="projects-grid">
-        <a class="project-card__link" href="https://github.com/Akasxh/Terrain-Recognition" target="_blank" rel="noopener noreferrer">
+
+        <a class="project-card__link" href="projects/gpucheck.html">
           <article class="project-card">
-            <img src="image/terrain_recognition.png" alt="Terrain Recognition System architecture diagram" class="project-card__image">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #1e1b4b, #312e81); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="30" width="80" height="60" rx="6" fill="#4f46e5" opacity="0.3" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="60" y="55" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="10" font-weight="600">pytest</text>
+                <text x="60" y="72" text-anchor="middle" fill="#818cf8" font-family="monospace" font-size="8">GPU</text>
+                <path d="M110 60 L140 60" stroke="#818cf8" stroke-width="2" stroke-dasharray="4,3"/>
+                <rect x="150" y="20" width="110" height="80" rx="8" fill="#4f46e5" opacity="0.15" stroke="#6366f1" stroke-width="1.5"/>
+                <text x="205" y="45" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="9">assert_close</text>
+                <text x="205" y="60" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="9">@dtypes</text>
+                <text x="205" y="75" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="9">@shapes</text>
+                <circle cx="245" cy="42" r="8" fill="none" stroke="#22c55e" stroke-width="2"/>
+                <path d="M241 42 L244 45 L249 39" stroke="#22c55e" stroke-width="2" fill="none"/>
+              </svg>
+            </div>
             <div class="project-card__content">
-              <h2 class="project-card__title">Terrain Recognition System</h2>
-              <p class="project-card__description">A Terrain Recognition System for Edge and Military devices using CNNs. With 10+ stars and 5+ contributors.</p>
+              <h2 class="project-card__title">gpucheck</h2>
+              <p class="project-card__description">pytest for GPU kernels. Dtype-aware assertions, shape fuzzing, and CUDA benchmarking. Found 8 real bugs in Triton including an 83% error in layer norm.</p>
               <div class="project-card__badges">
-                <span class="badge">CNNs</span>
-                <span class="badge">SIH 23'</span>
-                <span class="badge">Open-source @ GSSoC &amp; CodePeak</span>
+                <span class="badge">PyTorch</span>
+                <span class="badge">CUDA</span>
+                <span class="badge">Triton</span>
+                <span class="badge">Published on PyPI</span>
               </div>
             </div>
           </article>
         </a>
 
-        <a class="project-card__link" href="https://github.com/Akasxh/Action_Identifier" target="_blank" rel="noopener noreferrer">
+        <a class="project-card__link" href="projects/haste.html">
           <article class="project-card">
-            <img src="image/action_identifier.png" alt="Action Recognition System demo" class="project-card__image">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #0c1222, #1e293b); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="140" y="35" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="18" font-weight="700">HASTE</text>
+                <rect x="30" y="50" width="60" height="30" rx="4" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+                <text x="60" y="69" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">Norm Gate</text>
+                <path d="M95 65 L105 65" stroke="#fbbf24" stroke-width="1.5"/>
+                <rect x="110" y="50" width="60" height="30" rx="4" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+                <text x="140" y="69" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">Sketch</text>
+                <path d="M175 65 L185 65" stroke="#fbbf24" stroke-width="1.5"/>
+                <rect x="190" y="50" width="60" height="30" rx="4" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+                <text x="220" y="69" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">Full Attn</text>
+                <text x="140" y="100" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="9">57-65% sparsity, &lt;1% accuracy loss</text>
+              </svg>
+            </div>
             <div class="project-card__content">
-              <h2 class="project-card__title">Action Recognition System</h2>
-              <p class="project-card__description">A Action Recognition System for helping elderly learn ASL using real-time video processing currently being funded.</p>
+              <h2 class="project-card__title">HASTE: Upgrade Flash Attention</h2>
+              <p class="project-card__description">Flash Attention variant with 3-level cascade pre-filtering and provable error bounds. 57-65% effective sparsity with less than 1% accuracy degradation.</p>
               <div class="project-card__badges">
-                <span class="badge">Transformers</span>
-                <span class="badge">LSTMs</span>
-                <span class="badge">Winner @ Saras AI Hackathon</span>
+                <span class="badge">PyTorch</span>
+                <span class="badge">Attention</span>
+                <span class="badge">Sparsity</span>
+                <span class="badge">Research</span>
               </div>
             </div>
           </article>
         </a>
 
-        <a class="project-card__link" href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer">
+        <a class="project-card__link" href="projects/pixmask.html">
           <article class="project-card">
-            <img src="image/Product_recommendation.png" alt="Advanced Product Recommendation visuals" class="project-card__image">
-            <div class="project-card__content">
-              <h2 class="project-card__title">Advanced Product Recommender</h2>
-              <p class="project-card__description">An Advanced Product Recommender System for made in reference with icecat dataset with 100k+ products using traditional ML Techniques, Association Rule Mining and RAG Systems with LLMs.</p>
-              <div class="project-card__badges">
-                <span class="badge">Rule Mining</span>
-                <span class="badge">RAG</span>
-                <span class="badge">Winner @ STIBO Systems</span>
-              </div>
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #1a0a2e, #2d1b4e); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="35" width="55" height="50" rx="4" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
+                <text x="47" y="55" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="7">Adversarial</text>
+                <text x="47" y="68" text-anchor="middle" fill="#c084fc" font-family="monospace" font-size="7">Image</text>
+                <path d="M80 60 L100 60" stroke="#ef4444" stroke-width="2"/>
+                <text x="90" y="52" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="7">x</text>
+                <rect x="105" y="25" width="70" height="70" rx="8" fill="#a855f7" opacity="0.1" stroke="#a855f7" stroke-width="1.5"/>
+                <text x="140" y="50" text-anchor="middle" fill="#d8b4fe" font-family="monospace" font-size="8">SIMD</text>
+                <text x="140" y="63" text-anchor="middle" fill="#d8b4fe" font-family="monospace" font-size="8">Sanitize</text>
+                <text x="140" y="76" text-anchor="middle" fill="#d8b4fe" font-family="monospace" font-size="7">&lt;15ms</text>
+                <path d="M180 60 L200 60" stroke="#22c55e" stroke-width="2"/>
+                <rect x="205" y="35" width="55" height="50" rx="4" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="1.5"/>
+                <text x="232" y="55" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Clean</text>
+                <text x="232" y="68" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Image</text>
+              </svg>
             </div>
-          </article>
-        </a>
-
-        <a class="project-card__link" href="https://github.com/Akasxh" target="_blank" rel="noopener noreferrer">
-          <article class="project-card">
-            <img src="image/ThreatX.png" alt="ThreatX malicious URL detection visuals" class="project-card__image">
             <div class="project-card__content">
-              <h2 class="project-card__title">Malicious URL Detection Extension</h2>
-              <p class="project-card__description">A Malicious URL Detection Extension for detecting malicious URLs using SOTA Techniques implemented from leading research papers. Using MLP, BERT and hueristic based approaches for secure offline detection.</p>
+              <h2 class="project-card__title">pixmask</h2>
+              <p class="project-card__description">Sub-15ms adversarial image sanitization for multimodal LLMs. C++17 SIMD core with AVX2/NEON dispatch, zero heap allocations in the hot path. pip install ready.</p>
               <div class="project-card__badges">
+                <span class="badge">C++17</span>
+                <span class="badge">SIMD</span>
                 <span class="badge">Security</span>
-                <span class="badge">SOTA Techniques</span>
+                <span class="badge">Python Bindings</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/efficient-inference.html">
+          <article class="project-card">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #0f172a, #1e3a5f); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="140" y="30" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600">Sparse Attention Benchmark</text>
+                <rect x="25" y="45" width="55" height="55" rx="4" fill="#0ea5e9" opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+                <text x="52" y="65" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="8">HASTE v2</text>
+                <text x="52" y="78" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="7">Quest+SVD</text>
+                <rect x="90" y="45" width="55" height="55" rx="4" fill="#0ea5e9" opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+                <text x="117" y="65" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="8">BLASST</text>
+                <text x="117" y="78" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="7">Interval</text>
+                <rect x="155" y="45" width="55" height="55" rx="4" fill="#0ea5e9" opacity="0.15" stroke="#38bdf8" stroke-width="1"/>
+                <text x="182" y="65" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="8">SparQ</text>
+                <text x="182" y="78" text-anchor="middle" fill="#7dd3fc" font-family="monospace" font-size="7">Top-k</text>
+                <rect x="220" y="45" width="40" height="55" rx="4" fill="#64748b" opacity="0.3" stroke="#94a3b8" stroke-width="1"/>
+                <text x="240" y="68" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="8">Dense</text>
+              </svg>
+            </div>
+            <div class="project-card__content">
+              <h2 class="project-card__title">Efficient ML Inference</h2>
+              <p class="project-card__description">Benchmarking suite comparing three sparse attention methods as drop-in Llama replacements. Evaluated on MATH500, AIME, GPQA accuracy and latency from 1K to 128K tokens.</p>
+              <div class="project-card__badges">
+                <span class="badge">Llama</span>
+                <span class="badge">Sparse Attention</span>
+                <span class="badge">Benchmarking</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/rosetta.html">
+          <article class="project-card">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #0a0a1a, #1a1a3e); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="60" r="30" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+                <circle cx="80" cy="60" r="22" fill="none" stroke="#4f46e5" stroke-width="0.5" stroke-dasharray="2,2"/>
+                <circle cx="95" cy="50" r="3" fill="#f59e0b"/>
+                <text x="80" y="100" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="8">Kepler/TESS</text>
+                <path d="M120 60 L160 60" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <text x="140" y="52" text-anchor="middle" fill="#818cf8" font-family="monospace" font-size="8">AI</text>
+                <rect x="170" y="35" width="90" height="50" rx="6" fill="#6366f1" opacity="0.1" stroke="#6366f1" stroke-width="1.5"/>
+                <text x="215" y="55" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="9">CNN + RF</text>
+                <text x="215" y="70" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="8">99.8% acc</text>
+              </svg>
+            </div>
+            <div class="project-card__content">
+              <h2 class="project-card__title">Project Rosetta</h2>
+              <p class="project-card__description">Explainable AI for exoplanet detection from Kepler/TESS light curves. CNN achieves 99.8% accuracy with per-prediction feature attribution. NASA Space Apps 2025.</p>
+              <div class="project-card__badges">
+                <span class="badge">TensorFlow</span>
+                <span class="badge">React</span>
+                <span class="badge">NASA Space Apps</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/veridex.html">
+          <article class="project-card">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #052e16, #14532d); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="140" y="30" text-anchor="middle" fill="#4ade80" font-family="monospace" font-size="16" font-weight="700">veridex</text>
+                <text x="140" y="48" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="monospace" font-size="9">autonomous fact-checker</text>
+                <rect x="30" y="60" width="50" height="30" rx="4" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1"/>
+                <text x="55" y="79" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Search</text>
+                <rect x="90" y="60" width="50" height="30" rx="4" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1"/>
+                <text x="115" y="79" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Extract</text>
+                <rect x="150" y="60" width="50" height="30" rx="4" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1"/>
+                <text x="175" y="79" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Score</text>
+                <rect x="210" y="60" width="50" height="30" rx="4" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1"/>
+                <text x="235" y="79" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="7">Report</text>
+                <text x="140" y="108" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="8">zero API keys required</text>
+              </svg>
+            </div>
+            <div class="project-card__content">
+              <h2 class="project-card__title">veridex</h2>
+              <p class="project-card__description">Autonomous OSINT agent that fact-checks the internet in real time. NLP credibility scoring, multi-source synthesis, full Streamlit dashboard. Zero API keys.</p>
+              <div class="project-card__badges">
+                <span class="badge">spaCy</span>
+                <span class="badge">NLP</span>
+                <span class="badge">Streamlit</span>
+                <span class="badge">Docker</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/lablens.html">
+          <article class="project-card">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #1c1917, #44403c); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="70" height="70" rx="4" fill="#78716c" opacity="0.15" stroke="#a8a29e" stroke-width="1"/>
+                <line x1="30" y1="40" x2="80" y2="40" stroke="#a8a29e" stroke-width="1" opacity="0.4"/>
+                <line x1="30" y1="50" x2="75" y2="50" stroke="#a8a29e" stroke-width="1" opacity="0.4"/>
+                <line x1="30" y1="60" x2="70" y2="60" stroke="#a8a29e" stroke-width="1" opacity="0.4"/>
+                <line x1="30" y1="70" x2="78" y2="70" stroke="#a8a29e" stroke-width="1" opacity="0.4"/>
+                <line x1="30" y1="80" x2="65" y2="80" stroke="#a8a29e" stroke-width="1" opacity="0.4"/>
+                <text x="55" y="36" text-anchor="middle" fill="#d6d3d1" font-family="monospace" font-size="7">PDF</text>
+                <path d="M100 60 L130 60" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3"/>
+                <rect x="140" y="25" width="120" height="70" rx="6" fill="#f59e0b" opacity="0.08" stroke="#f59e0b" stroke-width="1"/>
+                <text x="200" y="42" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">instruments</text>
+                <text x="200" y="55" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">chemicals</text>
+                <text x="200" y="68" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">conditions</text>
+                <text x="200" y="81" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="8">parameters</text>
+              </svg>
+            </div>
+            <div class="project-card__content">
+              <h2 class="project-card__title">lablens</h2>
+              <p class="project-card__description">Turn any scientific paper into structured, searchable experiment metadata in under a second. NER + 300 domain-specific regex patterns across 8 entity categories.</p>
+              <div class="project-card__badges">
+                <span class="badge">spaCy</span>
+                <span class="badge">NER</span>
+                <span class="badge">BioSchemas</span>
+                <span class="badge">Docker</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/terrain.html">
+          <article class="project-card">
+            <img src="image/terrain_recognition.png" alt="Terrain Recognition System" class="project-card__image">
+            <div class="project-card__content">
+              <h2 class="project-card__title">Terrain Recognition</h2>
+              <p class="project-card__description">92.4% accuracy terrain classifier compressed from 150MB to 15.6MB. Compared 7 CNN architectures and 4 transfer learning approaches across 5 terrain classes. 21 stars.</p>
+              <div class="project-card__badges">
+                <span class="badge">EfficientNet</span>
+                <span class="badge">CNNs</span>
+                <span class="badge">SIH 2023</span>
+                <span class="badge">Open Source</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
+        <a class="project-card__link" href="projects/threatx.html">
+          <article class="project-card">
+            <img src="image/ThreatX.png" alt="Malicious URL Detection" class="project-card__image">
+            <div class="project-card__content">
+              <h2 class="project-card__title">ThreatX: Malicious URL Detector</h2>
+              <p class="project-card__description">BERT + MLP dual-model phishing detection with a Chrome extension. Real-time URL scanning via Flask API. Three training iterations with progressive feature engineering.</p>
+              <div class="project-card__badges">
+                <span class="badge">BERT</span>
+                <span class="badge">Chrome Extension</span>
                 <span class="badge">1st Runner Up @ CRISIL</span>
               </div>
             </div>
           </article>
         </a>
+
+        <a class="project-card__link" href="projects/healthpulse.html">
+          <article class="project-card">
+            <div class="project-card__image" style="height:192px; background: linear-gradient(135deg, #0f172a, #1e3a5f); display:flex; align-items:center; justify-content:center;">
+              <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="140" y="28" text-anchor="middle" fill="#f43f5e" font-family="monospace" font-size="14" font-weight="700">healthpulse</text>
+                <polyline points="30,80 50,70 70,75 90,55 110,65 130,45 150,60 170,40 190,50 210,35 230,45 250,30" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.6"/>
+                <text x="140" y="105" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="9">11 vital metrics, 100% offline</text>
+              </svg>
+            </div>
+            <div class="project-card__content">
+              <h2 class="project-card__title">HealthPulse AI</h2>
+              <p class="project-card__description">100% offline health risk intelligence. Ensemble ML (RF+LR) over 11 vital metrics with 7-day rolling analysis, PDF reports, and 6 Plotly visualization tabs. Zero cloud.</p>
+              <div class="project-card__badges">
+                <span class="badge">scikit-learn</span>
+                <span class="badge">Streamlit</span>
+                <span class="badge">Plotly</span>
+                <span class="badge">Docker</span>
+              </div>
+            </div>
+          </article>
+        </a>
+
       </div>
     </section>
   </main>
 </body>
 </html>
-
-
-

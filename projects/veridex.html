@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeriDex - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">VeriDex</h1>
+      <div class="post-categories"><span>spaCy</span> <span>NLP</span> <span>Streamlit</span> <span>Docker</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/veridex" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>The Problem with "Just Google It"</h2>
+
+        <p>I kept running into the same situation: someone makes a claim online, I want to verify it, and the best advice anyone has is "just Google it." That is not verification. That is hoping the first page of search results happens to contain the truth. Real fact checking requires pulling from multiple independent sources, extracting the actual claims being made, and cross referencing them. Nobody does this manually because it takes forever. So I automated it.</p>
+
+        <p>VeriDex is an autonomous OSINT research agent. You give it a claim, and it goes to work. It queries DuckDuckGo (no Google API keys, no rate limit headaches), scrapes the results with full robots.txt compliance because I am not trying to get anyone's IP banned, and then does the actual interesting part: extracting structured facts from unstructured web pages.</p>
+
+        <h2>How the Pipeline Works</h2>
+
+        <p>The extraction layer uses spaCy's NER to pull out named entities, then runs TF-IDF weighted TextRank to identify the most salient claims in each source. This is not keyword matching. TextRank builds a graph of sentences weighted by term importance and extracts the ones that carry the most informational weight. It is surprisingly effective at finding the "meat" of an article even when it is buried under ads and filler.</p>
+
+        <p>Once I have structured facts from multiple sources, VeriDex scores credibility across five dimensions: source authority, cross source consensus, claim specificity, temporal consistency, and internal coherence. Each dimension gets a score, and the final credibility rating is a weighted combination. The cross source consensus score is probably the most useful one. If five independent sources all report the same figure, that is a lot more credible than one source making a bold claim nobody else corroborates.</p>
+
+        <figure style="text-align:center; margin:32px 0;">
+          <svg viewBox="0 0 520 180" width="520" height="180" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+            <rect x="10" y="60" width="90" height="60" rx="10" fill="#4f46e5" opacity="0.85"/>
+            <text x="55" y="95" text-anchor="middle" fill="white" font-size="12" font-family="monospace">Query</text>
+            <line x1="100" y1="90" x2="140" y2="90" stroke="#a5b4fc" stroke-width="2" marker-end="url(#arrow)"/>
+            <rect x="140" y="60" width="90" height="60" rx="10" fill="#6366f1" opacity="0.85"/>
+            <text x="185" y="88" text-anchor="middle" fill="white" font-size="11" font-family="monospace">Scrape</text>
+            <text x="185" y="102" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">robots.txt</text>
+            <line x1="230" y1="90" x2="270" y2="90" stroke="#a5b4fc" stroke-width="2" marker-end="url(#arrow)"/>
+            <rect x="270" y="60" width="90" height="60" rx="10" fill="#818cf8" opacity="0.85"/>
+            <text x="315" y="88" text-anchor="middle" fill="white" font-size="11" font-family="monospace">NER +</text>
+            <text x="315" y="102" text-anchor="middle" fill="white" font-size="11" font-family="monospace">TextRank</text>
+            <line x1="360" y1="90" x2="400" y2="90" stroke="#a5b4fc" stroke-width="2" marker-end="url(#arrow)"/>
+            <rect x="400" y="60" width="100" height="60" rx="10" fill="#a78bfa" opacity="0.85"/>
+            <text x="450" y="88" text-anchor="middle" fill="white" font-size="11" font-family="monospace">Credibility</text>
+            <text x="450" y="102" text-anchor="middle" fill="white" font-size="11" font-family="monospace">5-dim Score</text>
+            <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a5b4fc"/></marker></defs>
+          </svg>
+          <figcaption style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">VeriDex pipeline: query, scrape, extract, score</figcaption>
+        </figure>
+
+        <h2>The Dashboard</h2>
+
+        <p>Everything surfaces through a Streamlit dashboard with Plotly visualizations. You can see the credibility breakdown per source, the consensus graph across sources, and drill into individual extracted facts. Results persist in SQLite so you can revisit previous research sessions. When you need to share findings, there is PDF and JSON export built in.</p>
+
+        <h2>Fully Local, Zero API Keys</h2>
+
+        <p>The whole thing runs locally. No OpenAI key, no cloud services, no third party APIs beyond DuckDuckGo's public search. I was deliberate about this. A fact checking tool that depends on a commercial API is a fact checking tool that stops working when the API changes pricing or goes down. VeriDex is 1,397 lines of Python that run anywhere you have Python and a network connection. Docker support included if you want to spin it up in a container.</p>
+
+        <p>The architecture is intentionally simple. There is no LLM in the loop. The NER plus TextRank pipeline is deterministic and fast. You get consistent results on the same inputs, which matters a lot when the whole point of the tool is verifying information. A system that gives you different credibility scores on Tuesday than it gave you on Monday is not a system you can trust.</p>
+
+        <h2>Limitations and Honest Assessment</h2>
+
+        <p>VeriDex is not a replacement for investigative journalism. It cannot assess source intent, detect sophisticated disinformation campaigns, or evaluate claims that require domain expertise to interpret. What it can do is the mechanical part of fact checking: gather sources, extract claims, and surface agreement or disagreement across them. The "last mile" of judgment is still on you. But at least now you are making that judgment with structured evidence instead of gut feeling and a browser tab with 47 open pages.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

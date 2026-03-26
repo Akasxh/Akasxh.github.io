@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efficient ML Inference - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">Efficient ML Inference</h1>
+      <div class="post-categories"><span>PyTorch</span> <span>Llama</span> <span>Sparse Attention</span> <span>Benchmarking</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/efficient_ml_inference" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>The Benchmark</h2>
+
+        <p>There are a lot of sparse attention papers. Each claims speedups on different models, different sequence lengths, different metrics. Comparing them fairly is nearly impossible from reading papers alone. So I built a unified benchmark that evaluates three sparse attention methods as drop in replacements for Llama's attention layer: HASTE v2, BLASST, and SparQ. Same model, same data, same hardware, same evaluation pipeline. No more apples to oranges comparisons.</p>
+
+        <p>The evaluation covers three axes: accuracy on reasoning benchmarks (MATH500, AIME, GPQA), perplexity on language modeling (Wikipedia, C4), and latency across sequence lengths from 1K to 128K tokens. Each method is tested as a literal attention layer swap. The Llama model loads normally, and the attention module gets replaced with the sparse variant. Everything else stays identical: weights, KV cache layout, sampling parameters.</p>
+
+        <h2>The Three Methods</h2>
+
+        <p>HASTE v2 is my own method, building on the original HASTE cascade filter. The v2 additions are Quest style interval arithmetic for tighter block importance bounds, SVD residual bounds that exploit low rank structure in the attention matrix, and an entropy guided budget that allocates more compute to high entropy heads (where attention is spread out) and less to low entropy heads (where attention is concentrated). The entropy guidance is the key insight: not all heads need the same sparsity budget, and the optimal budget is predictable from the softmax entropy of recent tokens.</p>
+
+        <p>BLASST (Block Level Approximate Sparse Self attention with Thresholding) uses a block level scoring function based on accumulated query key statistics. It maintains running statistics per KV block and thresholds blocks based on their historical contribution. It is simpler than HASTE but effective for moderate sparsity levels.</p>
+
+        <p>SparQ takes a different approach: it sparsifies the query rather than the keys. Instead of selecting which KV blocks to attend to, it selects which dimensions of the query vector contribute most to the attention scores and computes a low rank approximation of the attention using only those dimensions. This is orthogonal to KV sparsity and in principle can be combined with it.</p>
+
+        <svg viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="200" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="210" y="22" fill="#a5b4fc" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">Accuracy vs Sparsity Tradeoff</text>
+          <!-- Axes -->
+          <line x1="60" y1="170" x2="390" y2="170" stroke="#4f46e5" stroke-width="1"/>
+          <line x1="60" y1="40" x2="60" y2="170" stroke="#4f46e5" stroke-width="1"/>
+          <text x="225" y="193" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">Sparsity %</text>
+          <text x="22" y="105" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle" transform="rotate(-90,22,105)">MATH500 Acc</text>
+          <!-- Axis labels -->
+          <text x="60" y="183" fill="#64748b" font-family="monospace" font-size="8" text-anchor="middle">0%</text>
+          <text x="170" y="183" fill="#64748b" font-family="monospace" font-size="8" text-anchor="middle">40%</text>
+          <text x="280" y="183" fill="#64748b" font-family="monospace" font-size="8" text-anchor="middle">60%</text>
+          <text x="390" y="183" fill="#64748b" font-family="monospace" font-size="8" text-anchor="middle">80%</text>
+          <text x="50" y="44" fill="#64748b" font-family="monospace" font-size="8" text-anchor="end">100</text>
+          <text x="50" y="107" fill="#64748b" font-family="monospace" font-size="8" text-anchor="end">95</text>
+          <text x="50" y="170" fill="#64748b" font-family="monospace" font-size="8" text-anchor="end">90</text>
+          <!-- Dense baseline -->
+          <line x1="60" y1="50" x2="390" y2="50" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="4"/>
+          <text x="395" y="50" fill="#94a3b8" font-family="monospace" font-size="8">dense</text>
+          <!-- HASTE v2 -->
+          <circle cx="280" cy="56" r="6" fill="#34d399"/><text x="280" y="48" fill="#34d399" font-family="monospace" font-size="8" text-anchor="middle">HASTE v2</text>
+          <!-- BLASST -->
+          <circle cx="225" cy="68" r="6" fill="#fbbf24"/><text x="225" y="60" fill="#fbbf24" font-family="monospace" font-size="8" text-anchor="middle">BLASST</text>
+          <!-- SparQ -->
+          <circle cx="200" cy="80" r="6" fill="#f87171"/><text x="200" y="72" fill="#f87171" font-family="monospace" font-size="8" text-anchor="middle">SparQ</text>
+        </svg>
+
+        <h2>Evaluation Results</h2>
+
+        <p>On MATH500, HASTE v2 at 60% sparsity retains 99.2% of dense accuracy. BLASST retains 98.1% at 50% sparsity but degrades faster beyond that. SparQ holds 97.5% at 45% sparsity. On AIME (harder competition math), the gap widens: HASTE v2 loses 1.8% at 60% sparsity while BLASST loses 4.2% and SparQ loses 5.7%. The reasoning heavy benchmarks expose quality differences that perplexity alone does not capture.</p>
+
+        <p>Perplexity on Wikipedia and C4 tells a different story. All three methods are within 0.1 perplexity points of dense at their respective operating sparsities. Perplexity is not a sensitive enough metric to distinguish between these methods. This is why I included reasoning benchmarks: they reveal failure modes that aggregate language modeling metrics smooth over.</p>
+
+        <p>Latency is where things get practical. At 32K tokens, HASTE v2 at 60% sparsity gives 1.7x speedup over dense FlashAttention 2. BLASST at 50% gives 1.4x. SparQ at 45% gives 1.3x. At 128K tokens, HASTE v2 hits 2.3x because memory bandwidth savings scale with sequence length. The cascade overhead is amortized over more blocks, and the EMA temporal coherence becomes more effective with longer histories.</p>
+
+        <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="150" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="210" y="22" fill="#a5b4fc" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">Latency Speedup at 128K Tokens</text>
+          <!-- Bars -->
+          <text x="100" y="52" fill="#c4b5fd" font-family="monospace" font-size="10" text-anchor="end">HASTE v2</text>
+          <rect x="110" y="40" width="230" height="18" rx="4" fill="#34d399" opacity="0.8"/>
+          <text x="345" y="53" fill="#34d399" font-family="monospace" font-size="10">2.3x</text>
+          <text x="100" y="82" fill="#c4b5fd" font-family="monospace" font-size="10" text-anchor="end">BLASST</text>
+          <rect x="110" y="70" width="160" height="18" rx="4" fill="#fbbf24" opacity="0.8"/>
+          <text x="275" y="83" fill="#fbbf24" font-family="monospace" font-size="10">1.6x</text>
+          <text x="100" y="112" fill="#c4b5fd" font-family="monospace" font-size="10" text-anchor="end">SparQ</text>
+          <rect x="110" y="100" width="130" height="18" rx="4" fill="#f87171" opacity="0.8"/>
+          <text x="245" y="113" fill="#f87171" font-family="monospace" font-size="10">1.4x</text>
+          <text x="210" y="140" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">vs dense FlashAttention-2 on A100</text>
+        </svg>
+
+        <h2>LaTeX Tables and Reproducibility</h2>
+
+        <p>The benchmark suite generates publication ready LaTeX tables automatically. Every run produces a JSON results file with raw numbers, and the table generator formats them into accuracy tables, perplexity tables, and latency comparison tables with proper standard deviations and confidence intervals. I built this because I was tired of manually formatting benchmark results every time I tweaked a parameter.</p>
+
+        <p>All configurations are specified in YAML. You define the model, the attention methods to compare, the sparsity budgets, the evaluation tasks, and the sequence lengths. One command runs everything and produces the full comparison. The idea is that anyone can reproduce the exact numbers or swap in their own method with a single config change. If you have a sparse attention method and want to see how it stacks up, the benchmark is ready for it.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gpucheck - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">gpucheck</h1>
+      <div class="post-categories"><span>Python</span> <span>PyTorch</span> <span>CUDA</span> <span>Triton</span> <span>PyPI</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/gpucheck" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>The Problem</h2>
+
+        <p>Every team writing GPU kernels has the same ritual. You write a Triton or CUDA kernel, call <code>torch.allclose</code> with some copy pasted tolerance values, get a boolean back, and call it a day. If it fails, you stare at <code>False</code> with no idea what went wrong or where. If it passes, you have no idea if your tolerances were just loose enough to hide real bugs. I got tired of this, so I built gpucheck: a pytest plugin designed specifically for GPU kernel testing.</p>
+
+        <h2>What It Does</h2>
+
+        <p>The core idea is dtype-aware assertions. When you call <code>assert_close(result, expected)</code>, gpucheck auto selects tolerances based on the actual dtype of the tensors. float32, float16, bfloat16, float8_e5m2, float8_e4m3fn all have different mantissa widths and therefore different numerical precision. Using the same atol and rtol for all of them is not testing, it is theater. gpucheck's tolerance tables are informed by failure analysis across hundreds of configurations.</p>
+
+        <p>On top of that, three decorators handle parametric testing: <code>@dtypes</code>, <code>@shapes</code>, and <code>@devices</code>. Stack them on a single test function and they generate the full cartesian product. Here is what it looks like in practice:</p>
+
+<pre><code>import torch
+import pytest
+from gpucheck import assert_close, dtypes, shapes, devices
+
+@pytest.mark.gpu
+@dtypes("float16", "bfloat16", "float32")
+@shapes((128, 128), (371, 17), (1024, 1024))
+@devices("cuda:0")
+def test_softmax_kernel(dtype, shape, device):
+    x = torch.randn(shape, dtype=dtype, device=device)
+    result = my_triton_softmax(x)
+    expected = torch.softmax(x, dim=-1)
+    assert_close(result, expected)
+</code></pre>
+
+        <p>Nine configurations from one function. Scale to five dtypes, ten shapes, two devices and you get 100 tests with zero copy paste. The decorators plug directly into pytest's parametrize machinery, so you keep proper test IDs, selective reruns, and all the pytest features you already know.</p>
+
+        <h2>Rich Error Reports</h2>
+
+        <p>When an assertion fails, you do not get a boolean. You get a Rich formatted mismatch report: max absolute error, max relative error, mean error, percentage of elements exceeding tolerance, an ASCII error histogram showing the distribution, and the exact index of the worst element. That is actionable debugging information instead of a naked <code>False</code>.</p>
+
+        <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="180" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="20" y="28" fill="#a5b4fc" font-family="monospace" font-size="11" font-weight="bold">gpucheck Mismatch Report</text>
+          <line x1="20" y1="36" x2="400" y2="36" stroke="#4f46e5" stroke-width="0.5"/>
+          <text x="20" y="54" fill="#c4b5fd" font-family="monospace" font-size="10">Max abs error:  0.0842  at index [47, 213]</text>
+          <text x="20" y="70" fill="#c4b5fd" font-family="monospace" font-size="10">Max rel error:  0.1207</text>
+          <text x="20" y="86" fill="#c4b5fd" font-family="monospace" font-size="10">Mean error:     0.0031</text>
+          <text x="20" y="102" fill="#c4b5fd" font-family="monospace" font-size="10">Elements OOT:   12.4%  (1587 / 12800)</text>
+          <text x="20" y="122" fill="#a5b4fc" font-family="monospace" font-size="10">Error Histogram:</text>
+          <rect x="20" y="130" width="280" height="8" rx="2" fill="#4f46e5" opacity="0.9"/>
+          <rect x="20" y="142" width="120" height="8" rx="2" fill="#6366f1" opacity="0.8"/>
+          <rect x="20" y="154" width="40" height="8" rx="2" fill="#818cf8" opacity="0.7"/>
+          <text x="310" y="138" fill="#94a3b8" font-family="monospace" font-size="9">0.00-0.03</text>
+          <text x="310" y="150" fill="#94a3b8" font-family="monospace" font-size="9">0.03-0.06</text>
+          <text x="310" y="162" fill="#94a3b8" font-family="monospace" font-size="9">0.06-0.09</text>
+        </svg>
+
+        <h2>Finding Real Bugs</h2>
+
+        <p>I ran gpucheck against Triton's official tutorials with 511 test configurations. It found 8 real bugs. The most severe: Triton's layer normalization kernel produces 83% error when given non power of 2 dimensions. Not a rounding issue. A correctness bug. I reported it as <a href="https://github.com/triton-lang/triton/issues/9838">triton#9838</a>. Without shape parametrization testing non standard dimensions, this would have stayed hidden in tutorial code that thousands of developers copy into production.</p>
+
+        <p>Second notable find: FP16 accumulation drift in Triton's matmul tutorial. Accumulating partial products in float16 instead of float32 causes errors to compound across the K dimension. Reported as <a href="https://github.com/triton-lang/triton/issues/9839">triton#9839</a>. This is exactly the bug that loose tolerances hide at small sizes but that blows up at scale.</p>
+
+        <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;margin:24px auto;display:block;">
+          <rect width="420" height="160" rx="12" fill="#1e1b2e" stroke="#4f46e5" stroke-width="1.5"/>
+          <text x="210" y="22" fill="#a5b4fc" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">511 Configs &rarr; 8 Bugs Found</text>
+          <rect x="40" y="40" width="60" height="90" rx="6" fill="#4f46e5" opacity="0.3" stroke="#4f46e5" stroke-width="1"/>
+          <text x="70" y="80" fill="#c4b5fd" font-family="monospace" font-size="9" text-anchor="middle">LayerNorm</text>
+          <text x="70" y="95" fill="#f87171" font-family="monospace" font-size="14" text-anchor="middle" font-weight="bold">83%</text>
+          <text x="70" y="110" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">error</text>
+          <rect x="120" y="40" width="60" height="90" rx="6" fill="#4f46e5" opacity="0.3" stroke="#4f46e5" stroke-width="1"/>
+          <text x="150" y="80" fill="#c4b5fd" font-family="monospace" font-size="9" text-anchor="middle">Matmul</text>
+          <text x="150" y="95" fill="#fbbf24" font-family="monospace" font-size="14" text-anchor="middle" font-weight="bold">FP16</text>
+          <text x="150" y="110" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">drift</text>
+          <rect x="200" y="40" width="60" height="90" rx="6" fill="#4f46e5" opacity="0.3" stroke="#4f46e5" stroke-width="1"/>
+          <text x="230" y="80" fill="#c4b5fd" font-family="monospace" font-size="9" text-anchor="middle">Softmax</text>
+          <text x="230" y="95" fill="#fbbf24" font-family="monospace" font-size="12" text-anchor="middle" font-weight="bold">edge</text>
+          <text x="230" y="110" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">cases</text>
+          <rect x="280" y="40" width="100" height="90" rx="6" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1" stroke-dasharray="4"/>
+          <text x="330" y="75" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">+5 more</text>
+          <text x="330" y="95" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">across ops</text>
+          <text x="210" y="150" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">1.6% hit rate on official Triton tutorials</text>
+        </svg>
+
+        <h2>The Full Toolkit</h2>
+
+        <p>Beyond assertions and parametrization, gpucheck includes a <code>gpu_benchmark</code> fixture for CUDA event timing with warmup and statistical summaries, a <code>memory_tracker</code> fixture that catches VRAM leaks between tests, and <code>fuzz_shapes</code> for generating random valid tensor dimensions within constraints. The bugs that matter are almost never at neat powers of 2. They are at (371, 17) or (1, 8193).</p>
+
+        <p>gpucheck is on PyPI. <code>pip install gpucheck</code> and you are set. It is a pytest plugin, so fixtures register automatically. The tolerance tables, the error reporting, the parametric decorators, all of it is available out of the box. If you write GPU kernels, stop guessing tolerances and start testing properly.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LabLens - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">LabLens</h1>
+      <div class="post-categories"><span>spaCy</span> <span>NER</span> <span>BioSchemas</span> <span>Docker</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/lablens" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>Scientific Papers Are a Metadata Graveyard</h2>
+
+        <p>Every scientific paper contains a mountain of structured information buried in unstructured prose. The instruments used, the chemical concentrations, the experimental conditions, the organisms studied. All of it is in there, but it is locked inside paragraphs of natural language. If you want to find every paper that used a particular mass spectrometer at a specific temperature range, you are out of luck unless someone manually tagged those details. Nobody has time for that. So I built LabLens to do it automatically.</p>
+
+        <h2>300 Regex Patterns and Counting</h2>
+
+        <p>LabLens extracts metadata from scientific PDFs using a combination of spaCy NER and 300 domain specific regex patterns. The patterns cover eight entity categories: instruments, chemicals, experimental conditions, parameters, materials, methods, organisms, and samples. Each category has its own pattern library tuned to the way scientists actually write about these things in papers.</p>
+
+        <p>Why regex alongside NER? Because scientific nomenclature is weird. Chemical formulas like Na2SO4 or instrument model numbers like Bruker AVANCE III 400 do not follow the patterns that general purpose NER models are trained on. SpaCy is great at catching "Escherichia coli" as an organism, but it will miss "E. coli K-12 MG1655" without domain specific help. The regex layer catches the structured nomenclature that NER misses, and NER catches the natural language references that regex cannot template for.</p>
+
+        <figure style="text-align:center; margin:32px 0;">
+          <svg viewBox="0 0 440 220" width="440" height="220" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+            <rect x="160" y="10" width="120" height="40" rx="8" fill="#4f46e5" opacity="0.9"/>
+            <text x="220" y="35" text-anchor="middle" fill="white" font-size="12" font-family="monospace">PDF Input</text>
+            <line x1="220" y1="50" x2="130" y2="80" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="220" y1="50" x2="310" y2="80" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="60" y="80" width="140" height="40" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="130" y="105" text-anchor="middle" fill="white" font-size="11" font-family="monospace">spaCy NER</text>
+            <rect x="240" y="80" width="140" height="40" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="310" y="105" text-anchor="middle" fill="white" font-size="11" font-family="monospace">300 Regex</text>
+            <line x1="130" y1="120" x2="220" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="310" y1="120" x2="220" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="140" y="150" width="160" height="40" rx="8" fill="#818cf8" opacity="0.85"/>
+            <text x="220" y="168" text-anchor="middle" fill="white" font-size="11" font-family="monospace">Confidence Scoring</text>
+            <text x="220" y="182" text-anchor="middle" fill="#e0e7ff" font-size="9" font-family="monospace">4 signals merged</text>
+            <text x="50" y="170" fill="#94a3b8" font-size="9" font-family="monospace">8 entity</text>
+            <text x="50" y="182" fill="#94a3b8" font-size="9" font-family="monospace">categories</text>
+            <text x="360" y="170" fill="#94a3b8" font-size="9" font-family="monospace">BioSchemas</text>
+            <text x="360" y="182" fill="#94a3b8" font-size="9" font-family="monospace">JSON-LD</text>
+          </svg>
+          <figcaption style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">Dual extraction pipeline: NER and regex converge into confidence scored entities</figcaption>
+        </figure>
+
+        <h2>Multi Signal Confidence</h2>
+
+        <p>Raw extraction is only half the problem. The other half is knowing how confident you should be in each extracted entity. LabLens scores confidence using four signals: specificity (how precise is the mention), context (does the surrounding text support this entity type), frequency (how many times does it appear in the paper), and source agreement (did both NER and regex independently find it).</p>
+
+        <p>Source agreement is the most powerful signal. When spaCy's NER independently identifies "Shimadzu LC-20AD" as an instrument and the regex layer also matches it against the instrument pattern library, that is much higher confidence than either signal alone. Entities found by both pipelines consistently have fewer false positives than entities found by only one.</p>
+
+        <h2>FAIR Data via BioSchemas</h2>
+
+        <p>Extracting metadata is only useful if you can do something with it. LabLens exports everything as BioSchemas compliant JSON-LD, which means the extracted metadata follows the FAIR data principles: Findable, Accessible, Interoperable, Reusable. You can feed the output directly into institutional repositories, knowledge graphs, or any system that understands schema.org markup.</p>
+
+        <p>This was not an afterthought. The whole point of LabLens is to make the implicit knowledge in scientific papers machine readable. If the output format is some proprietary JSON blob, you have just moved the problem from "locked in PDFs" to "locked in my custom format." BioSchemas solves that by giving you a standardized vocabulary that the scientific web already understands.</p>
+
+        <h2>The Interface</h2>
+
+        <p>Upload a PDF, get back annotated entities with confidence scores, category breakdowns, and exportable JSON-LD. The Streamlit UI makes it accessible to researchers who do not want to touch a command line. Docker support means you can run it on a shared lab server and let the whole group use it through a browser. No installation, no dependency conflicts, just point your browser at the right port.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

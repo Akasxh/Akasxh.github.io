@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthPulse AI - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">HealthPulse AI</h1>
+      <div class="post-categories"><span>scikit-learn</span> <span>Streamlit</span> <span>Plotly</span> <span>Docker</span></div>
+      <div style="margin-bottom: 24px;">
+        <a href="https://github.com/Akasxh/healthpulse-ai" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif;">View on GitHub &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <h2>Health Data Should Stay on Your Machine</h2>
+
+        <p>Every health dashboard I looked at wanted to ship my data to some cloud service. Heart rate, blood pressure, sleep patterns, all of it going to servers I do not control. For something as personal as health metrics, that felt fundamentally wrong. So I built HealthPulse AI with a hard constraint: 100% offline. No cloud, no API keys, no telemetry. Your health data stays on your machine. Period.</p>
+
+        <h2>The Ensemble</h2>
+
+        <p>The core prediction model is a soft voting ensemble combining Random Forest (60% weight) and Logistic Regression (40% weight). RF handles the nonlinear interactions between vitals that LR cannot capture, things like the combined effect of high resting heart rate and poor sleep quality that is riskier than either factor alone. LR provides a calibrated probability baseline that keeps the ensemble's confidence estimates honest.</p>
+
+        <p>The model takes 7 day rolling averages across 11 health metrics and predicts a risk category: Low, Moderate, or High. Rolling averages are important here. A single bad night of sleep or one elevated blood pressure reading is noise. Seven day trends are signal. The feature engineering emphasizes temporal patterns over point in time snapshots because that is how health risk actually works.</p>
+
+        <figure style="text-align:center; margin:32px 0;">
+          <svg viewBox="0 0 460 210" width="460" height="210" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;">
+            <rect x="140" y="5" width="180" height="35" rx="8" fill="#4f46e5" opacity="0.9"/>
+            <text x="230" y="27" text-anchor="middle" fill="white" font-size="11" font-family="monospace">7-day Rolling Vitals (11)</text>
+            <line x1="190" y1="40" x2="110" y2="70" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="270" y1="40" x2="350" y2="70" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="30" y="70" width="160" height="50" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="110" y="93" text-anchor="middle" fill="white" font-size="12" font-family="monospace">Random Forest</text>
+            <text x="110" y="108" text-anchor="middle" fill="#c7d2fe" font-size="10" font-family="monospace">60% weight</text>
+            <rect x="270" y="70" width="160" height="50" rx="8" fill="#6366f1" opacity="0.85"/>
+            <text x="350" y="93" text-anchor="middle" fill="white" font-size="12" font-family="monospace">Logistic Reg</text>
+            <text x="350" y="108" text-anchor="middle" fill="#c7d2fe" font-size="10" font-family="monospace">40% weight</text>
+            <line x1="110" y1="120" x2="230" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <line x1="350" y1="120" x2="230" y2="150" stroke="#a5b4fc" stroke-width="2"/>
+            <rect x="155" y="150" width="150" height="45" rx="8" fill="#818cf8" opacity="0.85"/>
+            <text x="230" y="170" text-anchor="middle" fill="white" font-size="11" font-family="monospace">Soft Voting</text>
+            <text x="230" y="185" text-anchor="middle" fill="#e0e7ff" font-size="10" font-family="monospace">Low / Mod / High</text>
+          </svg>
+          <figcaption style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">Soft voting ensemble: RF captures nonlinear interactions, LR keeps probabilities calibrated</figcaption>
+        </figure>
+
+        <h2>Six Visualization Tabs</h2>
+
+        <p>The Streamlit dashboard has six Plotly powered tabs. The main overview shows your risk prediction with confidence intervals and the contributing factors ranked by importance. The vitals tab plots each metric over time with trend lines and anomaly highlighting. The sleep analyzer tab breaks down sleep quality patterns and correlates them with next day metrics. There are dedicated tabs for cardiovascular trends, activity patterns, and a comprehensive report view.</p>
+
+        <p>I spent more time on the visualizations than on the model, and I think that was the right call. A perfectly accurate model that shows you a single "Moderate Risk" label is less useful than a good enough model that shows you exactly which metrics are trending in the wrong direction and how they relate to each other. The Plotly charts are interactive, so you can zoom into specific date ranges, hover for exact values, and compare multiple metrics on the same time axis.</p>
+
+        <h2>The Extra Tools</h2>
+
+        <p>Beyond the core risk prediction, HealthPulse includes a BMI calculator, a calorie needs estimator, and a PDF report generator. The PDF report is designed for sharing with a doctor. It includes a summary of risk trends, flagged anomalies, and the raw data in a clean table format. I wanted this to be something you could print and bring to an appointment, not just a dashboard you stare at alone.</p>
+
+        <h2>Why Not a Deep Learning Model</h2>
+
+        <p>With only 11 input features and relatively straightforward feature interactions, a Random Forest plus Logistic Regression ensemble is the right tool. A neural network would be harder to interpret, slower to train on new data, and would not meaningfully outperform the ensemble on this problem size. The RF also gives you feature importances for free, which directly powers the "contributing factors" visualization. Try getting that out of a transformer without bolting on SHAP or attention visualization hacks.</p>
+
+        <p>The whole thing is Docker ready. Pull the image, run it, open your browser. No Python environment to manage, no dependency conflicts, no "works on my machine" issues. Health monitoring should be as easy to set up as installing an app, not a devops project.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
