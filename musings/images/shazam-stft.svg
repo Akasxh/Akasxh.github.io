@@ -1,57 +1,122 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450">
   <defs>
-    <linearGradient id="barGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#4f46e5"/>
-      <stop offset="100%" stop-color="#a855f7"/>
+    <linearGradient id="bgS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
-    <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#4f46e5"/>
+    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="barGradS" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="prismGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="shadowS">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glowS">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowS" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
     </marker>
+    <pattern id="dotsS" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.8" fill="#334155" opacity="0.5"/>
+    </pattern>
   </defs>
 
-  <!-- Background -->
-  <rect width="700" height="300" fill="#f8f9fa" rx="12"/>
+  <rect width="1000" height="450" fill="url(#bgS)"/>
+  <rect width="1000" height="450" fill="url(#dotsS)"/>
 
-  <!-- Left panel: Waveform -->
-  <rect x="30" y="40" width="240" height="200" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="150" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0f172a">Time Domain</text>
+  <!-- Title -->
+  <text x="500" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#e2e8f0">Audio Signal &#x2192; STFT &#x2192; Frequency Components</text>
 
-  <!-- Sine wave polyline -->
-  <polyline fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-    points="45,140 55,110 65,85 75,75 85,85 95,110 105,140 115,170 125,195 135,205 145,195 155,170 165,140 175,110 185,85 195,75 205,85 215,110 225,140 235,170 245,195 255,205"/>
+  <!-- === LEFT: Waveform === -->
+  <rect x="30" y="55" width="320" height="320" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#shadowS)"/>
+  <text x="190" y="82" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#818cf8">Time Domain Audio</text>
 
-  <!-- Second harmonic overlay -->
-  <polyline fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"
-    points="45,140 50,125 55,115 60,120 65,135 70,150 75,155 80,145 85,128 90,115 95,118 100,132 105,148 110,155 115,148 120,130 125,115 130,115 135,128 140,148 145,158 150,150 155,132 160,118 165,115 170,125 175,142 180,155 185,152 190,135 195,118 200,112 205,120 210,138 215,152 220,155 225,142 230,125 235,115 240,118 245,130 250,148 255,155"/>
+  <!-- Waveform axes -->
+  <line x1="60" y1="90" x2="60" y2="350" stroke="#475569" stroke-width="1.5"/>
+  <line x1="60" y1="220" x2="330" y2="220" stroke="#475569" stroke-width="1.5"/>
+  <text x="55" y="105" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">+1</text>
+  <text x="55" y="342" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">-1</text>
+  <text x="190" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">Time &#x2192;</text>
+  <text x="45" y="220" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" transform="rotate(-90,45,220)">Amplitude</text>
 
-  <!-- Axis labels -->
-  <text x="150" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Time</text>
-  <text x="38" y="145" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" transform="rotate(-90,38,145)">Amplitude</text>
+  <!-- Complex waveform (polyline with ~50 points) -->
+  <polyline
+    points="65,220 70,190 75,165 80,150 85,160 90,185 95,210 100,240 105,265 110,280 115,270 120,245 125,215 130,190 135,175 140,180 145,200 150,225 155,250 160,265 165,260 170,235 175,205 180,180 185,170 190,180 195,200 200,230 205,255 210,270 215,260 220,235 225,200 230,175 235,165 240,175 245,200 250,230 255,255 260,270 265,260 270,235 275,205 280,180 285,170 290,185 295,210 300,235 305,255 310,260 315,245 320,220 325,195"
+    fill="none" stroke="url(#waveGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowS)"/>
 
-  <!-- Arrow -->
-  <line x1="290" y1="140" x2="390" y2="140" stroke="#4f46e5" stroke-width="2.5" marker-end="url(#arrowHead)"/>
-  <rect x="315" y="118" width="52" height="22" rx="4" fill="#4f46e5"/>
-  <text x="341" y="133" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="white">STFT</text>
+  <!-- Window overlay -->
+  <rect x="140" y="155" width="80" height="130" rx="4" fill="#6366f1" opacity="0.1" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="180" y="148" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#a5b4fc">Window</text>
 
-  <!-- Right panel: Frequency bars -->
-  <rect x="420" y="40" width="250" height="200" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="545" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0f172a">Frequency Domain</text>
+  <!-- === CENTER: STFT Transform === -->
+  <line x1="370" y1="220" x2="470" y2="220" stroke="#818cf8" stroke-width="3" marker-end="url(#arrowS)"/>
+  <text x="420" y="200" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#e2e8f0">Short-Time</text>
+  <text x="420" y="216" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#e2e8f0">Fourier</text>
+  <text x="420" y="232" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#e2e8f0">Transform</text>
 
-  <!-- Frequency bars -->
-  <rect x="440" y="155" width="18" height="75" rx="3" fill="url(#barGrad)"/>
-  <rect x="465" y="85" width="18" height="145" rx="3" fill="url(#barGrad)"/>
-  <rect x="490" y="120" width="18" height="110" rx="3" fill="url(#barGrad)"/>
-  <rect x="515" y="65" width="18" height="165" rx="3" fill="url(#barGrad)"/>
-  <rect x="540" y="170" width="18" height="60" rx="3" fill="url(#barGrad)"/>
-  <rect x="565" y="100" width="18" height="130" rx="3" fill="url(#barGrad)"/>
-  <rect x="590" y="185" width="18" height="45" rx="3" fill="url(#barGrad)"/>
-  <rect x="615" y="195" width="18" height="35" rx="3" fill="url(#barGrad)"/>
-  <rect x="640" y="210" width="18" height="20" rx="3" fill="url(#barGrad)"/>
+  <!-- Prism -->
+  <polygon points="420,255 385,315 455,315" fill="url(#prismGrad)" opacity="0.6" filter="url(#shadowS)"/>
+  <!-- Rainbow lines from prism -->
+  <line x1="420" y1="315" x2="395" y2="350" stroke="#4f46e5" stroke-width="2" opacity="0.6"/>
+  <line x1="420" y1="315" x2="410" y2="352" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
+  <line x1="420" y1="315" x2="425" y2="354" stroke="#a855f7" stroke-width="2" opacity="0.6"/>
+  <line x1="420" y1="315" x2="440" y2="350" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
 
-  <!-- Axis labels -->
-  <text x="545" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Frequency (Hz)</text>
-  <text x="428" y="145" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" transform="rotate(-90,428,145)">Magnitude</text>
+  <!-- Mathematical formula -->
+  <text x="420" y="390" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8">X(f) = &#x2211; x(t)&#xb7;w(t)&#xb7;e^(-2&#x3c0;ift)</text>
 
-  <!-- Baseline -->
-  <line x1="435" y1="230" x2="662" y2="230" stroke="#e2e8f0" stroke-width="1"/>
+  <!-- === RIGHT: Frequency Spectrum === -->
+  <rect x="500" y="55" width="470" height="320" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#shadowS)"/>
+  <text x="735" y="82" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#c084fc">Frequency Components</text>
+
+  <!-- Axes -->
+  <line x1="540" y1="90" x2="540" y2="350" stroke="#475569" stroke-width="1.5"/>
+  <line x1="540" y1="350" x2="940" y2="350" stroke="#475569" stroke-width="1.5"/>
+  <text x="735" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">Frequency (Hz) &#x2192;</text>
+  <text x="525" y="220" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b" transform="rotate(-90,525,220)">Magnitude</text>
+
+  <!-- Frequency bars (25 bars) -->
+  <rect x="550" y="310" width="12" height="40" rx="2" fill="url(#barGradS)" opacity="0.7"/>
+  <rect x="566" y="280" width="12" height="70" rx="2" fill="url(#barGradS)" opacity="0.75"/>
+  <rect x="582" y="240" width="12" height="110" rx="2" fill="url(#barGradS)" opacity="0.8"/>
+  <rect x="598" y="180" width="12" height="170" rx="2" fill="url(#barGradS)" opacity="0.9"/>
+  <rect x="614" y="130" width="12" height="220" rx="2" fill="url(#barGradS)" opacity="1"/>
+  <rect x="630" y="160" width="12" height="190" rx="2" fill="url(#barGradS)" opacity="0.95"/>
+  <rect x="646" y="200" width="12" height="150" rx="2" fill="url(#barGradS)" opacity="0.85"/>
+  <rect x="662" y="250" width="12" height="100" rx="2" fill="url(#barGradS)" opacity="0.7"/>
+  <rect x="678" y="280" width="12" height="70" rx="2" fill="url(#barGradS)" opacity="0.6"/>
+  <rect x="694" y="260" width="12" height="90" rx="2" fill="url(#barGradS)" opacity="0.65"/>
+  <rect x="710" y="220" width="12" height="130" rx="2" fill="url(#barGradS)" opacity="0.8"/>
+  <rect x="726" y="170" width="12" height="180" rx="2" fill="url(#barGradS)" opacity="0.9"/>
+  <rect x="742" y="200" width="12" height="150" rx="2" fill="url(#barGradS)" opacity="0.85"/>
+  <rect x="758" y="260" width="12" height="90" rx="2" fill="url(#barGradS)" opacity="0.65"/>
+  <rect x="774" y="290" width="12" height="60" rx="2" fill="url(#barGradS)" opacity="0.55"/>
+  <rect x="790" y="300" width="12" height="50" rx="2" fill="url(#barGradS)" opacity="0.5"/>
+  <rect x="806" y="310" width="12" height="40" rx="2" fill="url(#barGradS)" opacity="0.45"/>
+  <rect x="822" y="315" width="12" height="35" rx="2" fill="url(#barGradS)" opacity="0.4"/>
+  <rect x="838" y="320" width="12" height="30" rx="2" fill="url(#barGradS)" opacity="0.35"/>
+  <rect x="854" y="325" width="12" height="25" rx="2" fill="url(#barGradS)" opacity="0.3"/>
+  <rect x="870" y="330" width="12" height="20" rx="2" fill="url(#barGradS)" opacity="0.3"/>
+  <rect x="886" y="333" width="12" height="17" rx="2" fill="url(#barGradS)" opacity="0.25"/>
+  <rect x="902" y="337" width="12" height="13" rx="2" fill="url(#barGradS)" opacity="0.2"/>
+  <rect x="918" y="340" width="12" height="10" rx="2" fill="url(#barGradS)" opacity="0.15"/>
+
+  <!-- Peak annotations -->
+  <text x="620" y="122" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#f59e0b">Peak: 440 Hz</text>
+  <text x="732" y="162" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#f59e0b">Harmonic</text>
+
+  <!-- Bottom annotation -->
+  <text x="500" y="430" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Sliding window decomposes audio into frequency components at each time step</text>
 </svg>

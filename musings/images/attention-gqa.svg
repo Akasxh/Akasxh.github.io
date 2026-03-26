@@ -1,180 +1,168 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 350" width="750" height="350">
-  <!-- MHA Column -->
-  <g transform="translate(25, 0)">
-    <text x="100" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#0f172a">MHA</text>
-    <text x="100" y="42" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.5)">Multi-Head Attention</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 450">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="speedBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="shadowG">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <pattern id="dotsG" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.8" fill="#334155" opacity="0.5"/>
+    </pattern>
+  </defs>
 
-    <!-- Q heads row -->
-    <text x="100" y="68" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">Q Heads</text>
-    <g>
-      <circle cx="16" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="16" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q1</text>
-      <circle cx="40" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="40" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q2</text>
-      <circle cx="64" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="64" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q3</text>
-      <circle cx="88" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="88" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q4</text>
-      <circle cx="112" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="112" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q5</text>
-      <circle cx="136" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="136" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q6</text>
-      <circle cx="160" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="160" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q7</text>
-      <circle cx="184" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="184" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q8</text>
-    </g>
+  <rect width="1100" height="450" fill="url(#bgG)"/>
+  <rect width="1100" height="450" fill="url(#dotsG)"/>
 
-    <!-- Lines connecting each Q to its own KV -->
-    <line x1="16" y1="100" x2="16" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="40" y1="100" x2="40" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="64" y1="100" x2="64" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="88" y1="100" x2="88" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="112" y1="100" x2="112" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="136" y1="100" x2="136" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="160" y1="100" x2="160" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="184" y1="100" x2="184" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
+  <!-- Title -->
+  <text x="550" y="32" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#e2e8f0">MHA vs GQA vs MQA: KV Head Sharing</text>
 
-    <!-- KV heads row -->
-    <text x="100" y="165" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">KV Heads</text>
-    <g>
-      <circle cx="16" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="16" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="40" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="40" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="64" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="64" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="88" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="88" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="112" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="112" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="136" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="136" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="160" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="160" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-      <circle cx="184" cy="185" r="10" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="184" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" font-weight="600" fill="#a855f7">KV</text>
-    </g>
+  <!-- === MHA Panel === -->
+  <rect x="20" y="48" width="340" height="330" rx="12" fill="#1e293b" stroke="#4f46e5" stroke-width="2" filter="url(#shadowG)"/>
+  <text x="190" y="78" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e2e8f0">MHA</text>
+  <text x="190" y="96" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">Multi-Head Attention</text>
 
-    <!-- Cache label -->
-    <rect x="40" y="215" width="120" height="24" rx="12" fill="#4f46e5" opacity="0.1" stroke="#4f46e5" stroke-width="1"/>
-    <text x="100" y="231" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#4f46e5">KV Cache: 8x</text>
+  <!-- Q row (8 circles) -->
+  <text x="32" y="128" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#818cf8">Q:</text>
+  <g>
+    <circle cx="75" cy="124" r="16" fill="#4f46e5" filter="url(#shadowG)"/><text x="75" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q1</text>
+    <circle cx="113" cy="124" r="16" fill="#4f46e5"/><text x="113" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q2</text>
+    <circle cx="151" cy="124" r="16" fill="#4f46e5"/><text x="151" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q3</text>
+    <circle cx="189" cy="124" r="16" fill="#4f46e5"/><text x="189" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q4</text>
+    <circle cx="227" cy="124" r="16" fill="#4f46e5"/><text x="227" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q5</text>
+    <circle cx="265" cy="124" r="16" fill="#4f46e5"/><text x="265" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q6</text>
+    <circle cx="303" cy="124" r="16" fill="#4f46e5"/><text x="303" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q7</text>
+    <circle cx="341" cy="124" r="16" fill="#4f46e5"/><text x="341" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q8</text>
+  </g>
+  <!-- K row -->
+  <text x="32" y="188" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#f59e0b">K:</text>
+  <g>
+    <circle cx="75" cy="184" r="16" fill="#b45309"/><text x="75" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K1</text>
+    <circle cx="113" cy="184" r="16" fill="#b45309"/><text x="113" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K2</text>
+    <circle cx="151" cy="184" r="16" fill="#b45309"/><text x="151" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K3</text>
+    <circle cx="189" cy="184" r="16" fill="#b45309"/><text x="189" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K4</text>
+    <circle cx="227" cy="184" r="16" fill="#b45309"/><text x="227" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K5</text>
+    <circle cx="265" cy="184" r="16" fill="#b45309"/><text x="265" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K6</text>
+    <circle cx="303" cy="184" r="16" fill="#b45309"/><text x="303" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K7</text>
+    <circle cx="341" cy="184" r="16" fill="#b45309"/><text x="341" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">K8</text>
+  </g>
+  <!-- V row -->
+  <text x="32" y="248" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#22c55e">V:</text>
+  <g>
+    <circle cx="75" cy="244" r="16" fill="#15803d"/><text x="75" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V1</text>
+    <circle cx="113" cy="244" r="16" fill="#15803d"/><text x="113" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V2</text>
+    <circle cx="151" cy="244" r="16" fill="#15803d"/><text x="151" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V3</text>
+    <circle cx="189" cy="244" r="16" fill="#15803d"/><text x="189" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V4</text>
+    <circle cx="227" cy="244" r="16" fill="#15803d"/><text x="227" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V5</text>
+    <circle cx="265" cy="244" r="16" fill="#15803d"/><text x="265" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V6</text>
+    <circle cx="303" cy="244" r="16" fill="#15803d"/><text x="303" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V7</text>
+    <circle cx="341" cy="244" r="16" fill="#15803d"/><text x="341" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">V8</text>
+  </g>
+  <!-- Connection lines: each Q to its own K,V -->
+  <g stroke="#64748b" stroke-width="1.5" opacity="0.5">
+    <line x1="75" y1="140" x2="75" y2="168"/><line x1="75" y1="200" x2="75" y2="228"/>
+    <line x1="113" y1="140" x2="113" y2="168"/><line x1="113" y1="200" x2="113" y2="228"/>
+    <line x1="151" y1="140" x2="151" y2="168"/><line x1="151" y1="200" x2="151" y2="228"/>
+    <line x1="189" y1="140" x2="189" y2="168"/><line x1="189" y1="200" x2="189" y2="228"/>
+    <line x1="227" y1="140" x2="227" y2="168"/><line x1="227" y1="200" x2="227" y2="228"/>
+    <line x1="265" y1="140" x2="265" y2="168"/><line x1="265" y1="200" x2="265" y2="228"/>
+    <line x1="303" y1="140" x2="303" y2="168"/><line x1="303" y1="200" x2="303" y2="228"/>
+    <line x1="341" y1="140" x2="341" y2="168"/><line x1="341" y1="200" x2="341" y2="228"/>
+  </g>
+  <!-- KV Cache label -->
+  <rect x="120" y="280" width="140" height="30" rx="8" fill="#7f1d1d" opacity="0.7"/>
+  <text x="190" y="300" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#fca5a5">KV Cache: 8&#xd7;</text>
+
+  <!-- === GQA Panel === -->
+  <rect x="380" y="48" width="340" height="330" rx="12" fill="#1e293b" stroke="#a855f7" stroke-width="2" filter="url(#shadowG)"/>
+  <text x="550" y="78" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e2e8f0">GQA</text>
+  <text x="550" y="96" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">Grouped-Query Attention</text>
+
+  <!-- Q row (8 circles) -->
+  <text x="392" y="128" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#818cf8">Q:</text>
+  <g>
+    <circle cx="435" cy="124" r="16" fill="#4f46e5"/><text x="435" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q1</text>
+    <circle cx="473" cy="124" r="16" fill="#4f46e5"/><text x="473" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q2</text>
+    <circle cx="511" cy="124" r="16" fill="#4f46e5"/><text x="511" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q3</text>
+    <circle cx="549" cy="124" r="16" fill="#4f46e5"/><text x="549" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q4</text>
+    <circle cx="587" cy="124" r="16" fill="#4f46e5"/><text x="587" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q5</text>
+    <circle cx="625" cy="124" r="16" fill="#4f46e5"/><text x="625" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q6</text>
+    <circle cx="663" cy="124" r="16" fill="#4f46e5"/><text x="663" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q7</text>
+    <circle cx="701" cy="124" r="16" fill="#4f46e5"/><text x="701" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q8</text>
+  </g>
+  <!-- K row (2 circles, centered under groups) -->
+  <text x="392" y="188" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#f59e0b">K:</text>
+  <circle cx="492" cy="184" r="18" fill="#b45309" filter="url(#shadowG)"/><text x="492" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fff">K1</text>
+  <circle cx="644" cy="184" r="18" fill="#b45309" filter="url(#shadowG)"/><text x="644" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fff">K2</text>
+  <!-- V row (2 circles) -->
+  <text x="392" y="248" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#22c55e">V:</text>
+  <circle cx="492" cy="244" r="18" fill="#15803d" filter="url(#shadowG)"/><text x="492" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fff">V1</text>
+  <circle cx="644" cy="244" r="18" fill="#15803d" filter="url(#shadowG)"/><text x="644" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fff">V2</text>
+
+  <!-- Connection lines: groups of 4 Q to shared K,V -->
+  <g stroke="#64748b" stroke-width="1.5" opacity="0.5">
+    <!-- Group 1: Q1-Q4 to K1,V1 -->
+    <line x1="435" y1="140" x2="492" y2="166"/><line x1="473" y1="140" x2="492" y2="166"/>
+    <line x1="511" y1="140" x2="492" y2="166"/><line x1="549" y1="140" x2="492" y2="166"/>
+    <line x1="492" y1="202" x2="492" y2="226"/>
+    <!-- Group 2: Q5-Q8 to K2,V2 -->
+    <line x1="587" y1="140" x2="644" y2="166"/><line x1="625" y1="140" x2="644" y2="166"/>
+    <line x1="663" y1="140" x2="644" y2="166"/><line x1="701" y1="140" x2="644" y2="166"/>
+    <line x1="644" y1="202" x2="644" y2="226"/>
+  </g>
+  <!-- Group brackets -->
+  <rect x="418" y="107" width="148" height="44" rx="6" fill="none" stroke="#a855f7" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <rect x="570" y="107" width="148" height="44" rx="6" fill="none" stroke="#a855f7" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <rect x="480" y="280" width="140" height="30" rx="8" fill="#854d0e" opacity="0.7"/>
+  <text x="550" y="300" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#fde68a">KV Cache: 2&#xd7;</text>
+
+  <!-- === MQA Panel === -->
+  <rect x="740" y="48" width="340" height="330" rx="12" fill="#1e293b" stroke="#22c55e" stroke-width="2" filter="url(#shadowG)"/>
+  <text x="910" y="78" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e2e8f0">MQA</text>
+  <text x="910" y="96" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">Multi-Query Attention</text>
+
+  <!-- Q row (8) -->
+  <text x="752" y="128" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#818cf8">Q:</text>
+  <g>
+    <circle cx="795" cy="124" r="16" fill="#4f46e5"/><text x="795" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q1</text>
+    <circle cx="833" cy="124" r="16" fill="#4f46e5"/><text x="833" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q2</text>
+    <circle cx="871" cy="124" r="16" fill="#4f46e5"/><text x="871" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q3</text>
+    <circle cx="909" cy="124" r="16" fill="#4f46e5"/><text x="909" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q4</text>
+    <circle cx="947" cy="124" r="16" fill="#4f46e5"/><text x="947" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q5</text>
+    <circle cx="985" cy="124" r="16" fill="#4f46e5"/><text x="985" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q6</text>
+    <circle cx="1023" cy="124" r="16" fill="#4f46e5"/><text x="1023" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q7</text>
+    <circle cx="1061" cy="124" r="16" fill="#4f46e5"/><text x="1061" y="129" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#fff">Q8</text>
+  </g>
+  <!-- K row (1 circle) -->
+  <text x="752" y="188" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#f59e0b">K:</text>
+  <circle cx="910" cy="184" r="20" fill="#b45309" filter="url(#shadowG)"/><text x="910" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#fff">K1</text>
+  <!-- V row (1 circle) -->
+  <text x="752" y="248" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#22c55e">V:</text>
+  <circle cx="910" cy="244" r="20" fill="#15803d" filter="url(#shadowG)"/><text x="910" y="249" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#fff">V1</text>
+
+  <!-- All Q connect to single K,V -->
+  <g stroke="#64748b" stroke-width="1.5" opacity="0.5">
+    <line x1="795" y1="140" x2="910" y2="164"/><line x1="833" y1="140" x2="910" y2="164"/>
+    <line x1="871" y1="140" x2="910" y2="164"/><line x1="909" y1="140" x2="910" y2="164"/>
+    <line x1="947" y1="140" x2="910" y2="164"/><line x1="985" y1="140" x2="910" y2="164"/>
+    <line x1="1023" y1="140" x2="910" y2="164"/><line x1="1061" y1="140" x2="910" y2="164"/>
+    <line x1="910" y1="204" x2="910" y2="224"/>
   </g>
 
-  <!-- Separator -->
-  <line x1="245" y1="15" x2="245" y2="250" stroke="rgba(15,23,42,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
+  <rect x="840" y="280" width="140" height="30" rx="8" fill="#14532d" opacity="0.7"/>
+  <text x="910" y="300" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#86efac">KV Cache: 1&#xd7;</text>
 
-  <!-- GQA Column -->
-  <g transform="translate(275, 0)">
-    <text x="100" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#0f172a">GQA</text>
-    <text x="100" y="42" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.5)">Grouped Query Attention</text>
+  <!-- Speed indicator bar -->
+  <text x="160" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Slow</text>
+  <rect x="200" y="403" width="700" height="16" rx="8" fill="url(#speedBar)" opacity="0.7"/>
+  <text x="940" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Fast</text>
 
-    <!-- Q heads -->
-    <text x="100" y="68" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">Q Heads</text>
-    <g>
-      <circle cx="16" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="16" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q1</text>
-      <circle cx="40" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="40" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q2</text>
-      <circle cx="64" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="64" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q3</text>
-      <circle cx="88" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="88" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q4</text>
-      <circle cx="112" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="112" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q5</text>
-      <circle cx="136" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="136" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q6</text>
-      <circle cx="160" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="160" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q7</text>
-      <circle cx="184" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="184" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q8</text>
-    </g>
-
-    <!-- Group 1 lines: Q1-Q4 -> KV1 -->
-    <line x1="16" y1="100" x2="52" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="40" y1="100" x2="52" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="64" y1="100" x2="52" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="88" y1="100" x2="52" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <!-- Group 2 lines: Q5-Q8 -> KV2 -->
-    <line x1="112" y1="100" x2="148" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="136" y1="100" x2="148" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="160" y1="100" x2="148" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-    <line x1="184" y1="100" x2="148" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.4"/>
-
-    <!-- Group brackets -->
-    <rect x="2" y="108" width="100" height="14" rx="3" fill="#6366f1" opacity="0.08" stroke="#6366f1" stroke-width="0.5"/>
-    <text x="52" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#6366f1">Group 1</text>
-    <rect x="98" y="108" width="100" height="14" rx="3" fill="#6366f1" opacity="0.08" stroke="#6366f1" stroke-width="0.5"/>
-    <text x="148" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#6366f1">Group 2</text>
-
-    <!-- KV heads -->
-    <text x="100" y="165" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">KV Heads</text>
-    <circle cx="52" cy="185" r="13" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-    <text x="52" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#a855f7">KV1</text>
-    <circle cx="148" cy="185" r="13" fill="#a855f7" opacity="0.2" stroke="#a855f7" stroke-width="1.5"/>
-    <text x="148" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#a855f7">KV2</text>
-
-    <rect x="40" y="215" width="120" height="24" rx="12" fill="#6366f1" opacity="0.1" stroke="#6366f1" stroke-width="1"/>
-    <text x="100" y="231" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#6366f1">KV Cache: 2x</text>
-  </g>
-
-  <!-- Separator -->
-  <line x1="495" y1="15" x2="495" y2="250" stroke="rgba(15,23,42,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
-
-  <!-- MQA Column -->
-  <g transform="translate(525, 0)">
-    <text x="100" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#0f172a">MQA</text>
-    <text x="100" y="42" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.5)">Multi-Query Attention</text>
-
-    <!-- Q heads -->
-    <text x="100" y="68" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">Q Heads</text>
-    <g>
-      <circle cx="16" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="16" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q1</text>
-      <circle cx="40" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="40" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q2</text>
-      <circle cx="64" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="64" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q3</text>
-      <circle cx="88" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="88" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q4</text>
-      <circle cx="112" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="112" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q5</text>
-      <circle cx="136" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="136" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q6</text>
-      <circle cx="160" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="160" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q7</text>
-      <circle cx="184" cy="90" r="10" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
-      <text x="184" y="94" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" font-weight="600" fill="#4f46e5">Q8</text>
-    </g>
-
-    <!-- All lines converge to single KV -->
-    <line x1="16" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="40" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="64" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="88" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="112" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="136" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="160" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-    <line x1="184" y1="100" x2="100" y2="170" stroke="#4f46e5" stroke-width="0.8" opacity="0.35"/>
-
-    <!-- Single KV head -->
-    <text x="100" y="165" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.45)" font-weight="600">KV Head</text>
-    <circle cx="100" cy="185" r="15" fill="#a855f7" opacity="0.25" stroke="#a855f7" stroke-width="2"/>
-    <text x="100" y="189" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#a855f7">KV</text>
-
-    <rect x="40" y="215" width="120" height="24" rx="12" fill="#a855f7" opacity="0.1" stroke="#a855f7" stroke-width="1"/>
-    <text x="100" y="231" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#a855f7">KV Cache: 1x</text>
-  </g>
-
-  <!-- Bottom arrow showing spectrum -->
-  <line x1="80" y1="280" x2="670" y2="280" stroke="rgba(15,23,42,0.15)" stroke-width="1.5"/>
-  <polygon points="80,280 92,276 92,284" fill="rgba(15,23,42,0.15)"/>
-  <polygon points="670,280 658,276 658,284" fill="rgba(15,23,42,0.15)"/>
-  <text x="80" y="300" text-anchor="start" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.4)">Best quality</text>
-  <text x="375" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.4)">Sweet spot</text>
-  <text x="670" y="300" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.4)">Best efficiency</text>
-
-  <!-- Arrow markers -->
-  <text x="80" y="316" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.3)">More memory</text>
-  <text x="670" y="316" text-anchor="end" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.3)">Less memory</text>
+  <text x="550" y="442" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Inference Speed &#x2192;</text>
 </svg>

@@ -1,63 +1,123 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 350" width="700" height="350">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
   <defs>
-    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-      <path d="M0,0 L7,2.5 L0,5 Z" fill="#4f46e5"/>
+    <linearGradient id="bgF" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="sramGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="l2Grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="hbmGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <filter id="shadowF">
+      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glowIndigo">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#6366f1" flood-opacity="0.6" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowGreen">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#22c55e" flood-opacity="0.5" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowF" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
     </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22c55e"/>
+    </marker>
+    <pattern id="dotsF" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.8" fill="#334155" opacity="0.5"/>
+    </pattern>
   </defs>
 
+  <!-- Background -->
+  <rect width="1000" height="500" fill="url(#bgF)"/>
+  <rect width="1000" height="500" fill="url(#dotsF)"/>
+
   <!-- Title -->
-  <text x="30" y="28" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#0f172a">GPU Memory Hierarchy</text>
+  <text x="500" y="35" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#e2e8f0">GPU Memory Hierarchy &amp; FlashAttention</text>
 
-  <!-- Pyramid / Stack -->
-  <!-- HBM - bottom, largest -->
-  <rect x="60" y="230" width="340" height="80" rx="8" fill="#a855f7" opacity="0.15" stroke="#a855f7" stroke-width="1.5"/>
-  <text x="230" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="700" fill="#a855f7">HBM</text>
-  <text x="230" y="278" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="rgba(15,23,42,0.6)">80 GB</text>
-  <text x="230" y="296" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(15,23,42,0.45)">~2 TB/s bandwidth</text>
+  <!-- === PYRAMID (center) === -->
+  <!-- SRAM tier (top, narrowest) -->
+  <path d="M 370,70 L 630,70 L 660,180 L 340,180 Z" fill="url(#sramGrad)" filter="url(#glowIndigo)" opacity="0.95"/>
+  <text x="500" y="105" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fff">SRAM</text>
+  <text x="500" y="128" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#e0e7ff">192 KB / SM</text>
+  <text x="500" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#c7d2fe">~19 TB/s bandwidth</text>
+  <text x="500" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#a5b4fc">(On-chip, ultra fast)</text>
 
-  <!-- L2 Cache - middle -->
-  <rect x="110" y="145" width="240" height="70" rx="8" fill="#6366f1" opacity="0.15" stroke="#6366f1" stroke-width="1.5"/>
-  <text x="230" y="173" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#6366f1">L2 Cache</text>
-  <text x="230" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="rgba(15,23,42,0.6)">40 MB</text>
+  <!-- L2 tier (middle) -->
+  <path d="M 340,185 L 660,185 L 710,310 L 290,310 Z" fill="url(#l2Grad)" opacity="0.85" filter="url(#shadowF)"/>
+  <text x="500" y="225" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fff">L2 Cache</text>
+  <text x="500" y="250" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#f3e8ff">40 MB</text>
+  <text x="500" y="275" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#e9d5ff">~12 TB/s bandwidth</text>
 
-  <!-- SRAM - top, smallest -->
-  <rect x="155" y="55" width="150" height="75" rx="8" fill="#4f46e5" opacity="0.18" stroke="#4f46e5" stroke-width="2"/>
-  <text x="230" y="80" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#4f46e5">SRAM</text>
-  <text x="230" y="97" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(15,23,42,0.6)">192 KB per SM</text>
-  <text x="230" y="115" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(15,23,42,0.45)">~19 TB/s bandwidth</text>
+  <!-- HBM tier (bottom, widest) -->
+  <path d="M 290,315 L 710,315 L 780,460 L 220,460 Z" fill="url(#hbmGrad)" opacity="0.9" filter="url(#shadowF)"/>
+  <text x="500" y="360" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e2e8f0">HBM (Main Memory)</text>
+  <text x="500" y="385" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">80 GB capacity</text>
+  <text x="500" y="410" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">2 TB/s bandwidth</text>
+  <text x="500" y="435" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">(Off-chip, high latency)</text>
 
-  <!-- Speed labels on left -->
-  <text x="45" y="92" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#4f46e5" font-weight="600">FAST</text>
-  <line x1="25" y1="100" x2="25" y2="280" stroke="rgba(15,23,42,0.15)" stroke-width="1.5"/>
-  <polygon points="25,100 21,112 29,112" fill="rgba(15,23,42,0.15)"/>
-  <polygon points="25,280 21,268 29,268" fill="rgba(15,23,42,0.15)"/>
-  <text x="45" y="278" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#a855f7" font-weight="600">SLOW</text>
+  <!-- Tier divider lines -->
+  <line x1="340" y1="182" x2="660" y2="182" stroke="#e2e8f0" stroke-width="1" opacity="0.3"/>
+  <line x1="290" y1="312" x2="710" y2="312" stroke="#e2e8f0" stroke-width="1" opacity="0.3"/>
 
-  <!-- Right side comparison -->
-  <!-- Standard Attention (bad) -->
-  <g transform="translate(440, 70)">
-    <rect x="0" y="0" width="240" height="100" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1" opacity="0.8"/>
-    <text x="18" y="22" font-family="system-ui,sans-serif" font-size="16" fill="#ef4444" font-weight="700">&#x2717;</text>
-    <text x="38" y="22" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#dc2626">Standard Attention</text>
-    <text x="20" y="42" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">1. Write N x N matrix to HBM</text>
-    <text x="20" y="57" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">2. Read back for softmax</text>
-    <text x="20" y="72" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">3. Write softmax result to HBM</text>
-    <text x="20" y="87" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">4. Read back for V multiply</text>
+  <!-- === LEFT SIDE: Standard Attention === -->
+  <g transform="translate(0,0)">
+    <rect x="20" y="55" width="200" height="40" rx="8" fill="#7f1d1d" opacity="0.8" filter="url(#shadowF)"/>
+    <text x="120" y="72" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#fca5a5">Standard Attention</text>
+    <text x="120" y="88" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#ef4444">&#x2717;</text>
+
+    <text x="30" y="120" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">Materialize full</text>
+    <text x="30" y="136" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">N&#xd7;N matrix in HBM</text>
+
+    <!-- Red dashed arrow going all the way down to HBM -->
+    <line x1="120" y1="95" x2="120" y2="170" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <line x1="120" y1="170" x2="120" y2="250" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <line x1="120" y1="250" x2="120" y2="390" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrowRed)"/>
+
+    <!-- Red box at bottom of arrow -->
+    <rect x="55" y="395" width="130" height="30" rx="6" fill="#7f1d1d" opacity="0.6"/>
+    <text x="120" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">N&#xd7;N in HBM</text>
   </g>
 
-  <!-- FlashAttention (good) -->
-  <g transform="translate(440, 195)">
-    <rect x="0" y="0" width="240" height="110" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1" opacity="0.8"/>
-    <text x="18" y="22" font-family="system-ui,sans-serif" font-size="16" fill="#22c55e" font-weight="700">&#x2713;</text>
-    <text x="38" y="22" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#16a34a">FlashAttention</text>
-    <text x="20" y="42" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">1. Load Q, K, V tiles into SRAM</text>
-    <text x="20" y="57" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">2. Compute attention in SRAM</text>
-    <text x="20" y="72" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">3. Online softmax (incremental)</text>
-    <text x="20" y="87" font-family="system-ui,sans-serif" font-size="10.5" fill="#0f172a" opacity="0.7">4. Write only final output to HBM</text>
-    <text x="20" y="103" font-family="system-ui,sans-serif" font-size="10" fill="#16a34a" font-weight="600">Memory: O(N) not O(N²)</text>
+  <!-- === RIGHT SIDE: FlashAttention === -->
+  <g transform="translate(0,0)">
+    <rect x="780" y="55" width="200" height="40" rx="8" fill="#14532d" opacity="0.8" filter="url(#shadowF)"/>
+    <text x="880" y="72" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#86efac">FlashAttention</text>
+    <text x="880" y="88" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#22c55e">&#x2713;</text>
+
+    <text x="790" y="120" font-family="system-ui, sans-serif" font-size="12" fill="#86efac">Tile computation</text>
+    <text x="790" y="136" font-family="system-ui, sans-serif" font-size="12" fill="#86efac">stays in SRAM</text>
+
+    <!-- Green arrows staying in SRAM tier -->
+    <line x1="880" y1="95" x2="880" y2="130" stroke="#22c55e" stroke-width="2.5" marker-end="url(#arrowG)"/>
+    <!-- Circular arrow showing tiling -->
+    <path d="M 860,130 Q 840,155 860,170" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowG)"/>
+    <path d="M 900,170 Q 920,155 900,130" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowG)"/>
+    <text x="880" y="158" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#86efac">Tile</text>
+
+    <!-- Small green box showing it stays on-chip -->
+    <rect x="835" y="175" width="90" height="26" rx="6" fill="#14532d" opacity="0.6"/>
+    <text x="880" y="192" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#86efac">On-chip only</text>
   </g>
 
-  <!-- Connecting arrow from pyramid to comparison -->
-  <line x1="400" y1="270" x2="438" y2="250" stroke="#a855f7" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
-  <line x1="305" y1="92" x2="438" y2="92" stroke="#4f46e5" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <!-- Memory complexity callout -->
+  <rect x="350" y="468" width="300" height="28" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1.5" filter="url(#glowGreen)"/>
+  <text x="500" y="487" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#86efac">Memory: O(N&#xb2;) &#x2192; O(N)</text>
 </svg>

@@ -1,84 +1,118 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
   <defs>
-    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#f1f5f9"/>
+    <linearGradient id="bg-tma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
-    <marker id="arrowDown" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
-      <path d="M0,0 L4,6 L8,0" fill="none" stroke="#4f46e5" stroke-width="1.5"/>
-    </marker>
-    <marker id="arrowUp" markerWidth="8" markerHeight="6" refX="4" refY="0" orient="auto">
-      <path d="M0,6 L4,0 L8,6" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-    </marker>
+    <linearGradient id="smemGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#3730a3"/>
+    </linearGradient>
+    <linearGradient id="l2Grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="hbmGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="tmaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="glowTma">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <rect width="700" height="300" rx="16" fill="url(#bg2)" stroke="#e2e8f0" stroke-width="1"/>
+  <!-- Background -->
+  <rect width="1000" height="500" fill="url(#bg-tma)"/>
 
   <!-- Title -->
-  <text x="350" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">TMA Async Copy Pipeline (Hopper)</text>
+  <text x="500" y="40" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="bold" fill="#e2e8f0">TMA Asynchronous Copy Pipeline</text>
 
-  <!-- Left side: Compute Warps -->
-  <rect x="40" y="60" width="160" height="180" rx="10" fill="white" stroke="#4f46e5" stroke-width="2"/>
-  <text x="120" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">Compute Warps</text>
+  <!-- === COMPUTE COLUMN (Left) === -->
+  <text x="200" y="80" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="bold" fill="#818cf8">Compute Warps</text>
 
-  <!-- ALU boxes inside -->
-  <rect x="55" y="95" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="82" y="113" text-anchor="middle" font-size="10" fill="#4f46e5">ALU</text>
-  <rect x="120" y="95" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="147" y="113" text-anchor="middle" font-size="10" fill="#4f46e5">ALU</text>
-  <rect x="55" y="132" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="82" y="150" text-anchor="middle" font-size="10" fill="#4f46e5">ALU</text>
-  <rect x="120" y="132" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="147" y="150" text-anchor="middle" font-size="10" fill="#4f46e5">ALU</text>
-  <rect x="55" y="169" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="82" y="187" text-anchor="middle" font-size="10" fill="#4f46e5">FMA</text>
-  <rect x="120" y="169" width="55" height="28" rx="5" fill="#eef2ff" stroke="#4f46e5" stroke-width="1"/>
-  <text x="147" y="187" text-anchor="middle" font-size="10" fill="#4f46e5">FMA</text>
+  <!-- ALU box -->
+  <rect x="60" y="100" width="120" height="70" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <text x="120" y="128" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="bold" fill="#818cf8">ALU</text>
+  <text x="120" y="150" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">INT / FP32</text>
+  <!-- ALU icon: plus sign -->
+  <line x1="35" y1="135" x2="50" y2="135" stroke="#6366f1" stroke-width="2" opacity="0.5"/>
+  <line x1="42" y1="128" x2="42" y2="142" stroke="#6366f1" stroke-width="2" opacity="0.5"/>
 
-  <text x="120" y="218" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">doing math ops</text>
+  <!-- FMA box -->
+  <rect x="200" y="100" width="120" height="70" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <text x="260" y="128" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="bold" fill="#818cf8">FMA</text>
+  <text x="260" y="150" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">a*b + c</text>
 
-  <!-- Memory hierarchy (center-right) -->
-  <!-- Shared Memory (SRAM) -->
-  <rect x="280" y="55" width="180" height="45" rx="8" fill="#4f46e5" opacity="0.9"/>
-  <text x="370" y="75" text-anchor="middle" font-size="11" font-weight="700" fill="white">Shared Memory</text>
-  <text x="370" y="89" text-anchor="middle" font-size="9" fill="#c7d2fe">(SRAM, ~228 KB/SM)</text>
+  <!-- Tensor Core box -->
+  <rect x="110" y="190" width="180" height="70" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="200" y="218" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="bold" fill="#c084fc">Tensor Core</text>
+  <text x="200" y="240" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">Matrix MMA ops</text>
+  <!-- Matrix icon -->
+  <rect x="78" y="203" width="20" height="20" rx="2" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/>
+  <line x1="78" y1="210" x2="98" y2="210" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
+  <line x1="78" y1="216" x2="98" y2="216" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
+  <line x1="85" y1="203" x2="85" y2="223" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
+  <line x1="91" y1="203" x2="91" y2="223" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
 
-  <!-- L2 Cache -->
-  <rect x="260" y="125" width="220" height="45" rx="8" fill="#6366f1" opacity="0.7"/>
-  <text x="370" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="white">L2 Cache</text>
-  <text x="370" y="162" text-anchor="middle" font-size="9" fill="#e0e7ff">(50 MB)</text>
+  <!-- Green dashed divider -->
+  <line x1="420" y1="70" x2="420" y2="475" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="10,6" opacity="0.6"/>
+  <text x="420" y="490" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">Independent Execution</text>
 
-  <!-- Global Memory (HBM) -->
-  <rect x="240" y="200" width="260" height="50" rx="8" fill="#a855f7" opacity="0.6"/>
-  <text x="370" y="223" text-anchor="middle" font-size="11" font-weight="700" fill="white">Global Memory (HBM3)</text>
-  <text x="370" y="240" text-anchor="middle" font-size="9" fill="#f3e8ff">(80 GB, 3.35 TB/s)</text>
+  <!-- === TMA UNIT (Right column) === -->
+  <text x="600" y="80" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="bold" fill="#fbbf24">TMA Unit</text>
 
-  <!-- TMA Unit (right side) -->
-  <rect x="540" y="80" width="120" height="140" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-  <text x="600" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">TMA Unit</text>
-  <text x="600" y="122" text-anchor="middle" font-size="9" fill="#92400e">(Hardware)</text>
+  <!-- TMA hardware block -->
+  <rect x="520" y="100" width="160" height="160" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2.5"/>
+  <rect x="535" y="115" width="130" height="45" rx="8" fill="url(#tmaGrad)" opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+  <text x="600" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#fbbf24">Address Gen</text>
+  <rect x="535" y="170" width="130" height="45" rx="8" fill="url(#tmaGrad)" opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+  <text x="600" y="198" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#fbbf24">DMA Engine</text>
+  <rect x="535" y="225" width="130" height="25" rx="8" fill="url(#tmaGrad)" opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+  <text x="600" y="243" text-anchor="middle" font-family="monospace" font-size="11" fill="#f59e0b">Async Copy</text>
 
-  <!-- TMA internal arrows showing data flow -->
-  <line x1="600" y1="190" x2="600" y2="170" stroke="#f59e0b" stroke-width="2"/>
-  <line x1="600" y1="165" x2="600" y2="145" stroke="#f59e0b" stroke-width="2"/>
-  <line x1="600" y1="140" x2="600" y2="130" stroke="#f59e0b" stroke-width="2"/>
-  <polygon points="596,132 600,124 604,132" fill="#f59e0b"/>
-  <polygon points="596,172 600,164 604,172" fill="#f59e0b"/>
+  <!-- === MEMORY HIERARCHY (Right side, stacked) === -->
+  <!-- Shared Memory (SRAM) - top -->
+  <rect x="730" y="95" width="240" height="80" rx="10" fill="url(#smemGrad)" stroke="#818cf8" stroke-width="2"/>
+  <text x="850" y="130" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="17" font-weight="bold" fill="white">Shared Memory</text>
+  <text x="850" y="152" text-anchor="middle" font-family="monospace" font-size="13" fill="#c7d2fe">(SRAM) ~228 KB</text>
 
-  <!-- TMA arrows from memory to shared mem -->
-  <path d="M500,225 Q540,225 560,210" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,3"/>
-  <path d="M540,90 Q510,78 460,78" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,3"/>
-  <polygon points="464,74 456,78 464,82" fill="#f59e0b"/>
+  <!-- L2 Cache - middle -->
+  <rect x="730" y="195" width="240" height="65" rx="10" fill="url(#l2Grad)" stroke="#a855f7" stroke-width="2"/>
+  <text x="850" y="228" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="17" font-weight="bold" fill="white">L2 Cache</text>
+  <text x="850" y="248" text-anchor="middle" font-family="monospace" font-size="13" fill="#ddd6fe">~50 MB</text>
 
-  <!-- Compute warp connection to shared mem -->
-  <path d="M200,95 Q240,78 280,78" fill="none" stroke="#4f46e5" stroke-width="2"/>
-  <polygon points="276,74 284,78 276,82" fill="#4f46e5"/>
-  <text x="240" y="68" text-anchor="middle" font-size="8" fill="#4f46e5">read data</text>
+  <!-- Global Memory (HBM) - bottom -->
+  <rect x="730" y="280" width="240" height="100" rx="10" fill="url(#hbmGrad)" stroke="#475569" stroke-width="2"/>
+  <text x="850" y="325" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="17" font-weight="bold" fill="#e2e8f0">Global Memory</text>
+  <text x="850" y="350" text-anchor="middle" font-family="monospace" font-size="13" fill="#94a3b8">(HBM) ~80 GB</text>
+  <text x="850" y="370" text-anchor="middle" font-family="monospace" font-size="12" fill="#64748b">High bandwidth</text>
 
-  <!-- Independence indicator -->
-  <rect x="220" y="268" width="260" height="24" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
-  <text x="350" y="284" text-anchor="middle" font-size="10" font-weight="600" fill="#065f46">Compute and data movement happen simultaneously</text>
+  <!-- Data flow arrows (TMA → memory hierarchy, bottom to top) -->
+  <!-- TMA to SMEM -->
+  <path d="M 680,165 L 725,135" fill="none" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowAmber)"/>
+  <polygon points="725,135 715,135 720,125" fill="#f59e0b"/>
 
-  <!-- Separation indicator -->
-  <line x1="230" y1="50" x2="230" y2="255" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="232" y="262" font-size="7" fill="#94a3b8">independent</text>
+  <!-- Global to TMA -->
+  <path d="M 730,340 L 685,250" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="685,250 680,262 690,260" fill="#94a3b8"/>
+
+  <!-- L2 to TMA -->
+  <path d="M 730,225 L 685,210" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="685,210 680,222 690,218" fill="#a855f7"/>
+
+  <!-- Bandwidth labels on arrows -->
+  <text x="710" y="120" text-anchor="middle" font-family="monospace" font-size="11" fill="#f59e0b" transform="rotate(-20, 710, 120)">fast</text>
+
+  <!-- Annotation box at bottom -->
+  <rect x="100" y="420" width="520" height="40" rx="10" fill="#22c55e" opacity="0.08" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="360" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#86efac">Compute and data movement happen simultaneously</text>
+
+  <!-- Bidirectional arrow between compute and TMA at the top -->
+  <line x1="320" y1="135" x2="400" y2="135" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="370" y="125" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">decoupled</text>
 </svg>
