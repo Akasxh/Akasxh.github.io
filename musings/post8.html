@@ -100,9 +100,7 @@
         <p>The thing is, the real story of Ampere is TF32. NVIDIA introduced this 19 bit floating point format (8 bit exponent like FP32, but 10 bit mantissa like FP16) that could run on tensor cores while giving you near FP32 accuracy. Before TF32, you had to explicitly convert your training pipeline to mixed precision with FP16, deal with loss scaling, worry about overflow. TF32 just worked. You kept your FP32 code, the tensor cores handled TF32 internally, and training accuracy barely moved. This was huge for adoption.</p>
 
         <figure>
-          <div style="background: rgba(15,23,42,0.04); border-radius: 12px; padding: 40px; text-align: center; color: rgba(15,23,42,0.4); font-style: italic;">
-            Diagram showing FP32, TF32, FP16, and BF16 bit layouts side by side with exponent and mantissa fields highlighted
-          </div>
+          <img src="images/gpu-fp-formats.svg" alt="Floating point format comparison showing FP32, TF32, FP16, and BF16 bit layouts with sign, exponent, and mantissa fields" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>Floating point format comparison. TF32 takes the best of both worlds: FP32 range with FP16 tensor core speed.</figcaption>
         </figure>
 
@@ -141,9 +139,7 @@
         <p>If you have ever written a tiled GEMM kernel and spent hours getting the shared memory loading right with proper double buffering, TMA makes that dramatically simpler. You describe the tensor layout, tell TMA to prefetch a tile, and it handles the rest. This is not just a convenience feature. It actually frees up warps that were previously dedicated to data movement, letting you use more of your SM budget for actual compute.</p>
 
         <figure>
-          <div style="background: rgba(15,23,42,0.04); border-radius: 12px; padding: 40px; text-align: center; color: rgba(15,23,42,0.4); font-style: italic;">
-            Illustration of TMA async copy pipeline: Global Memory to L2 Cache to Shared Memory, with TMA unit managing transfers independently of compute warps
-          </div>
+          <img src="images/gpu-tma.svg" alt="TMA async copy pipeline showing compute warps and TMA unit independently moving data through shared memory, L2 cache, and global memory" class="post-image" style="width:100%; max-width:700px; margin:0 auto; display:block;">
           <figcaption>TMA offloads memory movement to a dedicated hardware unit, freeing warps for compute.</figcaption>
         </figure>
 
@@ -166,9 +162,7 @@
         <p>Fifth generation Tensor Cores bring FP4 support. Think about that progression: FP32 to TF32 to FP16/BF16 to FP8 to FP4, each generation pushing the precision lower while the hardware gets smarter about maintaining accuracy. The second generation Transformer Engine now handles FP4 precision management automatically. For inference on trillion parameter models, FP4 could be transformative. You are looking at up to 9 PFLOPS of FP4 throughput and 4.5 PFLOPS at FP8.</p>
 
         <figure>
-          <div style="background: rgba(15,23,42,0.04); border-radius: 12px; padding: 40px; text-align: center; color: rgba(15,23,42,0.4); font-style: italic;">
-            Blackwell B200 two-die layout showing the 10 TB/s die-to-die interconnect, HBM3e stacks on each side, and NVLink 5.0 connections
-          </div>
+          <img src="images/gpu-blackwell.svg" alt="Blackwell B200 two-die layout with Die 0 and Die 1 connected by 10 TB/s interconnect, HBM3e stacks on each side, and NVLink 5.0" class="post-image" style="width:100%; max-width:750px; margin:0 auto; display:block;">
           <figcaption>Blackwell's two-die design with 10 TB/s interconnect represents NVIDIA's move into the chiplet era.</figcaption>
         </figure>
 
@@ -199,9 +193,7 @@
         <p>Every architecture I have discussed gives you more compute per byte of memory bandwidth. This means the penalty for inefficient memory access gets worse each generation. An L2 cache miss on Blackwell wastes more potential FLOPS than an L2 cache miss on Ampere, simply because there are more FLOPS available to waste.</p>
 
         <figure>
-          <div style="background: rgba(15,23,42,0.04); border-radius: 12px; padding: 40px; text-align: center; color: rgba(15,23,42,0.4); font-style: italic;">
-            Roofline model plot showing the operational intensity (FLOPS/byte) needed to be compute-bound on A100 vs H100 vs B200, illustrating how the ridge point shifts right each generation
-          </div>
+          <img src="images/gpu-roofline.svg" alt="Roofline model plot comparing A100, H100, and B200 performance showing ridge points shifting right each generation" class="post-image" style="width:100%; max-width:700px; margin:0 auto; display:block;">
           <figcaption>The roofline model across generations. The ridge point keeps moving right, meaning you need higher arithmetic intensity to saturate compute.</figcaption>
         </figure>
 

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="700" height="400">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/>
+    </marker>
+  </defs>
+
+  <!-- Input -->
+  <rect x="280" y="360" width="140" height="32" rx="6" fill="#4f46e5" opacity="0.1" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="350" y="381" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#0f172a">Input Embedding</text>
+
+  <!-- Q, K, V projections -->
+  <line x1="310" y1="360" x2="170" y2="310" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="350" y1="360" x2="350" y2="310" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="390" y1="360" x2="530" y2="310" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="120" y="278" width="100" height="30" rx="6" fill="#4f46e5" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="170" y="298" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#fff">Q Linear</text>
+
+  <rect x="300" y="278" width="100" height="30" rx="6" fill="#6366f1" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="350" y="298" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#fff">K Linear</text>
+
+  <rect x="480" y="278" width="100" height="30" rx="6" fill="#a855f7" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="530" y="298" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#fff">V Linear</text>
+
+  <!-- Split arrows to heads -->
+  <line x1="170" y1="278" x2="170" y2="240" stroke="#4f46e5" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="350" y1="278" x2="350" y2="240" stroke="#6366f1" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="530" y1="278" x2="530" y2="240" stroke="#a855f7" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Heads label -->
+  <text x="350" y="220" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(15,23,42,0.6)">Split into h = 8 heads</text>
+
+  <!-- 8 head boxes -->
+  <g>
+    <rect x="68" y="160" width="70" height="45" rx="5" fill="#4f46e5" opacity="0.12" stroke="#4f46e5" stroke-width="1.2"/>
+    <text x="103" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#4f46e5">Head 1</text>
+    <text x="103" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="148" y="160" width="70" height="45" rx="5" fill="#4f46e5" opacity="0.12" stroke="#4f46e5" stroke-width="1.2"/>
+    <text x="183" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#4f46e5">Head 2</text>
+    <text x="183" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="228" y="160" width="70" height="45" rx="5" fill="#4f46e5" opacity="0.12" stroke="#4f46e5" stroke-width="1.2"/>
+    <text x="263" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#4f46e5">Head 3</text>
+    <text x="263" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="308" y="160" width="70" height="45" rx="5" fill="#6366f1" opacity="0.12" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="343" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6366f1">Head 4</text>
+    <text x="343" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="388" y="160" width="70" height="45" rx="5" fill="#6366f1" opacity="0.12" stroke="#6366f1" stroke-width="1.2"/>
+    <text x="423" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#6366f1">Head 5</text>
+    <text x="423" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="468" y="160" width="70" height="45" rx="5" fill="#a855f7" opacity="0.12" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="503" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#a855f7">Head 6</text>
+    <text x="503" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+
+    <rect x="548" y="160" width="70" height="45" rx="5" fill="#a855f7" opacity="0.12" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="583" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#a855f7">Head 7</text>
+    <text x="583" y="196" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="rgba(15,23,42,0.5)">Scaled Dot-Prod</text>
+  </g>
+
+  <!-- Arrows from heads up to concat -->
+  <line x1="103" y1="160" x2="350" y2="120" stroke="#4f46e5" stroke-width="0.8" opacity="0.5"/>
+  <line x1="183" y1="160" x2="350" y2="120" stroke="#4f46e5" stroke-width="0.8" opacity="0.5"/>
+  <line x1="263" y1="160" x2="350" y2="120" stroke="#4f46e5" stroke-width="0.8" opacity="0.5"/>
+  <line x1="343" y1="160" x2="350" y2="120" stroke="#6366f1" stroke-width="0.8" opacity="0.5"/>
+  <line x1="423" y1="160" x2="350" y2="120" stroke="#6366f1" stroke-width="0.8" opacity="0.5"/>
+  <line x1="503" y1="160" x2="350" y2="120" stroke="#a855f7" stroke-width="0.8" opacity="0.5"/>
+  <line x1="583" y1="160" x2="350" y2="120" stroke="#a855f7" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Concat box -->
+  <rect x="270" y="90" width="160" height="30" rx="6" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="350" y="110" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="600" fill="#4f46e5">Concat</text>
+
+  <!-- Arrow to Linear -->
+  <line x1="350" y1="90" x2="350" y2="65" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Output Linear -->
+  <rect x="270" y="30" width="160" height="32" rx="6" fill="#4f46e5" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="350" y="51" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#fff">W^O Linear</text>
+
+  <!-- Output arrow -->
+  <line x1="350" y1="30" x2="350" y2="12" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="350" y="8" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(15,23,42,0.5)">Output</text>
+
+  <!-- Dimension annotations -->
+  <text x="16" y="185" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.4)">d_k = d_model / h</text>
+  <text x="16" y="198" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.4)">= 512 / 8 = 64</text>
+</svg>

@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 300" width="750" height="300">
+  <defs>
+    <marker id="parr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#4f46e5"/>
+    </marker>
+  </defs>
+
+  <!-- Title: Logical KV Cache -->
+  <text x="95" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f172a">Logical KV Cache</text>
+  <text x="95" y="40" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.45)">(contiguous view per sequence)</text>
+
+  <!-- Logical blocks - vertical stack -->
+  <rect x="50" y="55" width="90" height="40" rx="5" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="95" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#4f46e5">Block 0</text>
+  <text x="95" y="86" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.4)">tokens 0-15</text>
+
+  <rect x="50" y="100" width="90" height="40" rx="5" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="95" y="117" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#4f46e5">Block 1</text>
+  <text x="95" y="131" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.4)">tokens 16-31</text>
+
+  <rect x="50" y="145" width="90" height="40" rx="5" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="95" y="162" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#4f46e5">Block 2</text>
+  <text x="95" y="176" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.4)">tokens 32-47</text>
+
+  <rect x="50" y="190" width="90" height="40" rx="5" fill="#4f46e5" opacity="0.15" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="95" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#4f46e5">Block 3</text>
+  <text x="95" y="221" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.4)">tokens 48-63</text>
+
+  <!-- Block Table -->
+  <text x="310" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f172a">Block Table</text>
+  <text x="310" y="40" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.45)">(logical → physical mapping)</text>
+
+  <!-- Table -->
+  <rect x="245" y="52" width="130" height="25" rx="4" fill="#0f172a" opacity="0.06"/>
+  <text x="280" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#0f172a">Logical</text>
+  <text x="340" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#0f172a">Physical</text>
+  <line x1="310" y1="52" x2="310" y2="195" stroke="rgba(15,23,42,0.1)" stroke-width="1"/>
+
+  <rect x="245" y="80" width="130" height="28" rx="0" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1"/>
+  <text x="280" y="99" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">0</text>
+  <text x="340" y="99" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">7</text>
+
+  <rect x="245" y="108" width="130" height="28" rx="0" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1"/>
+  <text x="280" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">1</text>
+  <text x="340" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">3</text>
+
+  <rect x="245" y="136" width="130" height="28" rx="0" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1"/>
+  <text x="280" y="155" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">2</text>
+  <text x="340" y="155" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">12</text>
+
+  <rect x="245" y="164" width="130" height="28" rx="0" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1"/>
+  <text x="280" y="183" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">3</text>
+  <text x="340" y="183" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#4f46e5" font-weight="600">5</text>
+
+  <!-- Arrows: logical to table -->
+  <line x1="140" y1="75" x2="243" y2="94" stroke="#4f46e5" stroke-width="1" marker-end="url(#parr)" opacity="0.5"/>
+  <line x1="140" y1="120" x2="243" y2="122" stroke="#4f46e5" stroke-width="1" marker-end="url(#parr)" opacity="0.5"/>
+  <line x1="140" y1="165" x2="243" y2="150" stroke="#4f46e5" stroke-width="1" marker-end="url(#parr)" opacity="0.5"/>
+  <line x1="140" y1="210" x2="243" y2="178" stroke="#4f46e5" stroke-width="1" marker-end="url(#parr)" opacity="0.5"/>
+
+  <!-- Physical GPU Memory -->
+  <text x="580" y="25" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f172a">Physical GPU Memory</text>
+  <text x="580" y="40" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.45)">(non-contiguous blocks)</text>
+
+  <!-- Physical memory grid: 4 cols x 4 rows = 16 blocks -->
+  <!-- Row 0: blocks 0-3 -->
+  <rect x="465" y="55" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="492" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <rect x="525" y="55" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="552" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">used</text>
+
+  <rect x="585" y="55" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="612" y="77" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <rect x="645" y="55" width="55" height="35" rx="4" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="2"/>
+  <text x="672" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#4f46e5">Blk 1</text>
+  <text x="672" y="84" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#4f46e5">[phys 3]</text>
+
+  <!-- Row 1: blocks 4-7 -->
+  <rect x="465" y="95" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="492" y="117" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">used</text>
+
+  <rect x="525" y="95" width="55" height="35" rx="4" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="2"/>
+  <text x="552" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#4f46e5">Blk 3</text>
+  <text x="552" y="124" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#4f46e5">[phys 5]</text>
+
+  <rect x="585" y="95" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="612" y="117" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <rect x="645" y="95" width="55" height="35" rx="4" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="2"/>
+  <text x="672" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#4f46e5">Blk 0</text>
+  <text x="672" y="124" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#4f46e5">[phys 7]</text>
+
+  <!-- Row 2: blocks 8-11 -->
+  <rect x="465" y="135" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="492" y="157" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">used</text>
+
+  <rect x="525" y="135" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="552" y="157" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <rect x="585" y="135" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="612" y="157" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">used</text>
+
+  <rect x="645" y="135" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="672" y="157" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <!-- Row 3: blocks 12-15 -->
+  <rect x="465" y="175" width="55" height="35" rx="4" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="2"/>
+  <text x="492" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#4f46e5">Blk 2</text>
+  <text x="492" y="204" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7" fill="#4f46e5">[phys 12]</text>
+
+  <rect x="525" y="175" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="552" y="197" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">used</text>
+
+  <rect x="585" y="175" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="612" y="197" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <rect x="645" y="175" width="55" height="35" rx="4" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+  <text x="672" y="197" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(15,23,42,0.3)">free</text>
+
+  <!-- Arrows: table to physical blocks -->
+  <line x1="377" y1="94" x2="643" y2="112" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#parr)" stroke-dasharray="4,2" opacity="0.6"/>
+  <line x1="377" y1="122" x2="643" y2="72" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#parr)" stroke-dasharray="4,2" opacity="0.6"/>
+  <line x1="377" y1="150" x2="463" y2="192" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#parr)" stroke-dasharray="4,2" opacity="0.6"/>
+  <line x1="377" y1="178" x2="523" y2="112" stroke="#4f46e5" stroke-width="1.2" marker-end="url(#parr)" stroke-dasharray="4,2" opacity="0.6"/>
+
+  <!-- Legend -->
+  <g transform="translate(465, 230)">
+    <rect x="0" y="0" width="14" height="14" rx="3" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="1.5"/>
+    <text x="20" y="11" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.6)">Allocated (this sequence)</text>
+
+    <rect x="0" y="22" width="14" height="14" rx="3" fill="#e5e7eb" stroke="rgba(15,23,42,0.08)" stroke-width="1"/>
+    <text x="20" y="33" font-family="system-ui,sans-serif" font-size="10" fill="rgba(15,23,42,0.6)">Free / other sequences</text>
+  </g>
+
+  <!-- Key insight text -->
+  <text x="95" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.4)">Sequence sees contiguous</text>
+  <text x="95" y="273" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.4)">blocks 0, 1, 2, 3</text>
+  <text x="310" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.4)">Indirection layer</text>
+  <text x="310" y="231" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="rgba(15,23,42,0.4)">(like OS page table)</text>
+</svg>
