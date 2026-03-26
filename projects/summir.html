@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUMMIR - S Akash</title>
+  <link rel="stylesheet" href="../musings/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link floating-nav__link--active">Projects</a>
+      <a href="../musings/index.html" class="floating-nav__link">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="../projects.html" class="back-link">&larr; Back to all projects</a>
+    <article class="post-shell">
+      <h1 class="post-title">SUMMIR: Hallucination Aware Ranking for Sports Insights from LLMs</h1>
+      <div class="post-categories">
+        <span>ECIR 2026 Main Track</span><span>NLP</span><span>Reinforcement Learning</span><span>PPO</span><span>Microsoft Collaboration</span>
+      </div>
+      <div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="https://github.com/Akasxh/Sports_Article_Ranking" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif;">View on GitHub &rarr;</a>
+        <a href="https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:rgba(79,70,229,0.1); color:#4f46e5; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; border:1px solid rgba(79,70,229,0.2);">Read the Paper &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <p>This is probably the work I am most proud of from my time at IIT Patna. SUMMIR (Sentence Unified Multimetric Model for Importance Ranking) started as a research project at the AIML Lab under <a href="https://www.iitp.ac.in/~sriparna/">Dr. Sriparna Saha</a>, grew into a collaboration with <a href="https://www.microsoft.com/en-us/research/people/gmanish/">Manish Gupta</a> at Microsoft, and ended up accepted at the main track of <a href="https://ecir2026.eu/">ECIR 2026</a>, one of the top information retrieval conferences.</p>
+
+        <p>The question we were asking: can LLMs reliably convert sports news into meaningful match insights, covering pre-game previews and post-game analysis across cricket, soccer, basketball, and baseball? And more importantly, how do you rank those insights when LLMs have a tendency to hallucinate facts that sound plausible but are completely wrong?</p>
+
+        <h2>The Problem</h2>
+
+        <p>Sports journalism generates massive volumes of content around every match. The idea was to use LLMs to automatically extract structured insights from this content. Think: key player performances, tactical shifts, momentum changes, injury impacts. The problem is that LLMs are confidently wrong a non trivial percentage of the time. A model might state that a player scored 47 runs in a match when the actual number was 23, or attribute a goal to the wrong player. In a domain where fans and analysts care about factual accuracy, this is not acceptable.</p>
+
+        <p>So we needed a ranking system that could evaluate generated insights along multiple dimensions, with hallucination detection as a first class concern, not an afterthought.</p>
+
+        <h2>The Dataset</h2>
+
+        <p>We built a dataset of 7,900 articles across 800 matches spanning four sports. These were filtered using a two step validation pipeline with 8 open source LLMs (Llama 3.1 8B, Mistral Nemo 12.2B, Qwen 2.5 14B, Llama 3.3 70B, and more). From these articles, we generated over 280,000 structured insights using four advanced LLMs, then evaluated factual reliability using FactScore and SummaC (Summary Consistency) metrics.</p>
+
+        <figure>
+          <img loading="lazy" src="../musings/images/summir-pipeline.png" alt="SUMMIR structured pipeline for news filtering, LLM-based insight generation, and performance evaluation" style="width:100%; border-radius:12px; box-shadow: 0 4px 16px rgba(15,23,42,0.1);">
+          <figcaption>Fig. 1 from the paper: Structured pipeline for news filtering, LLM-based insight generation, and performance evaluation in building the sports insights dataset.</figcaption>
+        </figure>
+
+        <h2>The Ranking Framework</h2>
+
+        <p>This is the core contribution. SUMMIR integrates six scoring features into a unified ranking system:</p>
+
+        <p><strong>Semantic Score (F1):</strong> Measures how semantically relevant an insight is to the source article using sentence transformer embeddings and cosine similarity.</p>
+
+        <p><strong>Emotional Intensity (F2):</strong> Captures the emotional weight of an insight. Sports content that evokes strong reactions tends to be more engaging.</p>
+
+        <p><strong>Sarcasm Score (F3):</strong> Detects sarcastic or ironic content that might confuse downstream systems or readers.</p>
+
+        <p><strong>TF-IDF Score (F4):</strong> Traditional term frequency scoring to capture keyword relevance.</p>
+
+        <p><strong>Buzzword Score (F5):</strong> Domain specific scoring using a curated sports keyword lexicon with VADER, AFINN, and SentiWordNet sentiment scores.</p>
+
+        <p><strong>NER Score (F6):</strong> Named entity recognition based person fame scoring using a Historical Popularity Index. If an insight mentions a well known player, it gets weighted higher.</p>
+
+        <p>These six features feed into ScoreNet, a custom neural network that fuses them into a final ranking score. But here is where it gets interesting: the reward signal for training comes from LLaMA 3.1 models (1B and 3B) fine tuned with Proximal Policy Optimization (PPO). We trained separate reward models on NDCG (ranking quality) and Recall (coverage) objectives, then combined them.</p>
+
+        <figure>
+          <img loading="lazy" src="../musings/images/summir-ranking.png" alt="SUMMIR insight ranking framework integrating diverse scoring features, PPO-based LLM fine-tuning, and evaluation metrics" style="width:100%; border-radius:12px; box-shadow: 0 4px 16px rgba(15,23,42,0.1);">
+          <figcaption>Fig. 3 from the paper: Insight ranking framework integrating diverse scoring features, PPO-based LLM fine-tuning, and evaluation metrics including NDCG, Recall, and SUMMIR.</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+
+        <p>We evaluated four LLMs (GPT-4o, Qwen 2.5 72B, Llama 3.3 70B, and Mistral 8x7B) across 20 matches per sport. GPT-4o achieved the highest accuracy with FactScores of 95.97% and SummaC scores of 60-72%. Mistral 8x7B scored lower, especially in Baseball and Soccer, showing higher hallucination rates.</p>
+
+        <p>The hallucination detection step significantly enhanced the dataset's credibility, ensuring the inclusion of only accurate, reliable insights. The final SUMMIR ranking combined semantic, emotional, and factual signals in a way that consistently outperformed single metric baselines across all four sports.</p>
+
+        <h2>Authors</h2>
+
+        <p>Nitish Kumar, Sannu Kumar, <strong>S Akash</strong>, Manish Gupta (Microsoft), Ankith Karat, Sriparna Saha (IIT Patna)</p>
+
+        <div class="paper-ref">
+          <div class="paper-title">"SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs"</div>
+          <div class="paper-authors">Nitish Kumar, Sannu Kumar, S Akash, Manish Gupta, Ankith Karat, Sriparna Saha</div>
+          <a href="https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/">ECIR 2026 Main Track | Pre-print</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
