@@ -1,33 +1,35 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - Musings by Akash</title>
+  <title>About - Musings by S Akash</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 <body>
-  <header>
-    <h1>Musings by Akash</h1>
-    <nav>
-      <a href="archive.html">Archive</a>
-      <a href="about.html">About</a>
-      <a href="../index.html">Main Site</a>
-    </nav>
-  </header>
-  <main>
-    <article>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <div class="archive-shell">
       <h2>About this blog</h2>
-      <p>This personal blog is where I write about a variety of topics. I previously wrote on another platform but moved here to create a more casual space for my thoughts.</p>
-      <p>The content can range from technical notes and essays to poetry or just random ideas. I aim to write succinct and approachable pieces that reflect my interests and experiences.</p>
-      <p>If you want to know more about me or get in touch, feel free to visit my main website.</p>
-    </article>
+      <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(15,23,42,0.75); margin-top: 16px;">This personal blog is where I write about a variety of topics. I previously wrote on another platform but moved here to create a more casual space for my thoughts.</p>
+      <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(15,23,42,0.75); margin-top: 12px;">The content ranges from technical deep dives on GPU computing and ML systems to essays about science, civilization, and whatever else catches my attention. I aim to write things that are both honest and useful.</p>
+      <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(15,23,42,0.75); margin-top: 12px;">If you want to know more about me or get in touch, visit my <a href="../index.html" style="color: #4f46e5; text-decoration: none; font-weight: 500;">main website</a>.</p>
+    </div>
   </main>
-  <footer>
-    &copy; 2025 Musings by Akash
-  </footer>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
 </body>
 </html>
-

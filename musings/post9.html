@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Built gpucheck Because GPU Kernel Testing Shouldn't Feel Like Guesswork - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">I Built gpucheck Because GPU Kernel Testing Shouldn't Feel Like Guesswork</h1>
+      <div class="post-meta">Mar 20, 2026 <span class="reading-time">9 min read</span></div>
+      <div class="post-categories"><span>Open Source</span> <span>GPU Computing</span></div>
+      <div class="post-body">
+
+        <h2>The Ritual Nobody Talks About</h2>
+
+        <p>Here is something nobody warns you about when you start writing GPU kernels: the testing is miserable. You write a Triton kernel or a custom CUDA op, you call <code>torch.allclose</code> with some magic tolerance values you copied from a Stack Overflow answer three months ago, and you pray it works. If it passes, great. If it fails, you stare at a boolean <code>False</code> and have absolutely no idea what went wrong, where it went wrong, or how badly it went wrong.</p>
+
+        <p>I was tired of this. Honestly, I was tired of the entire workflow. Write kernel. Pick arbitrary atol and rtol. Run test. Get a naked True/False. Tweak tolerances until it passes. Ship it. Wonder six months later if the kernel was ever actually correct or if you just loosened the tolerances enough to hide the bugs.</p>
+
+        <p>So I built <a href="https://github.com/Akasxh/gpucheck">gpucheck</a>. Think of it as pytest for GPU kernels. It is a pytest plugin that gives you dtype-aware assertions, parametric testing across dtypes, shapes, and devices, CUDA-event benchmarking, shape fuzzing, and memory leak detection. Everything I wished existed when I was debugging a bfloat16 matmul at 2am.</p>
+
+        <h2>The Dtype Tolerance Problem</h2>
+
+        <p>This is the core issue that pushed me to actually build the thing. When you test numerical code on GPUs, tolerance is everything. A kernel that is correct within float32 tolerances might be wildly wrong when you run it in float16. And bfloat16? That is a whole different beast. The mantissa is only 7 bits wide. You need completely different atol and rtol values.</p>
+
+        <p>Now multiply that by the newer float8 formats. float8_e5m2 has 2 bits of mantissa. float8_e4m3fn has 3. If you are using the same tolerances for float8_e5m2 and float32, you are not testing anything meaningful. You are just checking that two tensors exist.</p>
+
+        <p>The standard approach is to manually set tolerances per test, per dtype. So you end up with these massive tolerance tables scattered across your test files. Every team maintains their own. Nobody agrees on the right values. It is a mess.</p>
+
+        <p>gpucheck's <code>assert_close</code> fixes this by auto-picking tolerances based on the dtype of the tensors you hand it. No more guessing what atol should be for bfloat16. No more copying tolerance values from PyTorch's internal test suite and hoping they apply to your use case. You just call <code>assert_close(result, expected)</code> and it does the right thing.</p>
+
+        <h2>What Happens When It Fails</h2>
+
+        <p>This is honestly the part I am most proud of. When <code>torch.allclose</code> fails, you get <code>False</code>. That is it. A boolean. Thanks for nothing.</p>
+
+        <p>When gpucheck's <code>assert_close</code> fails, you get a Rich-formatted mismatch report with full error statistics: max absolute error, max relative error, mean error, the percentage of elements that exceed tolerance. You get an ASCII error histogram showing the distribution of errors. And you get the exact location of the worst element, so you know precisely where your kernel is breaking down.</p>
+
+        <p>The difference in debugging time is enormous. Instead of binary searching through your kernel to find the problematic region, you immediately see that, say, 12% of elements exceed tolerance, the worst error is at index [47, 213], and the error distribution is bimodal (which probably means you have a branch divergence issue). That is actionable information. That is what testing should give you.</p>
+
+        <h2>Parametric Testing That Actually Works</h2>
+
+        <p>GPU kernels need to work across dtypes, shapes, and devices. That is the whole point. But writing individual tests for every combination is tedious and nobody does it thoroughly enough.</p>
+
+        <p>gpucheck gives you three decorators: <code>@dtypes</code>, <code>@shapes</code>, and <code>@devices</code>. Stack them and they generate the cartesian product. Here is what a real test looks like:</p>
+
+<pre><code>import torch
+import pytest
+from gpucheck import assert_close, dtypes, shapes, devices
+
+@pytest.mark.gpu
+@dtypes("float16", "bfloat16", "float32")
+@shapes((128, 128), (512, 512), (1024, 1024))
+@devices("cuda:0")
+def test_relu_kernel(dtype, shape, device):
+    x = torch.randn(shape, dtype=dtype, device=device)
+    result = torch.relu(x)
+    expected = torch.clamp(x, min=0)
+    assert_close(result, expected)  # tolerances auto-selected by dtype
+</code></pre>
+
+        <p>That is 9 test configurations from a single function. Three dtypes times three shapes times one device. Scale it up to five dtypes and ten shapes and two devices, and you are at 100 configurations with zero copy-paste. The decorators integrate cleanly with pytest's parametrize machinery, so you get proper test IDs, selective re-runs, and all the pytest features you already know.</p>
+
+        <h2>511 Configurations, 8 Real Bugs</h2>
+
+        <p>I did not want gpucheck to just be theoretically useful. I wanted proof that it finds real bugs in real code. So I ran it against Triton's official tutorials and PyTorch's CUDA ops with 511 test configurations. It found 8 real bugs.</p>
+
+        <p>The big one: Triton's layer normalization kernel has an 83% error when you feed it non-power-of-2 dimensions. Eighty-three percent. That is not a rounding issue. That is a correctness bug. I reported it as <a href="https://github.com/triton-lang/triton/issues/9838">triton#9838</a>. Without gpucheck's shape parametrization testing non-standard dimensions, this would have sat unnoticed in production code that people copy from the official tutorials.</p>
+
+        <p>The second notable find: FP16 accumulation drift in Triton's tutorial matmul kernel. When you accumulate partial products in float16 instead of float32, errors compound across the K dimension. Reported as <a href="https://github.com/triton-lang/triton/issues/9839">triton#9839</a>. This is exactly the kind of bug that <code>torch.allclose</code> with loose tolerances would miss, because it hides under the noise floor at small matrix sizes and only shows up when you scale up.</p>
+
+        <p>Eight bugs from 511 configurations. That is a 1.6% hit rate, which honestly is alarmingly high for official tutorial code that thousands of developers copy into their projects.</p>
+
+        <h2>Beyond Assertions</h2>
+
+        <p>gpucheck is not just <code>assert_close</code> and decorators. There are a few other pieces that round out the toolkit.</p>
+
+        <p>The <code>gpu_benchmark</code> fixture gives you proper CUDA-event benchmarking with warmup runs, synchronized timing, and statistical summaries. No more wrapping your kernel in <code>torch.cuda.Event</code> boilerplate. Just request the fixture, call <code>gpu_benchmark(my_kernel, args)</code>, and get reliable numbers.</p>
+
+        <p>The <code>memory_tracker</code> fixture catches GPU memory leaks. It snapshots <code>torch.cuda.memory_allocated</code> before and after your test and flags any growth. Simple concept, but I cannot count how many times a leaky kernel has slowly eaten all my VRAM during a long test run.</p>
+
+        <p>And <code>fuzz_shapes</code> generates random valid tensor shapes within constraints you specify. Because the bugs that matter are almost never at (1024, 1024). They are at (371, 17) or (1, 8193) or whatever weird dimension your user's data happens to have. The Triton layer norm bug at non-power-of-2 dimensions is a perfect example of this.</p>
+
+        <h2>Why This Should Be Open Source</h2>
+
+        <p>Every team writing GPU kernels has some version of this testing infrastructure. Facebook has one internally. NVIDIA has one. Every ML startup has a janky utils/test_helpers.py that has grown organically over two years. None of them talk to each other. None of them share tolerance tables. None of them benefit from collective bug finding.</p>
+
+        <p>GPU testing infrastructure should be a shared foundation, not a proprietary advantage. The tolerance values in gpucheck are informed by actual failure analysis across hundreds of test configurations. That knowledge should be public. When someone discovers that float8_e5m2 needs an atol of 0.125 for certain operations, every GPU kernel developer should benefit from that finding, not just the team that happened to discover it.</p>
+
+        <p>I also believe that better testing tools lead to better kernels everywhere. If it takes 30 minutes to set up proper dtype-parametric tests with good error reporting, most people will not bother. If it takes 30 seconds, they will. Lower the friction and the ecosystem gets more reliable.</p>
+
+        <h2>Try It</h2>
+
+        <p>gpucheck is on PyPI:</p>
+
+<pre><code>pip install gpucheck</code></pre>
+
+        <p>The source is at <a href="https://github.com/Akasxh/gpucheck">github.com/Akasxh/gpucheck</a> and the package is on <a href="https://pypi.org/project/gpucheck/">PyPI</a>. It is a pytest plugin, so once installed, fixtures like <code>gpu_benchmark</code> and <code>memory_tracker</code> are available automatically. Import <code>assert_close</code>, <code>dtypes</code>, <code>shapes</code>, and <code>devices</code> from <code>gpucheck</code> and you are set.</p>
+
+        <p>If you write GPU kernels, I genuinely think this will save you time and catch bugs you did not know you had. If you find issues or want to contribute, PRs are welcome. The whole point is that this gets better as more people use it and feed back their findings.</p>
+
+        <p>Stop guessing tolerances. Stop staring at boolean outputs. Test your kernels properly.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

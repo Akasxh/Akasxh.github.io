@@ -1,41 +1,100 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Musings by S Akash</title>
+  <title>Blog - Musings by S Akash</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 <body>
-  <header>
-    <h1>Musings by S Akash</h1>
-    <nav>
-      <a href="archive.html">Archive</a>
-      <a href="about.html">About</a>
-      <a href="../index.html">Main Site</a>
-    </nav>
-  </header>
-  <main>
-    <!-- Article 1 -->
-    <article>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <div class="blog-header">
+      <h1>Musings by S Akash</h1>
+      <nav class="blog-header__nav">
+        <a href="archive.html">Archive</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+
+    <article class="article-card">
+      <h2><a href="post4.html">Attention Mechanisms That Actually Matter: From Multi-Head to PagedAttention</a></h2>
+      <div class="meta">Mar 25, 2026</div>
+      <div class="categories"><span>ML Systems</span><span>GPU Computing</span></div>
+      <p>A deep dive into four attention mechanisms that power modern LLMs, from the original transformer to the serving tricks that make inference feasible at scale.</p>
+      <a class="read-more" href="post4.html">Read more</a>
+    </article>
+
+    <article class="article-card">
+      <h2><a href="post5.html">How Shazam Identifies a Song in 10 Seconds (The Math Is Beautiful)</a></h2>
+      <div class="meta">Mar 24, 2026</div>
+      <div class="categories"><span>Signal Processing</span><span>Essay</span></div>
+      <p>A 20 year old paper turned an intractable search problem into a hash table lookup. Fourier transforms, constellation maps, and the most elegant algorithm I have ever encountered.</p>
+      <a class="read-more" href="post5.html">Read more</a>
+    </article>
+
+    <article class="article-card">
+      <h2><a href="post6.html">Dyson Spheres and the Kardashev Scale: Engineering at the Scale of Stars</a></h2>
+      <div class="meta">Mar 23, 2026</div>
+      <div class="categories"><span>Science</span><span>Essay</span></div>
+      <p>What it means to harness a star's full output, why Dyson Spheres are the defining structure of a Type II civilization, and where humanity sits on the Kardashev Scale right now.</p>
+      <a class="read-more" href="post6.html">Read more</a>
+    </article>
+
+    <article class="article-card">
+      <h2><a href="post8.html">NVIDIA GPU Architectures: Ampere to Blackwell, Through a Kernel Developer's Eyes</a></h2>
+      <div class="meta">Mar 22, 2026</div>
+      <div class="categories"><span>GPU Computing</span><span>CUDA</span></div>
+      <p>Four generations of NVIDIA GPUs, from the perspective of someone who actually writes the kernels that run on them. What the specs mean when you are profiling at 2am.</p>
+      <a class="read-more" href="post8.html">Read more</a>
+    </article>
+
+    <article class="article-card">
+      <h2><a href="post7.html">To Climb the Kardashev Scale, We Need AI That Thinks Like Terence Tao</a></h2>
+      <div class="meta">Mar 21, 2026</div>
+      <div class="categories"><span>Essay</span><span>AI</span><span>Technology</span></div>
+      <p>Why civilizational scale engineering challenges require not one brilliant mind but thousands working simultaneously, and why that means superhuman AI is not optional.</p>
+      <a class="read-more" href="post7.html">Read more</a>
+    </article>
+
+    <article class="article-card">
+      <h2><a href="post9.html">I Built gpucheck Because GPU Kernel Testing Shouldn't Feel Like Guesswork</a></h2>
+      <div class="meta">Mar 20, 2026</div>
+      <div class="categories"><span>Open Source</span><span>GPU Computing</span></div>
+      <p>The story behind gpucheck, a pytest plugin for GPU kernels. 511 test configs, 8 real bugs found in Triton and PyTorch, and why the GPU community deserves better testing tools.</p>
+      <a class="read-more" href="post9.html">Read more</a>
+    </article>
+
+    <article class="article-card">
       <h2><a href="post1.html">Learning to Build a Testing Framework</a></h2>
       <div class="meta">Oct 05, 2025</div>
       <div class="categories"><span>Research</span></div>
       <p>A story about how I developed a framework to test translations between programming languages.</p>
       <a class="read-more" href="post1.html">Read more</a>
     </article>
-    <!-- Article 2 -->
-    <article>
+
+    <article class="article-card">
       <h2><a href="post2.html">Tackling Ambiguities in Protocols</a></h2>
       <div class="meta">Sep 13, 2025</div>
       <div class="categories"><span>Essay</span><span>Technology</span></div>
       <p>Reflections on discovering ambiguities in protocol specifications and why it matters.</p>
       <a class="read-more" href="post2.html">Read more</a>
     </article>
-    <!-- Article 3 -->
-    <article>
+
+    <article class="article-card">
       <h2><a href="post3.html">Why I Deactivated My Social Accounts</a></h2>
       <div class="meta">Apr 20, 2025</div>
       <div class="categories"><span>Digital Wellbeing</span></div>
@@ -43,11 +102,6 @@
       <a class="read-more" href="post3.html">Read more</a>
     </article>
   </main>
-  <footer>
-    &copy; 2025 Musings by S Akash
-  </footer>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
 </body>
 </html>
-
-
-
