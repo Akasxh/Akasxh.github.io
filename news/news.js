@@ -1,11 +1,11 @@
 ﻿window.AKASH_NEWS = [
   {
     date: "2026-06-14",
-    summary: "Won <span class=\"news-highlight\">1st place</span> at the UCWS Hackathon in Singapore with <span class=\"news-highlight\">Re-Forge</span>, a multi-agent AI system — fully sponsored from India and backed by 130+ community supporters (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7472127175358558208/\" target=\"_blank\" rel=\"noopener\">event</a>)."
+    summary: "Won <span class=\"news-highlight\">1st place</span> at the UCWS Hackathon in Singapore with <span class=\"news-highlight\">Re-Forge</span>, a multi-agent AI system, fully sponsored from India and backed by 130+ community supporters (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7472127175358558208/\" target=\"_blank\" rel=\"noopener\">event</a>)."
   },
   {
     date: "2026-05-20",
-    summary: "<span class=\"news-highlight\">Two papers</span> accepted at the <a href=\"https://scale-icml-2026.github.io/\" target=\"_blank\" rel=\"noopener\">SCALE workshop at ICML 2026</a> — <a href=\"https://github.com/Akasxh/tool-fabrication-rate\" target=\"_blank\" rel=\"noopener\">Who Hallucinates Tools, How Often, and What Fixes It</a>, on per-call tool-name fabrication in LLM agents with a training-free fix, and <span class=\"news-highlight\">Compute-Aware Mixture-of-Agents</span>, verifier-gated adaptive aggregation under a fixed token budget."
+    summary: "<span class=\"news-highlight\">Two papers</span> accepted at the <a href=\"https://scale-icml-2026.github.io/accepted_papers.html\" target=\"_blank\" rel=\"noopener\">SCALE workshop at ICML 2026</a>: Tool-Existence Hallucination Is Tier-Dependent and Intra-Family Non-Monotonic on BFCL Multi-Turn, and Compute-Aware Mixture-of-Agents: Verifier-Gated Adaptive Aggregation under a Fixed Token Budget."
   },
   {
     date: "2026-05-01",
@@ -13,7 +13,7 @@
   },
   {
     date: "2026-04-01",
-    summary: "Invited to a <a href=\"https://www.ycombinator.com/\" target=\"_blank\" rel=\"noopener\">Y Combinator</a> interview for <span class=\"news-highlight\">Subtier</span>, and selected for <span class=\"news-highlight\">YC Startup School India</span> (Bengaluru) — one of 2,000 founders at YC's first-ever India event."
+    summary: "Invited to a <a href=\"https://www.ycombinator.com/\" target=\"_blank\" rel=\"noopener\">Y Combinator</a> interview for <span class=\"news-highlight\">Subtier</span>, and selected for <span class=\"news-highlight\">YC Startup School India</span> (Bengaluru), one of 2,000 founders at YC's first-ever India event."
   },
   {
     date: "2026-03-01",

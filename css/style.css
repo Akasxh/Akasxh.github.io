@@ -169,6 +169,10 @@ body {
 .news-item__date {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 104px;
+  white-space: nowrap;
   gap: 6px;
   padding: 2px 8px;
   border-radius: 999px;
@@ -177,12 +181,12 @@ body {
   font-weight: 600;
   letter-spacing: 0.05em;
   color: rgba(17, 24, 39, 0.6);
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 
 .news-item__summary {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-size: 0.8rem;
   color: rgba(17, 24, 39, 0.7);
