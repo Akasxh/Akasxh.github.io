@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Can C++26 Reflection Pick Your GPU at Runtime? - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">Can C++26 Reflection Pick Your GPU at Runtime?</h1>
+      <div class="post-meta">Jun 18, 2026 <span class="reading-time">7 min read</span></div>
+      <div class="post-categories"><span>C++</span> <span>GPU Computing</span> <span>Compilers</span></div>
+      <div class="post-body">
+
+        <h2>A LinkedIn Post That Got Stuck in My Head</h2>
+
+        <p>A Google researcher posted something on LinkedIn that I have not been able to stop thinking about. The gist: modern C++ is getting genuinely cool, because C++26 compile-time reflection uses a neat trick to represent heterogeneous data with a single scalar value, <code>std::meta::info</code>. And, he argued, you can steal that trick to represent runtime entities too. He is giving an <a href="https://www.accu.org/">ACCU</a> talk on building a homogeneous runtime reflection registry off the back of it.</p>
+
+        <p>The moment I read "represent heterogeneous things with one scalar," my brain immediately jumped to the problem I actually live in: heterogeneous GPUs. Could you steal the same trick to pick a GPU backend at runtime? I want to walk through what the trick really is, then be honest about whether it survives contact with a GPU.</p>
+
+        <h2>What std::meta::info Actually Is</h2>
+
+        <p>First, let me get the C++ part right, because it is easy to oversell. <code>std::meta::info</code> is a new scalar, opaque handle type from the C++26 <code>&lt;meta&gt;</code> header (<a href="https://www.cppreference.com/cpp/meta/info">cppreference</a>). One <code>std::meta::info</code> value represents a program entity during compilation: a class, a member function, a variable, a namespace, a base class, whatever. It is opaque. You do not poke at its bits. You treat it as an ID.</p>
+
+        <p>The mental model that made it click for me: an <code>info</code> value is a pointer into the compiler's AST. Instead of doing heavy template metaprogramming to interrogate a type, you take an ordinary value (the handle) and ask the compiler questions about it with plain <code>constexpr</code> code. The reflection operator <code>^^</code> produces an <code>info</code> from an entity, and "splicers" turn an <code>info</code> back into code you can compile.</p>
+
+        <p>So you write loops and <code>if</code> statements over <code>info</code> values, at compile time, in normal-looking C++. You ask "what is your name," "how many parameters," "what are your members," "what is your type." It is value-based reflection, not the recursive template puzzle box we have suffered through for fifteen years.</p>
+
+        <h2>The Neat Trick: One Key Type, Many Targets</h2>
+
+        <p>Here is the part the LinkedIn post was excited about. Because every entity (a class, a function, a member, a constant) collapses to one uniform scalar type, you can put them all in the same container. A class reflection and a function reflection have the same type: <code>std::meta::info</code>. So you can build a homogeneous registry, generated at compile time, and use it to identify and dispatch at runtime.</p>
+
+        <p>The CPU version looks roughly like this. One key type, heterogeneous targets behind a variant:</p>
+
+<pre><code>#include &lt;meta&gt;
+#include &lt;unordered_map&gt;
+#include &lt;variant&gt;
+
+struct FieldInfo  { std::meta::info type;  std::size_t offset; };
+struct MethodInfo { std::meta::info ret;   int arity; };
+using EntityInfo = std::variant&lt;FieldInfo, MethodInfo&gt;;
+
+// built at compile time by walking ^^SomeType's members,
+// then materialized into a normal runtime map.
+const std::unordered_map&lt;std::meta::info, EntityInfo&gt; registry = build_registry(^^Widget);
+
+// at runtime you look up a reflected handle and dispatch on it.
+auto it = registry.find(some_handle);
+</code></pre>
+
+        <p>That is the whole idea in one sentence: collapse everything to one key, then write one dispatch path instead of a tangle of overloads. It is elegant, and it is the kind of thing that makes the boilerplate of serializers, ORMs, and RPC layers mostly evaporate.</p>
+
+        <h2>So... Could We Steal It for GPUs?</h2>
+
+        <p>This is where I got excited and then made myself slow down. The dream: represent kernels uniformly with reflected handles, keep them in one registry, and select the GPU backend at runtime. Write one logical kernel, let the machine pick NVIDIA or AMD or Apple under the hood. Same trick, bigger payoff.</p>
+
+        <p>I have to be honest about why this is harder than it looks, because the reason is not a detail. It is the whole game.</p>
+
+        <h2>Why the CPU Trick Does Not Cross the GPU Boundary</h2>
+
+        <p>On CPUs the trick works because all the targets share one world. Same-ish ISA family, one ABI, one address space. A function pointer is portable: you can store it and later call it, and it just works. Reflection there is bookkeeping over things that already live in the same runtime.</p>
+
+        <p>On GPUs, none of that holds. Different vendors mean different ISAs: NVIDIA PTX and SASS, AMD RDNA and CDNA, Intel, plus Apple Metal. Different runtimes and driver stacks: CUDA, ROCm and HIP, SYCL and Level Zero, Metal. There is no shared ABI. There are separate address spaces. And crucially, a kernel is not a function pointer you can stash in a map. It is a separately compiled artifact (a cubin, a code object, a SPIR-V module, a Metal library) that you launch through a host API.</p>
+
+        <p>And <code>std::meta::info</code> is a compile-time, single-translation-unit, host-language construct. It does not cross the host/device boundary, and it does not unify backends that were compiled by entirely different toolchains. A handle into the host compiler's AST knows nothing about a cubin that <code>nvcc</code> produced in a separate compile. Reflection is not a portability layer. Saying otherwise would be the overclaim that makes this whole post wrong.</p>
+
+        <h2>What It Actually Could Do: Clean Up the Host Side</h2>
+
+        <p>Now the constructive part, because I do think there is something real here. Reflection cannot erase the ISA and ABI gap. But it can make the host-side dispatch and registry layer much cleaner, and that layer is genuinely painful today.</p>
+
+        <p>Picture a kernel registry keyed by a reflected handle, where each logical kernel maps to a set of per-backend compiled variants plus reflected metadata: dtypes, arity, launch bounds. The artifacts are still produced by their own toolchains. Reflection just gives you a tidy, value-based way to enumerate and wire them up, instead of the pile of macros, X-macros, and template dispatch tables that portability layers use today.</p>
+
+<pre><code>// one logical kernel, many precompiled backend artifacts.
+struct KernelVariants {
+  std::span&lt;const std::byte&gt; cuda_cubin;   // from nvcc, separate compile
+  std::span&lt;const std::byte&gt; hip_object;   // from hipcc
+  std::span&lt;const std::byte&gt; spirv;        // for SYCL / Level Zero
+  std::span&lt;const std::byte&gt; metal_lib;    // for Apple
+};
+struct KernelMeta { int arity; LaunchBounds bounds; /* reflected dtypes... */ };
+
+// reflection walks annotated kernel functors at compile time
+// and emits this homogeneous table. one key, many targets.
+const std::unordered_map&lt;std::meta::info, std::pair&lt;KernelMeta, KernelVariants&gt;&gt; kernels
+    = reflect_kernels(^^SaxpyKernel, ^^SoftmaxKernel /* ... */);
+
+// at runtime a thin selector asks the device what it is,
+// then hands back the matching precompiled artifact.
+const auto& v = kernels.at(handle).second;
+auto blob = select_for(current_device(), v);  // picks cubin vs spirv vs metal
+launch(blob, args);
+</code></pre>
+
+        <p>So reflection helps you organize and select. It replaces glue. It does not replace codegen. You still compile each backend separately, and a thin runtime selector queries device capabilities and picks the right precompiled blob. That is a real and useful narrowing of the problem, just not the magic one.</p>
+
+        <h2>Where This Connects to Work I Have Actually Done</h2>
+
+        <p>I am not speculating from the outside here. During my GSoC at CERN-HSF on TMVA SOFIE, I used the <a href="https://github.com/alpaka-group/alpaka">ALPAKA</a> portability layer to run the same code across vendor-agnostic GPU backends. Frameworks like ALPAKA, <a href="https://github.com/kokkos/kokkos">Kokkos</a>, and SYCL already solve "write once, run on many backends," and they do it with templates and separate compilation. Reflection would not replace them. The ISA gap is still bridged by their backends.</p>
+
+        <p>What reflection could do is shrink the glue around them: a reflected, value-based kernel registry instead of a template-heavy dispatch table. That hits home for me beyond SOFIE. With <a href="https://github.com/Akasxh/gpucheck">gpucheck</a> I spend a lot of time enumerating kernels across dtypes and devices, and in my sparse-attention work I am constantly registering and selecting kernel variants. A clean way to declare a kernel once, attach metadata, and have the registry fall out of reflection would genuinely cut boilerplate I write by hand today.</p>
+
+        <h2>What I Would Actually Prototype</h2>
+
+        <p>If I sat down to build this, here is the small, honest version. A <code>constexpr</code> reflection pass that walks annotated kernel functors and emits a homogeneous registry of <code>{info handle -&gt; backend artifacts + metadata}</code>. Then a runtime that resolves device to artifact: ask the driver what we are on, look up the handle, pick the matching blob, launch it.</p>
+
+        <p>The catch, stated plainly so nobody is surprised: you still compile each backend separately with its own toolchain. Reflection does not unify them. It just stops the boilerplate from multiplying every time you add a kernel or a backend. That is a modest claim, and modest claims are the ones that survive.</p>
+
+        <p>So, can C++26 reflection pick your GPU at runtime? Not on its own, and not in the way the one-scalar trick might tempt you to believe. But it could make the layer that does the picking dramatically less miserable to write. For someone who maintains kernel dispatch tables by hand, that is not a small thing. I think it is worth prototyping, and I might.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
