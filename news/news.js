@@ -20,7 +20,7 @@
     summary: "Joined <a href=\"https://autostep.ai/\" target=\"_blank\" rel=\"noopener\">Autostep (YC S25)</a> with <a href=\"https://www.linkedin.com/in/aidan-pratt/\" target=\"_blank\" rel=\"noopener\">Aidan Pratt</a> as a <span class=\"news-highlight\">founding engineer</span>, building systems that find and automate repetitive, high-cost work."
   },
   {
-    date: "2026-02-20",
+    date: "2026-04-18",
     summary: "Selected to present at the <a href=\"https://llvm.swoogo.com/2026eurollvm/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">2026 EuroLLVM Developers' Meeting</span></a> in Dublin, with travel sponsorship for work on vendor-agnostic ML kernels."
   },
   {
