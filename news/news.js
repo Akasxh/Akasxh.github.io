@@ -1,4 +1,32 @@
 ﻿window.AKASH_NEWS = [
+  {
+    date: "2026-06-14",
+    summary: "Won <span class=\"news-highlight\">1st place</span> at the UCWS Hackathon in Singapore with <span class=\"news-highlight\">Re-Forge</span>, a multi-agent AI system — fully sponsored from India and backed by 130+ community supporters (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7472127175358558208/\" target=\"_blank\" rel=\"noopener\">event</a>)."
+  },
+  {
+    date: "2026-05-20",
+    summary: "<span class=\"news-highlight\">Two papers</span> accepted at the <a href=\"https://scale-icml-2026.github.io/\" target=\"_blank\" rel=\"noopener\">SCALE workshop at ICML 2026</a> — <a href=\"https://github.com/Akasxh/tool-fabrication-rate\" target=\"_blank\" rel=\"noopener\">Who Hallucinates Tools, How Often, and What Fixes It</a>, on per-call tool-name fabrication in LLM agents with a training-free fix, and <span class=\"news-highlight\">Compute-Aware Mixture-of-Agents</span>, verifier-gated adaptive aggregation under a fixed token budget."
+  },
+  {
+    date: "2026-05-01",
+    summary: "Selected for the <span class=\"news-highlight\">Canopy Founders Accelerator</span> at <a href=\"https://f.inc/\" target=\"_blank\" rel=\"noopener\">Founders, Inc. (f.inc)</a>, a competitive cohort-based program for high-output founders and engineers."
+  },
+  {
+    date: "2026-04-01",
+    summary: "Invited to a <a href=\"https://www.ycombinator.com/\" target=\"_blank\" rel=\"noopener\">Y Combinator</a> interview for <span class=\"news-highlight\">Subtier</span>, and selected for <span class=\"news-highlight\">YC Startup School India</span> (Bengaluru) — one of 2,000 founders at YC's first-ever India event."
+  },
+  {
+    date: "2026-03-01",
+    summary: "Joined <a href=\"https://autostep.ai/\" target=\"_blank\" rel=\"noopener\">Autostep (YC S25)</a> with <a href=\"https://www.linkedin.com/in/aidan-pratt/\" target=\"_blank\" rel=\"noopener\">Aidan Pratt</a> as a <span class=\"news-highlight\">founding engineer</span>, building systems that find and automate repetitive, high-cost work."
+  },
+  {
+    date: "2026-02-20",
+    summary: "Selected to present at the <a href=\"https://llvm.swoogo.com/2026eurollvm/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">2026 EuroLLVM Developers' Meeting</span></a> in Dublin, with travel sponsorship for work on vendor-agnostic ML kernels."
+  },
+  {
+    date: "2026-04-21",
+    summary: "Won the <a href=\"https://hashkey.com/\" target=\"_blank\" rel=\"noopener\">HashKey Chain</a> Hackathon with <a href=\"https://www.flowlink.ink/\" target=\"_blank\" rel=\"noopener\">FlowLink</a>, earning a fully-sponsored invite to present at the <span class=\"news-highlight\">Hong Kong Web3 Festival</span>."
+  },
    {
     "date": "2025-12-16",
     "summary": "Our paper <a href=\"https://drive.google.com/file/d/1u_ACndtHPhG4wrcnZQVX6PbbCJKhitro/\" target=\"_blank\" rel=\"noopener\">SUMMIR: A Hallucination-Aware Framework for Ranking Sports Insights from LLMs</a>, has been accepted to the main track of <a href=\"https://ecir2026.eu/\" target=\"_blank\" rel=\"noopener\">ECIR 2026</a>."
