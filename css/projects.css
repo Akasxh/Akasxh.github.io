@@ -1,20 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap");
 
 :root {
-  --paper: #E7EAF1;
-  --ink: #0B1222;
-  --ink-2: #141E36;
-  --line-dark: rgba(148, 163, 184, 0.16);
-  --line-light: rgba(15, 23, 42, 0.10);
-  --indigo: #6366F1;
-  --violet: #8B5CF6;
-  --amber: #F4B53F;
-  --text-d: rgba(233, 238, 247, 0.93);
-  --muted-d: rgba(184, 199, 224, 0.62);
-  --cat-research: #a78bfa;
-  --cat-systems: #818cf8;
-  --cat-ml: #38bdf8;
-  --cat-security: #fb7185;
+  --paper: #E9ECF2;
+  --card: #FFFFFF;
+  --head: #F7F9FC;
+  --ink: #0F172A;
+  --muted: #475569;
+  --line: #E6EAF1;
+  --line-soft: rgba(15, 23, 42, 0.08);
+  --indigo: #4F46E5;
+  --amber: #D97706;
+  --cat-research: #7C3AED;
+  --cat-systems: #4F46E5;
+  --cat-ml: #0284C7;
+  --cat-security: #E11D48;
 }
 
 * { box-sizing: border-box; }
@@ -27,14 +26,13 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: var(--paper);
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.032) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.032) 1px, transparent 1px),
-    radial-gradient(1100px 620px at 12% -12%, rgba(99, 102, 241, 0.12), transparent 60%),
-    radial-gradient(960px 520px at 102% -4%, rgba(139, 92, 246, 0.10), transparent 55%);
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    radial-gradient(1100px 620px at 12% -12%, rgba(99, 102, 241, 0.1), transparent 60%),
+    radial-gradient(960px 520px at 102% -4%, rgba(139, 92, 246, 0.08), transparent 55%);
   background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
 }
 
-/* the blueprint grid replaces the old blur orbs */
 .background-shapes { display: none; }
 
 .page-container {
@@ -45,10 +43,8 @@ body {
   padding: 6px 0 100px;
 }
 
-/* ---------- HERO ---------- */
-.projects-hero {
-  margin: 8px 0 34px;
-}
+/* ---------- HERO (already light) ---------- */
+.projects-hero { margin: 8px 0 34px; }
 
 .hero-eyebrow {
   display: inline-block;
@@ -70,9 +66,7 @@ body {
   color: #0e1730;
 }
 
-.hero-title .dot {
-  color: var(--amber);
-}
+.hero-title .dot { color: var(--amber); }
 
 .hero-thesis {
   margin: 18px 0 0;
@@ -90,7 +84,7 @@ body {
   align-items: center;
   margin-top: 24px;
   padding-top: 18px;
-  border-top: 1px solid var(--line-light);
+  border-top: 1px solid var(--line-soft);
 }
 
 .hero-legend .count {
@@ -114,12 +108,7 @@ body {
   color: rgba(30, 41, 59, 0.62);
 }
 
-.legend-item i {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-}
-
+.legend-item i { width: 8px; height: 8px; border-radius: 999px; }
 .legend-item[data-cat="research"] i { background: var(--cat-research); }
 .legend-item[data-cat="systems"]  i { background: var(--cat-systems); }
 .legend-item[data-cat="ml"]       i { background: var(--cat-ml); }
@@ -139,7 +128,7 @@ body {
   }
 }
 
-/* ---------- CARD ---------- */
+/* ---------- CARD (light) ---------- */
 .card {
   display: block;
   text-decoration: none;
@@ -151,30 +140,24 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(165deg, var(--ink), var(--ink-2));
-  border: 1px solid var(--line-dark);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 14px 30px rgba(11, 18, 34, 0.28);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.07);
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover > article {
   transform: translateY(-6px);
-  border-color: rgba(129, 140, 248, 0.55);
-  box-shadow: 0 26px 56px rgba(11, 18, 34, 0.44), 0 0 0 1px rgba(129, 140, 248, 0.16);
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(99, 102, 241, 0.1);
 }
 
-.card:focus-visible {
-  outline: none;
-}
+.card:focus-visible { outline: none; }
+.card:focus-visible > article { outline: 2px solid var(--indigo); outline-offset: 3px; }
 
-.card:focus-visible > article {
-  outline: 2px solid var(--indigo);
-  outline-offset: 3px;
-}
-
-/* card header (the framed "diagram") */
+/* card header (light image panel) */
 .card__head {
   position: relative;
   height: 186px;
@@ -182,52 +165,39 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-bottom: 1px solid var(--line-dark);
-  background-color: #0a1020;
+  border-bottom: 1px solid var(--line);
+  background-color: var(--head);
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    radial-gradient(130% 150% at 50% -25%, rgba(99, 102, 241, 0.18), transparent 60%);
+    linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    radial-gradient(130% 150% at 50% -25%, rgba(99, 102, 241, 0.1), transparent 60%);
   background-size: 22px 22px, 22px 22px, 100% 100%;
 }
 
-/* registration corner ticks (technical-drawing signature) */
+/* registration corner ticks */
 .card__head::before,
 .card__head::after {
   content: "";
   position: absolute;
   width: 13px;
   height: 13px;
-  border-color: rgba(148, 163, 184, 0.42);
+  border-color: rgba(15, 23, 42, 0.22);
   pointer-events: none;
 }
 
-.card__head::before {
-  top: 12px;
-  left: 12px;
-  border-top: 1.5px solid;
-  border-left: 1.5px solid;
-}
-
-.card__head::after {
-  bottom: 12px;
-  right: 12px;
-  border-bottom: 1.5px solid;
-  border-right: 1.5px solid;
-}
+.card__head::before { top: 12px; left: 12px; border-top: 1.5px solid; border-left: 1.5px solid; }
+.card__head::after { bottom: 12px; right: 12px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
 
 .card__head svg {
   position: relative;
   z-index: 1;
   max-width: 82%;
   height: auto;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.1));
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
-.card:hover .card__head svg {
-  transform: scale(1.035);
-}
+.card:hover .card__head svg { transform: scale(1.035); }
 
 .card__cat {
   position: absolute;
@@ -242,20 +212,14 @@ body {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(226, 232, 240, 0.7);
+  color: rgba(15, 23, 42, 0.55);
 }
 
-.card__cat i {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--cat-systems);
-}
-
-.card__cat[data-cat="research"] i { background: var(--cat-research); box-shadow: 0 0 9px var(--cat-research); }
-.card__cat[data-cat="systems"]  i { background: var(--cat-systems);  box-shadow: 0 0 9px var(--cat-systems); }
-.card__cat[data-cat="ml"]       i { background: var(--cat-ml);       box-shadow: 0 0 9px var(--cat-ml); }
-.card__cat[data-cat="security"] i { background: var(--cat-security); box-shadow: 0 0 9px var(--cat-security); }
+.card__cat i { width: 7px; height: 7px; border-radius: 999px; background: var(--cat-systems); }
+.card__cat[data-cat="research"] i { background: var(--cat-research); box-shadow: 0 0 8px rgba(124, 58, 237, 0.45); }
+.card__cat[data-cat="systems"]  i { background: var(--cat-systems);  box-shadow: 0 0 8px rgba(79, 70, 229, 0.45); }
+.card__cat[data-cat="ml"]       i { background: var(--cat-ml);       box-shadow: 0 0 8px rgba(2, 132, 199, 0.45); }
+.card__cat[data-cat="security"] i { background: var(--cat-security); box-shadow: 0 0 8px rgba(225, 29, 72, 0.45); }
 
 .card__tag {
   position: absolute;
@@ -264,11 +228,11 @@ body {
   z-index: 2;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.66rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.01em;
   color: var(--amber);
-  background: rgba(244, 181, 63, 0.10);
-  border: 1px solid rgba(244, 181, 63, 0.32);
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.28);
   border-radius: 6px;
   padding: 3px 8px;
 }
@@ -287,7 +251,7 @@ body {
   font-weight: 600;
   font-size: 1.3rem;
   letter-spacing: -0.012em;
-  color: var(--text-d);
+  color: var(--ink);
 }
 
 .card__desc {
@@ -295,7 +259,7 @@ body {
   flex: 1;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--muted-d);
+  color: var(--muted);
 }
 
 .card__badges {
@@ -310,9 +274,9 @@ body {
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: rgba(199, 210, 254, 0.82);
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(129, 140, 248, 0.22);
+  color: #4338CA;
+  background: rgba(99, 102, 241, 0.09);
+  border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 6px;
   padding: 4px 9px;
 }
