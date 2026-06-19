@@ -372,17 +372,18 @@ body {
 }
 
 .post-body pre {
-  background: rgba(15, 23, 42, 0.88);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
-  padding: 24px 28px;
+  padding: 22px 26px;
   margin: 24px 0;
   overflow-x: auto;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
 }
 
 .post-body pre code {
   background: none;
-  color: #e2e8f0;
+  color: #1e293b;
   padding: 0;
   font-size: 0.82rem;
   line-height: 1.7;

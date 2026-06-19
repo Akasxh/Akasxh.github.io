@@ -1,142 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" role="img" aria-label="The Kardashev Scale: three tiers of civilizational energy consumption: Type I planet (~4x10^16 W), Type II star (~4x10^26 W), Type III galaxy (~4x10^37 W), with humanity marked at 0.73 on Sagan's interpolated scale.">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+    <!-- faint background dot grid -->
+    <pattern id="kdDots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#EEF2F7"/>
+    </pattern>
+
+    <!-- tier accent gradients (light tint fills) -->
+    <radialGradient id="kdPlanet" cx="42%" cy="38%" r="70%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="55%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </radialGradient>
+    <radialGradient id="kdStar" cx="45%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="60%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </radialGradient>
+    <radialGradient id="kdGalaxy" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#C4B5FD"/>
+      <stop offset="55%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Sagan scale bar: indigo -> violet -> amber, meaning ascending tiers -->
+    <linearGradient id="kdBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#6366F1"/>
+      <stop offset="36%" stop-color="#6366F1"/>
+      <stop offset="58%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
     </linearGradient>
-    <linearGradient id="scaleBar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#4f46e5"/>
-      <stop offset="30%" stop-color="#6366f1"/>
-      <stop offset="55%" stop-color="#a855f7"/>
-      <stop offset="80%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#fbbf24"/>
-    </linearGradient>
-    <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#fbbf24"/>
-      <stop offset="50%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="earthGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#22c55e"/>
-      <stop offset="40%" stop-color="#3b82f6"/>
-      <stop offset="100%" stop-color="#1e40af" stop-opacity="0.5"/>
-    </radialGradient>
-    <radialGradient id="galaxyGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#c084fc"/>
-      <stop offset="60%" stop-color="#a855f7"/>
-      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.3"/>
-    </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+
+    <marker id="kdArrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="1100" height="500" fill="url(#bg)"/>
+  <!-- panel -->
+  <rect x="0.5" y="0.5" width="1099" height="499" rx="16" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <rect x="0.5" y="0.5" width="1099" height="499" rx="16" fill="url(#kdDots)"/>
 
-  <!-- Stars -->
-  <circle cx="50" cy="30" r="1.5" fill="white" opacity="0.2"/>
-  <circle cx="150" cy="80" r="1" fill="white" opacity="0.15"/>
-  <circle cx="280" cy="20" r="1.2" fill="white" opacity="0.25"/>
-  <circle cx="400" cy="60" r="0.8" fill="white" opacity="0.1"/>
-  <circle cx="520" cy="35" r="1.5" fill="white" opacity="0.2"/>
-  <circle cx="650" cy="15" r="1" fill="white" opacity="0.3"/>
-  <circle cx="780" cy="50" r="1.3" fill="white" opacity="0.15"/>
-  <circle cx="900" cy="25" r="0.9" fill="white" opacity="0.2"/>
-  <circle cx="1020" cy="70" r="1.1" fill="white" opacity="0.25"/>
-  <circle cx="100" cy="450" r="1" fill="white" opacity="0.15"/>
-  <circle cx="300" cy="470" r="1.4" fill="white" opacity="0.2"/>
-  <circle cx="500" cy="440" r="0.8" fill="white" opacity="0.1"/>
-  <circle cx="700" cy="460" r="1.2" fill="white" opacity="0.25"/>
-  <circle cx="850" cy="480" r="1" fill="white" opacity="0.15"/>
-  <circle cx="1050" cy="450" r="1.3" fill="white" opacity="0.2"/>
-  <circle cx="70" cy="250" r="0.7" fill="white" opacity="0.1"/>
-  <circle cx="1060" cy="200" r="1" fill="white" opacity="0.15"/>
-  <circle cx="200" cy="150" r="0.9" fill="white" opacity="0.2"/>
-  <circle cx="950" cy="130" r="1.1" fill="white" opacity="0.15"/>
-  <circle cx="440" cy="130" r="1" fill="white" opacity="0.1"/>
-  <circle cx="750" cy="100" r="0.6" fill="white" opacity="0.25"/>
+  <!-- title -->
+  <text x="44" y="52" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="30" font-weight="700" fill="#0F172A">The Kardashev Scale</text>
+  <text x="44" y="78" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="18" fill="#64748B">Ranking civilizations by the energy they can harness</text>
 
-  <!-- Title -->
-  <text x="550" y="55" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="bold" fill="#e2e8f0">The Kardashev Scale</text>
-  <text x="550" y="80" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#94a3b8">Classifying civilizations by energy consumption</text>
+  <!-- Sagan formula chip (top-right) -->
+  <rect x="784" y="30" width="272" height="44" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.5"/>
+  <text x="804" y="49" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="12.5" font-weight="600" fill="#4F46E5">SAGAN INTERPOLATION</text>
+  <text x="804" y="68" font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-size="15" font-weight="600" fill="#334155">K = (log&#8321;&#8320; P &#8722; 6) / 10</text>
 
-  <!-- Scale bar -->
-  <rect x="100" y="250" width="900" height="28" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <rect x="100" y="250" width="900" height="28" rx="14" fill="url(#scaleBar)" opacity="0.8"/>
-
-  <!-- Scale tick marks -->
-  <line x1="100" y1="246" x2="100" y2="283" stroke="#475569" stroke-width="1.5"/>
-  <line x1="400" y1="243" x2="400" y2="286" stroke="#e2e8f0" stroke-width="2" opacity="0.5"/>
-  <line x1="650" y1="243" x2="650" y2="286" stroke="#e2e8f0" stroke-width="2" opacity="0.5"/>
-  <line x1="900" y1="243" x2="900" y2="286" stroke="#e2e8f0" stroke-width="2" opacity="0.5"/>
-  <text x="100" y="305" text-anchor="middle" font-family="monospace" font-size="15" fill="#94a3b8">0</text>
-  <text x="400" y="305" text-anchor="middle" font-family="monospace" font-size="15" fill="#94a3b8">I</text>
-  <text x="650" y="305" text-anchor="middle" font-family="monospace" font-size="15" fill="#94a3b8">II</text>
-  <text x="900" y="305" text-anchor="middle" font-family="monospace" font-size="15" fill="#94a3b8">III</text>
-
-  <!-- Humanity marker at 0.73 (0.73/3 * 900 + 100 = 319) -->
-  <line x1="319" y1="218" x2="319" y2="250" stroke="#ef4444" stroke-width="2.5"/>
-  <polygon points="319,248 314,238 324,238" fill="#ef4444"/>
-  <circle cx="319" cy="210" r="5" fill="#ef4444" filter="url(#glow)">
-    <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
-  </circle>
-  <rect x="222" y="185" width="194" height="26" rx="8" fill="#ef4444" opacity="0.12" stroke="#ef4444" stroke-width="1" stroke-opacity="0.4"/>
-  <text x="319" y="203" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" font-weight="bold" fill="#fca5a5">Humanity Today (0.73)</text>
-
-  <!-- Type I: Earth -->
-  <g transform="translate(400, 140)">
-    <circle cx="0" cy="0" r="38" fill="url(#earthGlow)" filter="url(#glow)"/>
-    <ellipse cx="-10" cy="-6" rx="14" ry="20" fill="#22c55e" opacity="0.5"/>
-    <ellipse cx="12" cy="10" rx="10" ry="12" fill="#22c55e" opacity="0.4"/>
-    <ellipse cx="-6" cy="18" rx="7" ry="6" fill="#22c55e" opacity="0.3"/>
-    <circle cx="0" cy="0" r="38" fill="none" stroke="#60a5fa" stroke-width="1.5" opacity="0.3"/>
-    <text x="0" y="60" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="bold" fill="#60a5fa">Type I</text>
-    <text x="0" y="82" text-anchor="middle" font-family="monospace" font-size="15" fill="#cbd5e1">~10&#xb9;&#x2076; W</text>
+  <!-- ============ TIER 1: PLANET ============ -->
+  <g transform="translate(247,182)">
+    <!-- planet -->
+    <circle cx="0" cy="0" r="46" fill="url(#kdPlanet)"/>
+    <ellipse cx="-16" cy="-12" rx="13" ry="18" fill="#34D399" opacity="0.85"/>
+    <ellipse cx="12" cy="9" rx="11" ry="13" fill="#34D399" opacity="0.8"/>
+    <ellipse cx="-4" cy="20" rx="8" ry="6" fill="#34D399" opacity="0.7"/>
+    <ellipse cx="20" cy="-16" rx="6" ry="7" fill="#34D399" opacity="0.6"/>
+    <circle cx="0" cy="0" r="46" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.55"/>
+    <circle cx="-15" cy="-16" r="40" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.10"/>
   </g>
-  <text x="400" y="340" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#60a5fa">Planetary Energy</text>
+  <text x="247" y="266" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#0EA5E9">TYPE I</text>
+  <text x="247" y="288" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="18" font-weight="700" fill="#0F172A">Planetary</text>
+  <text x="247" y="312" text-anchor="middle" font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-size="20" font-weight="700" fill="#0284C7">&#8776; 4&#215;10&#185;&#8310; W</text>
+  <text x="247" y="333" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13.5" fill="#64748B">all energy of its home planet</text>
 
-  <!-- Type II: Sun -->
-  <g transform="translate(650, 140)">
-    <circle cx="0" cy="0" r="30" fill="#fbbf24" opacity="0.15" filter="url(#softGlow)"/>
-    <circle cx="0" cy="0" r="38" fill="url(#sunGlow)" filter="url(#glow)"/>
-    <line x1="0" y1="-45" x2="0" y2="-54" stroke="#fbbf24" stroke-width="2.5" opacity="0.6"/>
-    <line x1="32" y1="-32" x2="38" y2="-38" stroke="#fbbf24" stroke-width="2.5" opacity="0.6"/>
-    <line x1="45" y1="0" x2="54" y2="0" stroke="#fbbf24" stroke-width="2.5" opacity="0.6"/>
-    <line x1="32" y1="32" x2="38" y2="38" stroke="#fbbf24" stroke-width="2.5" opacity="0.5"/>
-    <line x1="0" y1="45" x2="0" y2="54" stroke="#fbbf24" stroke-width="2.5" opacity="0.4"/>
-    <line x1="-32" y1="32" x2="-38" y2="38" stroke="#fbbf24" stroke-width="2.5" opacity="0.5"/>
-    <line x1="-45" y1="0" x2="-54" y2="0" stroke="#fbbf24" stroke-width="2.5" opacity="0.6"/>
-    <line x1="-32" y1="-32" x2="-38" y2="-38" stroke="#fbbf24" stroke-width="2.5" opacity="0.6"/>
-    <text x="0" y="60" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="bold" fill="#fbbf24">Type II</text>
-    <text x="0" y="82" text-anchor="middle" font-family="monospace" font-size="15" fill="#cbd5e1">~10&#xb2;&#x2076; W</text>
+  <!-- ============ TIER 2: STAR (Dyson sphere) ============ -->
+  <g transform="translate(550,182)">
+    <!-- corona -->
+    <circle cx="0" cy="0" r="60" fill="#F59E0B" opacity="0.12"/>
+    <circle cx="0" cy="0" r="52" fill="#F59E0B" opacity="0.10"/>
+    <!-- rays -->
+    <g stroke="#F59E0B" stroke-width="3" stroke-linecap="round" opacity="0.7">
+      <line x1="0" y1="-50" x2="0" y2="-62"/>
+      <line x1="35" y1="-35" x2="44" y2="-44"/>
+      <line x1="50" y1="0" x2="62" y2="0"/>
+      <line x1="35" y1="35" x2="44" y2="44"/>
+      <line x1="0" y1="50" x2="0" y2="62"/>
+      <line x1="-35" y1="35" x2="-44" y2="44"/>
+      <line x1="-50" y1="0" x2="-62" y2="0"/>
+      <line x1="-35" y1="-35" x2="-44" y2="-44"/>
+    </g>
+    <!-- star -->
+    <circle cx="0" cy="0" r="40" fill="url(#kdStar)"/>
+    <circle cx="-12" cy="-13" r="32" fill="none" stroke="#FFFBEB" stroke-width="5" opacity="0.20"/>
+    <!-- Dyson collector ring -->
+    <ellipse cx="0" cy="0" rx="56" ry="20" fill="none" stroke="#D97706" stroke-width="2" stroke-dasharray="4 7" opacity="0.85"/>
   </g>
-  <text x="650" y="340" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#fbbf24">Stellar Energy</text>
+  <text x="550" y="266" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#D97706">TYPE II</text>
+  <text x="550" y="288" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="18" font-weight="700" fill="#0F172A">Stellar</text>
+  <text x="550" y="312" text-anchor="middle" font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-size="20" font-weight="700" fill="#B45309">&#8776; 4&#215;10&#178;&#8310; W</text>
+  <text x="550" y="333" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13.5" fill="#64748B">full output of its star &#183; Dyson swarm</text>
 
-  <!-- Type III: Galaxy -->
-  <g transform="translate(900, 140)">
-    <circle cx="0" cy="0" r="42" fill="url(#galaxyGlow)" opacity="0.25"/>
-    <circle cx="0" cy="0" r="10" fill="#c084fc" filter="url(#glow)"/>
-    <ellipse cx="0" cy="0" rx="38" ry="13" fill="none" stroke="#c084fc" stroke-width="2.5" opacity="0.6" transform="rotate(-20)"/>
-    <ellipse cx="0" cy="0" rx="30" ry="11" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.4" transform="rotate(25)"/>
-    <ellipse cx="0" cy="0" rx="24" ry="9" fill="none" stroke="#818cf8" stroke-width="1.5" opacity="0.5" transform="rotate(-50)"/>
-    <circle cx="18" cy="-9" r="1.5" fill="white" opacity="0.4"/>
-    <circle cx="-22" cy="6" r="1" fill="white" opacity="0.3"/>
-    <circle cx="10" cy="14" r="1.2" fill="white" opacity="0.35"/>
-    <circle cx="-14" cy="-12" r="0.8" fill="white" opacity="0.3"/>
-    <circle cx="28" cy="3" r="0.9" fill="white" opacity="0.25"/>
-    <text x="0" y="60" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="bold" fill="#c084fc">Type III</text>
-    <text x="0" y="82" text-anchor="middle" font-family="monospace" font-size="15" fill="#cbd5e1">~10&#xb3;&#x2077; W</text>
+  <!-- ============ TIER 3: GALAXY ============ -->
+  <g transform="translate(853,182)">
+    <circle cx="0" cy="0" r="62" fill="url(#kdGalaxy)" opacity="0.55"/>
+    <g stroke-linecap="round" fill="none">
+      <ellipse cx="0" cy="0" rx="56" ry="19" stroke="#8B5CF6" stroke-width="3" opacity="0.75" transform="rotate(-22)"/>
+      <ellipse cx="0" cy="0" rx="45" ry="15" stroke="#A78BFA" stroke-width="2.5" opacity="0.6" transform="rotate(26)"/>
+      <ellipse cx="0" cy="0" rx="34" ry="11" stroke="#6366F1" stroke-width="2" opacity="0.55" transform="rotate(-58)"/>
+    </g>
+    <circle cx="0" cy="0" r="11" fill="#A78BFA"/>
+    <circle cx="0" cy="0" r="6" fill="#EDE9FE"/>
+    <circle cx="26" cy="-12" r="2" fill="#7C3AED" opacity="0.7"/>
+    <circle cx="-30" cy="9" r="1.8" fill="#7C3AED" opacity="0.6"/>
+    <circle cx="14" cy="19" r="1.8" fill="#7C3AED" opacity="0.6"/>
+    <circle cx="-18" cy="-17" r="1.5" fill="#7C3AED" opacity="0.55"/>
+    <circle cx="38" cy="4" r="1.5" fill="#7C3AED" opacity="0.5"/>
   </g>
-  <text x="900" y="340" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#c084fc">Galactic Energy</text>
+  <text x="853" y="266" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#7C3AED">TYPE III</text>
+  <text x="853" y="288" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="18" font-weight="700" fill="#0F172A">Galactic</text>
+  <text x="853" y="312" text-anchor="middle" font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-size="20" font-weight="700" fill="#6D28D9">&#8776; 4&#215;10&#179;&#8311; W</text>
+  <text x="853" y="333" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13.5" fill="#64748B">energy of an entire galaxy</text>
 
-  <!-- Bottom annotation -->
-  <rect x="300" y="440" width="500" height="38" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="550" y="465" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#94a3b8">Energy scale increases by a factor of ~10 billion between each type</text>
+  <!-- "x10^10 per tier" step badges between tiers -->
+  <g font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-size="13" font-weight="700" fill="#475569">
+    <g transform="translate(398.5,182)">
+      <line x1="-50" y1="0" x2="50" y2="0" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#kdArrow)"/>
+      <rect x="-31" y="-15" width="62" height="26" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+      <text x="0" y="3.5" text-anchor="middle">&#215;10&#185;&#8304;</text>
+    </g>
+    <g transform="translate(701.5,182)">
+      <line x1="-50" y1="0" x2="50" y2="0" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#kdArrow)"/>
+      <rect x="-31" y="-15" width="62" height="26" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+      <text x="0" y="3.5" text-anchor="middle">&#215;10&#185;&#8304;</text>
+    </g>
+  </g>
+
+  <!-- ============ SAGAN CONTINUOUS SCALE BAR ============ -->
+  <!-- bar maps K: 0 at x=130, I at x=410, II at x=690, III at x=970 (280 units / tier) -->
+  <g>
+    <!-- "us" callout above the bar -->
+    <g transform="translate(334.4,0)">
+      <rect x="-86" y="386" width="172" height="30" rx="9" fill="#FFF1F2" stroke="#FB7185" stroke-width="1.5"/>
+      <text x="0" y="406" text-anchor="middle" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#E11D48">Us &#183; today &#8776; 0.73</text>
+      <path d="M0,416 L-6,424 L6,424 Z" fill="#FB7185"/>
+      <line x1="0" y1="424" x2="0" y2="430" stroke="#F43F5E" stroke-width="2.5"/>
+    </g>
+
+    <!-- track -->
+    <rect x="130" y="430" width="840" height="22" rx="11" fill="#EEF2F7" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- filled progress up to K=0.73 (130 + 0.73/3*840 = 334.4) -->
+    <rect x="130" y="430" width="204.4" height="22" rx="11" fill="url(#kdBar)"/>
+    <!-- faint remainder of the gradient as an outline guide -->
+    <rect x="130" y="430" width="840" height="22" rx="11" fill="none" stroke="#CBD5E1" stroke-width="1"/>
+
+    <!-- us marker dot on the bar -->
+    <circle cx="334.4" cy="441" r="8" fill="#F43F5E" stroke="#FFFFFF" stroke-width="2.5"/>
+
+    <!-- tier ticks + labels -->
+    <g font-family="'JetBrains Mono','SFMono-Regular',Consolas,monospace" font-weight="700" font-size="15" fill="#475569" text-anchor="middle">
+      <line x1="130" y1="426" x2="130" y2="456" stroke="#94A3B8" stroke-width="1.5"/>
+      <text x="130" y="478">0</text>
+      <line x1="410" y1="424" x2="410" y2="458" stroke="#0EA5E9" stroke-width="2"/>
+      <text x="410" y="478" fill="#0284C7">I</text>
+      <line x1="690" y1="424" x2="690" y2="458" stroke="#F59E0B" stroke-width="2"/>
+      <text x="690" y="478" fill="#B45309">II</text>
+      <line x1="970" y1="424" x2="970" y2="458" stroke="#8B5CF6" stroke-width="2"/>
+      <text x="970" y="478" fill="#7C3AED">III</text>
+    </g>
+  </g>
+
+  <!-- footnote: log scale, right side aligned with bar -->
+  <text x="970" y="406" text-anchor="end" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13" fill="#94A3B8">each tier = 10 billion&#215; the last</text>
 </svg>

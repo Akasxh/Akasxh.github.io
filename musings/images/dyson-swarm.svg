@@ -1,135 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" font-family="Montserrat, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif">
   <defs>
-    <linearGradient id="bg-sw" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <radialGradient id="sunCore" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#fef3c7"/>
-      <stop offset="30%" stop-color="#fbbf24"/>
-      <stop offset="60%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
+    <!-- Soft star core -->
+    <radialGradient id="ds-sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF5"/>
+      <stop offset="38%" stop-color="#FCD34D"/>
+      <stop offset="78%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="sunCorona" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.4"/>
-      <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    <radialGradient id="ds-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#FCD34D" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FCD34D" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glowSw">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="bigGlow">
-      <feGaussianBlur stdDeviation="12" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <!-- Faint dot grid -->
+    <pattern id="ds-dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.3" cy="1.3" r="1.3" fill="#EEF2F7"/>
+    </pattern>
+    <!-- Arrowheads -->
+    <marker id="ds-arrow-amber" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/>
+    </marker>
+    <marker id="ds-arrow-slate" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748B"/>
+    </marker>
+    <!-- One reusable collector panel: a tilted solar tile with two cells -->
+    <g id="ds-panel">
+      <rect x="-9" y="-5.5" width="18" height="11" rx="2" fill="#EEF1FE" stroke="#4F46E5" stroke-width="1.4"/>
+      <line x1="0" y1="-5.5" x2="0" y2="5.5" stroke="#4F46E5" stroke-width="1" opacity="0.55"/>
+    </g>
   </defs>
 
-  <!-- Background -->
-  <rect width="1000" height="600" fill="url(#bg-sw)"/>
+  <!-- ===== Panel / background (BRIGHT) ===== -->
+  <rect width="1000" height="600" fill="#FFFFFF"/>
+  <rect x="12" y="12" width="976" height="576" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="13" y="13" width="974" height="574" rx="15" fill="url(#ds-dots)" opacity="0.9"/>
 
-  <!-- Stars -->
-  <circle cx="40" cy="25" r="1.2" fill="white" opacity="0.2"/>
-  <circle cx="120" cy="60" r="0.8" fill="white" opacity="0.15"/>
-  <circle cx="200" cy="15" r="1" fill="white" opacity="0.25"/>
-  <circle cx="310" cy="45" r="0.7" fill="white" opacity="0.1"/>
-  <circle cx="780" cy="30" r="1.3" fill="white" opacity="0.2"/>
-  <circle cx="860" cy="80" r="0.9" fill="white" opacity="0.15"/>
-  <circle cx="940" cy="20" r="1.1" fill="white" opacity="0.25"/>
-  <circle cx="50" cy="550" r="1" fill="white" opacity="0.15"/>
-  <circle cx="180" cy="570" r="1.2" fill="white" opacity="0.2"/>
-  <circle cx="820" cy="560" r="0.8" fill="white" opacity="0.1"/>
-  <circle cx="950" cy="540" r="1" fill="white" opacity="0.2"/>
-  <circle cx="60" cy="300" r="0.7" fill="white" opacity="0.15"/>
-  <circle cx="30" cy="420" r="0.9" fill="white" opacity="0.1"/>
-  <circle cx="960" cy="380" r="1.1" fill="white" opacity="0.2"/>
-  <circle cx="930" cy="170" r="0.8" fill="white" opacity="0.15"/>
-  <circle cx="80" cy="150" r="1" fill="white" opacity="0.2"/>
-  <circle cx="900" cy="450" r="0.6" fill="white" opacity="0.25"/>
+  <!-- ===== Title ===== -->
+  <text x="44" y="58" font-size="30" font-weight="700" fill="#0F172A">Dyson Swarm</text>
+  <text x="44" y="84" font-size="17" fill="#64748B">Thousands of independent collectors orbiting a star, not a solid shell</text>
 
-  <!-- Title -->
-  <text x="500" y="45" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="bold" fill="#e2e8f0">Dyson Swarm Architecture</text>
+  <!-- ===== Main scene group (shifted left to leave room for the right-hand note) ===== -->
+  <g>
+    <!-- Orbital paths at differing inclinations & semi-major axes (the swarm's tiled, non-intersecting shells) -->
+    <g fill="none" stroke-linecap="round">
+      <ellipse cx="430" cy="330" rx="248" ry="92"  stroke="#6366F1" stroke-width="1.6" stroke-dasharray="2,8" opacity="0.55"/>
+      <ellipse cx="430" cy="330" rx="262" ry="150" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="2,8" opacity="0.50" transform="rotate(26 430 330)"/>
+      <ellipse cx="430" cy="330" rx="250" ry="138" stroke="#0EA5E9" stroke-width="1.6" stroke-dasharray="2,8" opacity="0.50" transform="rotate(-30 430 330)"/>
+      <ellipse cx="430" cy="330" rx="214" ry="200" stroke="#6366F1" stroke-width="1.6" stroke-dasharray="2,8" opacity="0.45" transform="rotate(62 430 330)"/>
+      <ellipse cx="430" cy="330" rx="270" ry="116" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="2,8" opacity="0.45" transform="rotate(-58 430 330)"/>
+    </g>
 
-  <!-- Sun corona glow -->
-  <circle cx="500" cy="300" r="160" fill="url(#sunCorona)" filter="url(#bigGlow)"/>
-  <!-- Sun -->
-  <circle cx="500" cy="300" r="85" fill="url(#sunCore)" filter="url(#glowSw)"/>
-  <!-- Sun surface detail -->
-  <circle cx="475" cy="280" r="12" fill="#fef3c7" opacity="0.3"/>
-  <circle cx="520" cy="310" r="8" fill="#fef3c7" opacity="0.2"/>
-  <circle cx="490" cy="330" r="10" fill="#fef3c7" opacity="0.25"/>
-  <!-- Sun label -->
-  <text x="500" y="305" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="bold" fill="#451a03">3.8 x 10&#xb2;&#x2076; W</text>
+    <!-- Star: halo + core -->
+    <circle cx="430" cy="330" r="150" fill="url(#ds-halo)"/>
+    <circle cx="430" cy="330" r="62" fill="url(#ds-sun)"/>
+    <circle cx="430" cy="330" r="62" fill="none" stroke="#F59E0B" stroke-width="1.4" opacity="0.6"/>
+    <text x="430" y="326" text-anchor="middle" font-size="15" font-weight="700" fill="#7C2D12">Star</text>
+    <text x="430" y="346" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace" font-size="12.5" font-weight="600" fill="#92400E">3.8&#215;10&#178;&#8310; W</text>
 
-  <!-- Orbital ellipses (dashed) -->
-  <ellipse cx="500" cy="300" rx="180" ry="140" fill="none" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.3"/>
-  <ellipse cx="500" cy="300" rx="220" ry="110" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.25" transform="rotate(15, 500, 300)"/>
-  <ellipse cx="500" cy="300" rx="250" ry="160" fill="none" stroke="#a855f7" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.3" transform="rotate(-10, 500, 300)"/>
-  <ellipse cx="500" cy="300" rx="200" ry="170" fill="none" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.2" transform="rotate(35, 500, 300)"/>
-  <ellipse cx="500" cy="300" rx="240" ry="130" fill="none" stroke="#c084fc" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.25" transform="rotate(-25, 500, 300)"/>
-  <ellipse cx="500" cy="300" rx="210" ry="150" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-dasharray="8,6" opacity="0.2" transform="rotate(50, 500, 300)"/>
+    <!-- Energy beamed inward from a few collectors to a relay near the star (collect + relay) -->
+    <g stroke="#F59E0B" stroke-width="2" opacity="0.7" marker-end="url(#ds-arrow-amber)">
+      <line x1="207" y1="298" x2="366" y2="322"/>
+      <line x1="648" y1="372" x2="498" y2="344"/>
+      <line x1="430" y1="135" x2="430" y2="264"/>
+      <line x1="300" y1="492" x2="392" y2="392"/>
+    </g>
 
-  <!-- Solar collectors - orbit 1 -->
-  <rect x="315" y="195" width="14" height="8" rx="2" fill="#818cf8" opacity="0.9" transform="rotate(20, 322, 199)"/>
-  <rect x="670" y="390" width="14" height="8" rx="2" fill="#818cf8" opacity="0.9" transform="rotate(-15, 677, 394)"/>
-  <rect x="380" y="430" width="14" height="8" rx="2" fill="#818cf8" opacity="0.85" transform="rotate(40, 387, 434)"/>
-  <rect x="620" y="170" width="14" height="8" rx="2" fill="#818cf8" opacity="0.9" transform="rotate(-30, 627, 174)"/>
-  <rect x="290" y="310" width="14" height="8" rx="2" fill="#818cf8" opacity="0.8" transform="rotate(10, 297, 314)"/>
-  <rect x="710" y="280" width="14" height="8" rx="2" fill="#818cf8" opacity="0.85" transform="rotate(-5, 717, 284)"/>
+    <!-- ===== Collectors on the orbital paths (panels share one symbol; tilt varies by orbit) ===== -->
+    <!-- Orbit A (flat, indigo) -->
+    <use href="#ds-panel" transform="translate(207 298) rotate(8)"/>
+    <use href="#ds-panel" transform="translate(672 360) rotate(-8)"/>
+    <use href="#ds-panel" transform="translate(330 410) rotate(12)"/>
+    <use href="#ds-panel" transform="translate(560 250) rotate(-10)"/>
+    <use href="#ds-panel" transform="translate(178 330) rotate(4)"/>
+    <use href="#ds-panel" transform="translate(682 330) rotate(-4)"/>
 
-  <!-- Solar collectors - orbit 2 -->
-  <rect x="270" y="240" width="12" height="7" rx="2" fill="#a855f7" opacity="0.85" transform="rotate(25, 276, 244)"/>
-  <rect x="720" y="340" width="12" height="7" rx="2" fill="#a855f7" opacity="0.8" transform="rotate(-20, 726, 344)"/>
-  <rect x="350" y="155" width="12" height="7" rx="2" fill="#a855f7" opacity="0.9" transform="rotate(45, 356, 159)"/>
-  <rect x="650" y="440" width="12" height="7" rx="2" fill="#a855f7" opacity="0.85" transform="rotate(-35, 656, 444)"/>
-  <rect x="260" y="360" width="12" height="7" rx="2" fill="#a855f7" opacity="0.8" transform="rotate(15, 266, 364)"/>
-  <rect x="740" y="220" width="12" height="7" rx="2" fill="#a855f7" opacity="0.85" transform="rotate(-10, 746, 224)"/>
+    <!-- Orbit B (violet tilt) -->
+    <use href="#ds-panel" transform="translate(248 220) rotate(40)"/>
+    <use href="#ds-panel" transform="translate(636 452) rotate(-40)"/>
+    <use href="#ds-panel" transform="translate(560 196) rotate(34)"/>
+    <use href="#ds-panel" transform="translate(300 480) rotate(-34)"/>
 
-  <!-- Solar collectors - orbit 3 -->
-  <rect x="250" y="280" width="11" height="6" rx="2" fill="#c084fc" opacity="0.8" transform="rotate(30, 256, 283)"/>
-  <rect x="745" cy="310" width="11" height="6" rx="2" fill="#c084fc" opacity="0.75" transform="rotate(-25, 751, 313)"/>
-  <rect x="340" y="460" width="11" height="6" rx="2" fill="#c084fc" opacity="0.8" transform="rotate(50, 346, 463)"/>
-  <rect x="660" y="140" width="11" height="6" rx="2" fill="#c084fc" opacity="0.85" transform="rotate(-40, 666, 143)"/>
-  <rect x="280" y="180" width="11" height="6" rx="2" fill="#c084fc" opacity="0.75" transform="rotate(5, 286, 183)"/>
-  <rect x="720" y="420" width="11" height="6" rx="2" fill="#c084fc" opacity="0.8" transform="rotate(-15, 726, 423)"/>
+    <!-- Orbit C (sky tilt, opposite) -->
+    <use href="#ds-panel" transform="translate(232 430) rotate(-44)"/>
+    <use href="#ds-panel" transform="translate(640 220) rotate(44)"/>
+    <use href="#ds-panel" transform="translate(330 168) rotate(-50)"/>
+    <use href="#ds-panel" transform="translate(540 470) rotate(50)"/>
 
-  <!-- More collectors scattered -->
-  <rect x="330" y="380" width="10" height="6" rx="2" fill="#6366f1" opacity="0.75" transform="rotate(35, 335, 383)"/>
-  <rect x="680" y="210" width="10" height="6" rx="2" fill="#6366f1" opacity="0.8" transform="rotate(-45, 685, 213)"/>
-  <rect x="420" y="140" width="10" height="6" rx="2" fill="#6366f1" opacity="0.7" transform="rotate(60, 425, 143)"/>
-  <rect x="580" y="460" width="10" height="6" rx="2" fill="#6366f1" opacity="0.75" transform="rotate(-55, 585, 463)"/>
-  <rect x="240" y="320" width="10" height="6" rx="2" fill="#6366f1" opacity="0.7" transform="rotate(20, 245, 323)"/>
-  <rect x="760" y="270" width="10" height="6" rx="2" fill="#6366f1" opacity="0.75" transform="rotate(-30, 765, 273)"/>
-  <rect x="310" y="440" width="10" height="6" rx="2" fill="#818cf8" opacity="0.7" transform="rotate(40, 315, 443)"/>
-  <rect x="690" y="160" width="10" height="6" rx="2" fill="#818cf8" opacity="0.75" transform="rotate(-50, 695, 163)"/>
-  <rect x="460" y="460" width="10" height="6" rx="2" fill="#a855f7" opacity="0.7" transform="rotate(15, 465, 463)"/>
-  <rect x="540" y="130" width="10" height="6" rx="2" fill="#a855f7" opacity="0.75" transform="rotate(-10, 545, 133)"/>
-  <rect x="750" y="360" width="10" height="6" rx="2" fill="#c084fc" opacity="0.7" transform="rotate(25, 755, 363)"/>
-  <rect x="250" y="220" width="10" height="6" rx="2" fill="#c084fc" opacity="0.75" transform="rotate(-35, 255, 223)"/>
+    <!-- Orbit D (steep, indigo) -->
+    <use href="#ds-panel" transform="translate(430 135) rotate(78)"/>
+    <use href="#ds-panel" transform="translate(430 524) rotate(78)"/>
+    <use href="#ds-panel" transform="translate(372 150) rotate(70)"/>
+    <use href="#ds-panel" transform="translate(496 510) rotate(70)"/>
 
-  <!-- Energy collection arrows (thin amber) -->
-  <line x1="322" y1="199" x2="430" y2="265" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
-  <line x1="677" y1="394" x2="570" y2="335" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
-  <line x1="627" y1="174" x2="555" y2="245" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
-  <line x1="387" y1="434" x2="460" y2="360" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
-  <line x1="717" y1="284" x2="580" y2="295" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
-  <line x1="297" y1="314" x2="420" y2="305" stroke="#f59e0b" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
+    <!-- Orbit E (violet, shallow opposite) -->
+    <use href="#ds-panel" transform="translate(206 392) rotate(-20)"/>
+    <use href="#ds-panel" transform="translate(656 268) rotate(-20)"/>
+    <use href="#ds-panel" transform="translate(286 178) rotate(24)"/>
+    <use href="#ds-panel" transform="translate(580 484) rotate(24)"/>
 
-  <!-- Labels -->
-  <rect x="40" y="530" width="200" height="36" rx="8" fill="#1e293b" stroke="#4f46e5" stroke-width="1.5"/>
-  <rect x="7" y="530" width="10" height="6" rx="2" fill="#818cf8"/>
-  <text x="140" y="554" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#e2e8f0">Solar Collectors</text>
+    <!-- A few smaller distant collectors to convey "thousands" -->
+    <g fill="#C7D2FE" stroke="#6366F1" stroke-width="1">
+      <rect x="156" y="262" width="11" height="6.5" rx="1.6" transform="rotate(18 161 265)"/>
+      <rect x="700" y="398" width="11" height="6.5" rx="1.6" transform="rotate(-18 705 401)"/>
+      <rect x="404" y="120" width="11" height="6.5" rx="1.6" transform="rotate(72 409 123)"/>
+      <rect x="452" y="540" width="11" height="6.5" rx="1.6" transform="rotate(72 457 543)"/>
+      <rect x="690" y="248" width="11" height="6.5" rx="1.6" transform="rotate(-46 695 251)"/>
+      <rect x="170" y="414" width="11" height="6.5" rx="1.6" transform="rotate(-22 175 417)"/>
+    </g>
 
-  <rect x="280" y="530" width="200" height="36" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <text x="380" y="554" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#e2e8f0">Orbital Planes</text>
+    <!-- Re-radiated infrared waste heat from the collectors (the detectable signature) -->
+    <g stroke="#F43F5E" stroke-width="1.7" opacity="0.7" fill="none" stroke-linecap="round">
+      <path d="M186 286 q5 -6 10 0 q5 6 10 0 q5 -6 10 0"/>
+      <path d="M700 372 q5 -6 10 0 q5 6 10 0 q5 -6 10 0"/>
+      <path d="M444 118 q5 -6 10 0 q5 6 10 0 q5 -6 10 0"/>
+      <path d="M316 426 q5 -6 10 0 q5 6 10 0 q5 -6 10 0" transform="rotate(20 326 426)"/>
+    </g>
+  </g>
 
-  <rect x="520" y="530" width="230" height="36" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="635" y="554" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#e2e8f0">Energy Transmission</text>
+  <!-- ===== Right-hand explanatory note: collector + the myth contrast ===== -->
+  <g>
+    <!-- Single collector callout -->
+    <rect x="742" y="120" width="220" height="150" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4"/>
+    <text x="762" y="148" font-size="15" font-weight="700" fill="#0F172A">One swarm element</text>
+    <g transform="translate(792 192) scale(2.4)">
+      <use href="#ds-panel"/>
+    </g>
+    <line x1="822" y1="208" x2="852" y2="208" stroke="#F59E0B" stroke-width="2.2" marker-end="url(#ds-arrow-amber)"/>
+    <text x="862" y="200" font-size="12.5" fill="#334155">absorbs</text>
+    <text x="862" y="216" font-size="12.5" fill="#334155">sunlight</text>
+    <path d="M792 224 q6 8 12 0 q6 -8 12 0" stroke="#F43F5E" stroke-width="1.8" fill="none"/>
+    <text x="762" y="252" font-size="12.5" fill="#334155">Independent platform on its</text>
+    <text x="762" y="268" font-size="12.5" fill="#334155">own orbit; re-emits IR heat.</text>
+  </g>
 
-  <!-- Star label -->
-  <text x="500" y="405" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="bold" fill="#fbbf24" filter="url(#glowSw)">Star</text>
+  <!-- ===== Bottom legend strip ===== -->
+  <g>
+    <rect x="36" y="528" width="700" height="48" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
 
-  <!-- Annotation -->
-  <rect x="770" y="530" width="200" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="870" y="554" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#94a3b8">Multiple orbital inclinations</text>
+    <!-- Collector -->
+    <g transform="translate(62 552)"><use href="#ds-panel"/></g>
+    <text x="80" y="557" font-size="14.5" fill="#334155">Solar collector</text>
+
+    <!-- Orbital planes -->
+    <line x1="218" y1="552" x2="250" y2="552" stroke="#6366F1" stroke-width="2" stroke-dasharray="2,7"/>
+    <text x="258" y="557" font-size="14.5" fill="#334155">Orbital planes</text>
+
+    <!-- Energy beamed in -->
+    <line x1="392" y1="552" x2="424" y2="552" stroke="#F59E0B" stroke-width="2.4" marker-end="url(#ds-arrow-amber)"/>
+    <text x="432" y="557" font-size="14.5" fill="#334155">Energy relay</text>
+
+    <!-- IR re-emission -->
+    <path d="M566 552 q7 -8 14 0 q7 8 14 0" stroke="#F43F5E" stroke-width="2" fill="none"/>
+    <text x="602" y="557" font-size="14.5" fill="#334155">Re-emitted IR</text>
+  </g>
+
+  <!-- ===== Myth-vs-reality note (bottom right) ===== -->
+  <g>
+    <rect x="752" y="528" width="210" height="48" rx="12" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1.3"/>
+    <circle cx="776" cy="552" r="9" fill="none" stroke="#F43F5E" stroke-width="2.2"/>
+    <line x1="769.6" y1="558.4" x2="782.4" y2="545.6" stroke="#F43F5E" stroke-width="2.2"/>
+    <text x="794" y="548" font-size="12" font-weight="700" fill="#9F1239">Not a rigid shell</text>
+    <text x="794" y="565" font-size="11.5" fill="#9F1239">a solid sphere is unstable</text>
+  </g>
 </svg>

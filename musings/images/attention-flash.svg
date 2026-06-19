@@ -1,123 +1,154 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif">
   <defs>
-    <linearGradient id="bgF" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="sramGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#6366f1"/>
-    </linearGradient>
-    <linearGradient id="l2Grad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#c084fc"/>
-      <stop offset="100%" stop-color="#a855f7"/>
-    </linearGradient>
-    <linearGradient id="hbmGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#475569"/>
-      <stop offset="100%" stop-color="#334155"/>
-    </linearGradient>
-    <filter id="shadowF">
-      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
-    </filter>
-    <filter id="glowIndigo">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feFlood flood-color="#6366f1" flood-opacity="0.6" result="color"/>
-      <feComposite in="color" in2="blur" operator="in" result="glow"/>
-      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="glowGreen">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feFlood flood-color="#22c55e" flood-opacity="0.5" result="color"/>
-      <feComposite in="color" in2="blur" operator="in" result="glow"/>
-      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <marker id="arrowF" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    <!-- arrowheads -->
+    <marker id="fa-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/>
     </marker>
-    <marker id="arrowRed" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    <marker id="fa-arrow-slate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748B"/>
     </marker>
-    <marker id="arrowG" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22c55e"/>
+    <marker id="fa-arrow-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#F43F5E"/>
     </marker>
-    <pattern id="dotsF" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-      <circle cx="10" cy="10" r="0.8" fill="#334155" opacity="0.5"/>
+    <marker id="fa-arrow-emerald" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#10B981"/>
+    </marker>
+    <pattern id="fa-dots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#EEF2F7"/>
     </pattern>
   </defs>
 
-  <!-- Background -->
-  <rect width="1000" height="500" fill="url(#bgF)"/>
-  <rect width="1000" height="500" fill="url(#dotsF)"/>
+  <!-- ===== Background ===== -->
+  <rect width="1000" height="500" fill="#FFFFFF"/>
+  <rect x="10" y="10" width="980" height="480" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="11" y="11" width="978" height="478" rx="15" fill="url(#fa-dots)"/>
 
-  <!-- Title -->
-  <text x="500" y="35" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#e2e8f0">GPU Memory Hierarchy &amp; FlashAttention</text>
+  <!-- ===== Title ===== -->
+  <text x="40" y="50" font-size="27" font-weight="700" fill="#0F172A">FlashAttention &#183; IO-aware tiling + online softmax</text>
+  <text x="40" y="74" font-size="15.5" fill="#64748B">Exact attention that keeps work in fast SRAM and never writes the full N&#215;N score matrix to slow HBM</text>
 
-  <!-- === PYRAMID (center) === -->
-  <!-- SRAM tier (top, narrowest) -->
-  <path d="M 370,70 L 630,70 L 660,180 L 340,180 Z" fill="url(#sramGrad)" filter="url(#glowIndigo)" opacity="0.95"/>
-  <text x="500" y="105" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fff">SRAM</text>
-  <text x="500" y="128" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#e0e7ff">192 KB / SM</text>
-  <text x="500" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#c7d2fe">~19 TB/s bandwidth</text>
-  <text x="500" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#a5b4fc">(On-chip, ultra fast)</text>
+  <!-- divider -->
+  <line x1="40" y1="90" x2="960" y2="90" stroke="#E2E8F0" stroke-width="1"/>
 
-  <!-- L2 tier (middle) -->
-  <path d="M 340,185 L 660,185 L 710,310 L 290,310 Z" fill="url(#l2Grad)" opacity="0.85" filter="url(#shadowF)"/>
-  <text x="500" y="225" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fff">L2 Cache</text>
-  <text x="500" y="250" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#f3e8ff">40 MB</text>
-  <text x="500" y="275" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#e9d5ff">~12 TB/s bandwidth</text>
+  <!-- ===================================================================== -->
+  <!-- LEFT PANEL : GPU MEMORY HIERARCHY                                      -->
+  <!-- ===================================================================== -->
+  <text x="40" y="124" font-size="16.5" font-weight="700" fill="#334155">GPU memory hierarchy (A100)</text>
+  <text x="40" y="145" font-size="13" fill="#64748B">small + fast on top, large + slow at the bottom</text>
 
-  <!-- HBM tier (bottom, widest) -->
-  <path d="M 290,315 L 710,315 L 780,460 L 220,460 Z" fill="url(#hbmGrad)" opacity="0.9" filter="url(#shadowF)"/>
-  <text x="500" y="360" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e2e8f0">HBM (Main Memory)</text>
-  <text x="500" y="385" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">80 GB capacity</text>
-  <text x="500" y="410" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">2 TB/s bandwidth</text>
-  <text x="500" y="435" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">(Off-chip, high latency)</text>
+  <!-- SRAM (top, smallest, fastest) -->
+  <rect x="118" y="160" width="170" height="58" rx="12" fill="#6366F1" fill-opacity="0.14" stroke="#4F46E5" stroke-width="2"/>
+  <text x="203" y="184" text-anchor="middle" font-size="17" font-weight="700" fill="#3730A3">SRAM &#183; on-chip</text>
+  <text x="203" y="206" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#4F46E5">192 KB/SM &#183; ~19 TB/s</text>
 
-  <!-- Tier divider lines -->
-  <line x1="340" y1="182" x2="660" y2="182" stroke="#e2e8f0" stroke-width="1" opacity="0.3"/>
-  <line x1="290" y1="312" x2="710" y2="312" stroke="#e2e8f0" stroke-width="1" opacity="0.3"/>
+  <!-- L2 (middle) -->
+  <rect x="78" y="232" width="250" height="56" rx="12" fill="#8B5CF6" fill-opacity="0.12" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="203" y="256" text-anchor="middle" font-size="17" font-weight="700" fill="#6D28D9">L2 cache</text>
+  <text x="203" y="277" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#7C3AED">40 MB</text>
 
-  <!-- === LEFT SIDE: Standard Attention === -->
-  <g transform="translate(0,0)">
-    <rect x="20" y="55" width="200" height="40" rx="8" fill="#7f1d1d" opacity="0.8" filter="url(#shadowF)"/>
-    <text x="120" y="72" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#fca5a5">Standard Attention</text>
-    <text x="120" y="88" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#ef4444">&#x2717;</text>
+  <!-- HBM (bottom, largest, slowest) -->
+  <rect x="46" y="302" width="314" height="62" rx="12" fill="#0EA5E9" fill-opacity="0.10" stroke="#0EA5E9" stroke-width="2"/>
+  <text x="203" y="327" text-anchor="middle" font-size="17" font-weight="700" fill="#075985">HBM &#183; off-chip main memory</text>
+  <text x="203" y="349" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#0369A1">80 GB &#183; ~2 TB/s</text>
 
-    <text x="30" y="120" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">Materialize full</text>
-    <text x="30" y="136" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">N&#xd7;N matrix in HBM</text>
+  <!-- size / speed gradient axes -->
+  <line x1="386" y1="166" x2="386" y2="360" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#fa-arrow-slate)"/>
+  <text x="398" y="180" font-size="12" fill="#64748B">bigger</text>
+  <text x="398" y="356" font-size="12" fill="#64748B">capacity</text>
 
-    <!-- Red dashed arrow going all the way down to HBM -->
-    <line x1="120" y1="95" x2="120" y2="170" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/>
-    <line x1="120" y1="170" x2="120" y2="250" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/>
-    <line x1="120" y1="250" x2="120" y2="390" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrowRed)"/>
+  <line x1="30" y1="360" x2="30" y2="166" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#fa-arrow-slate)"/>
+  <text x="20" y="178" font-size="12" fill="#64748B" transform="rotate(-90 20 178)" text-anchor="start">faster</text>
 
-    <!-- Red box at bottom of arrow -->
-    <rect x="55" y="395" width="130" height="30" rx="6" fill="#7f1d1d" opacity="0.6"/>
-    <text x="120" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#fca5a5">N&#xd7;N in HBM</text>
+  <!-- speed factor callout -->
+  <text x="203" y="386" text-anchor="middle" font-size="12.5" fill="#64748B">SRAM is</text>
+  <text x="203" y="404" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" fill="#4F46E5">~10&#215; the bandwidth of HBM</text>
+
+  <!-- naive vs flash mini contrast -->
+  <rect x="40" y="420" width="346" height="54" rx="11" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <circle cx="60" cy="438" r="5.5" fill="#F43F5E" fill-opacity="0.18" stroke="#F43F5E" stroke-width="1.5"/>
+  <text x="74" y="442" font-size="12.5" fill="#9F1239" font-weight="600">Standard:</text>
+  <text x="142" y="442" font-size="12.5" fill="#64748B">writes full N&#215;N to HBM, reads it back &#8594; O(N&#178;) mem</text>
+  <circle cx="60" cy="460" r="5.5" fill="#10B981" fill-opacity="0.18" stroke="#10B981" stroke-width="1.5"/>
+  <text x="74" y="464" font-size="12.5" fill="#047857" font-weight="600">Flash:</text>
+  <text x="120" y="464" font-size="12.5" fill="#64748B">tiles stay in SRAM, N&#215;N never materialized &#8594; O(N)</text>
+
+  <!-- ===================================================================== -->
+  <!-- divider between panels                                                 -->
+  <!-- ===================================================================== -->
+  <line x1="436" y1="104" x2="436" y2="476" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT PANEL : TILING + ONLINE SOFTMAX                                  -->
+  <!-- ===================================================================== -->
+  <text x="468" y="124" font-size="16.5" font-weight="700" fill="#334155">Block-by-block compute in SRAM</text>
+  <text x="468" y="145" font-size="13" fill="#64748B">load Q/K/V tiles &#8594; partial attention &#8594; online softmax rescale</text>
+
+  <!-- Q tile (loaded once per outer block) -->
+  <rect x="468" y="166" width="64" height="64" rx="10" fill="#4F46E5" fill-opacity="0.13" stroke="#4F46E5" stroke-width="2"/>
+  <line x1="468" y1="187.3" x2="532" y2="187.3" stroke="#4F46E5" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="468" y1="208.6" x2="532" y2="208.6" stroke="#4F46E5" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="500" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#3730A3" font-family="'JetBrains Mono', ui-monospace, monospace">Q&#7522;</text>
+
+  <!-- K,V tiles, looped (shown as a small stack) -->
+  <rect x="566" y="174" width="58" height="56" rx="10" fill="#0EA5E9" fill-opacity="0.10" stroke="#0EA5E9" stroke-width="1.4" stroke-opacity="0.6"/>
+  <rect x="560" y="168" width="58" height="56" rx="10" fill="#0EA5E9" fill-opacity="0.12" stroke="#0EA5E9" stroke-width="2"/>
+  <line x1="560" y1="186.6" x2="618" y2="186.6" stroke="#0EA5E9" stroke-width="1" stroke-opacity="0.55"/>
+  <line x1="560" y1="205.3" x2="618" y2="205.3" stroke="#0EA5E9" stroke-width="1" stroke-opacity="0.55"/>
+  <text x="589" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#075985" font-family="'JetBrains Mono', ui-monospace, monospace">K&#11388;, V&#11388;</text>
+  <text x="500" y="264" text-anchor="middle" font-size="10.5" fill="#94A3B8">query tile</text>
+  <text x="589" y="264" text-anchor="middle" font-size="10.5" fill="#94A3B8">KV blocks j = 1..T</text>
+
+  <!-- arrow Q,K,V -> compute -->
+  <path d="M624,200 H668" fill="none" stroke="#64748B" stroke-width="1.8" marker-end="url(#fa-arrow-slate)"/>
+
+  <!-- Partial scores S_ij = Qi Kj^T (computed in SRAM, never stored to HBM) -->
+  <rect x="670" y="166" width="118" height="64" rx="10" fill="#F8FAFC" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="729" y="190" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6D28D9">partial scores</text>
+  <text x="729" y="210" text-anchor="middle" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#7C3AED">S&#7522;&#11388; = Q&#7522;K&#11388;&#7488;</text>
+  <text x="729" y="224" text-anchor="middle" font-size="10.5" fill="#94A3B8">one tile, in SRAM</text>
+
+  <!-- arrow to online softmax -->
+  <path d="M788,198 H832" fill="none" stroke="#64748B" stroke-width="1.8" marker-end="url(#fa-arrow-slate)"/>
+
+  <!-- Online softmax running-state box -->
+  <rect x="834" y="158" width="118" height="80" rx="11" fill="#F59E0B" fill-opacity="0.10" stroke="#F59E0B" stroke-width="2"/>
+  <text x="893" y="178" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B45309">online softmax</text>
+  <text x="893" y="200" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#92400E">m &#8592; max(m, S)</text>
+  <text x="893" y="220" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#92400E">l &#8592; &#945;&#183;l + &#931;e^(S&#8722;m)</text>
+
+  <!-- accumulator / running output -->
+  <rect x="670" y="262" width="282" height="70" rx="11" fill="#10B981" fill-opacity="0.10" stroke="#10B981" stroke-width="2"/>
+  <text x="811" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#047857">rescale &amp; accumulate output (stays on-chip)</text>
+  <text x="811" y="309" text-anchor="middle" font-size="14.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#065F46">O&#7522; &#8592; diag(&#945;)&#8315;&#185; O&#7522; + P&#771;&#7522;&#11388; V&#11388;</text>
+  <text x="811" y="325" text-anchor="middle" font-size="10.5" fill="#94A3B8">running output for the Q tile, corrected as m, l update</text>
+
+  <!-- arrow from softmax down to accumulator -->
+  <path d="M893,238 V250 H839 V260" fill="none" stroke="#F59E0B" stroke-width="1.8" marker-end="url(#fa-arrow-emerald)"/>
+  <!-- arrow from partial scores down into accumulator -->
+  <path d="M729,230 V252 H712 V260" fill="none" stroke="#8B5CF6" stroke-width="1.8" marker-end="url(#fa-arrow-emerald)"/>
+
+  <!-- loop-back arrow (next K/V block reuses same running state) -->
+  <path d="M670,300 H648 V200 H636" fill="none" stroke="#10B981" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#fa-arrow-emerald)"/>
+  <text x="657" y="248" font-size="10.5" fill="#047857" text-anchor="middle">next j</text>
+
+  <!-- final write -->
+  <path d="M811,332 V354" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#fa-arrow-emerald)"/>
+  <rect x="700" y="356" width="222" height="40" rx="10" fill="#10B981" fill-opacity="0.14" stroke="#10B981" stroke-width="2"/>
+  <text x="811" y="381" text-anchor="middle" font-size="13.5" font-weight="700" fill="#065F46">final O written to HBM &#183; size O(N)</text>
+
+  <!-- guarantee chip: N x N never stored -->
+  <rect x="468" y="356" width="208" height="40" rx="10" fill="#FFFFFF" stroke="#F43F5E" stroke-width="1.8"/>
+  <path d="M484,366 l14,20 M498,366 l-14,20" stroke="#F43F5E" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="511" y="372" font-size="12.5" font-weight="700" fill="#9F1239" font-family="'JetBrains Mono', ui-monospace, monospace">N&#215;N</text>
+  <text x="511" y="388" font-size="11.5" fill="#64748B">never written to HBM</text>
+
+  <!-- ===== bottom takeaway bar (spans both panels) ===== -->
+  <rect x="40" y="450" width="0" height="0" fill="none"/>
+  <g transform="translate(468,420)">
+    <rect x="0" y="0" width="484" height="26" rx="13" fill="#4F46E5" fill-opacity="0.10" stroke="#4F46E5" stroke-width="1.5"/>
+    <text x="242" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#3730A3">
+      <tspan font-family="'JetBrains Mono', ui-monospace, monospace">O(N&#178;) &#8594; O(N)</tspan>
+      <tspan fill="#475569" font-weight="600" font-family="Montserrat, system-ui, sans-serif" font-size="13"> memory &#183; same exact result, 2-4&#215; faster</tspan>
+    </text>
   </g>
-
-  <!-- === RIGHT SIDE: FlashAttention === -->
-  <g transform="translate(0,0)">
-    <rect x="780" y="55" width="200" height="40" rx="8" fill="#14532d" opacity="0.8" filter="url(#shadowF)"/>
-    <text x="880" y="72" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#86efac">FlashAttention</text>
-    <text x="880" y="88" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#22c55e">&#x2713;</text>
-
-    <text x="790" y="120" font-family="system-ui, sans-serif" font-size="12" fill="#86efac">Tile computation</text>
-    <text x="790" y="136" font-family="system-ui, sans-serif" font-size="12" fill="#86efac">stays in SRAM</text>
-
-    <!-- Green arrows staying in SRAM tier -->
-    <line x1="880" y1="95" x2="880" y2="130" stroke="#22c55e" stroke-width="2.5" marker-end="url(#arrowG)"/>
-    <!-- Circular arrow showing tiling -->
-    <path d="M 860,130 Q 840,155 860,170" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowG)"/>
-    <path d="M 900,170 Q 920,155 900,130" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowG)"/>
-    <text x="880" y="158" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#86efac">Tile</text>
-
-    <!-- Small green box showing it stays on-chip -->
-    <rect x="835" y="175" width="90" height="26" rx="6" fill="#14532d" opacity="0.6"/>
-    <text x="880" y="192" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#86efac">On-chip only</text>
-  </g>
-
-  <!-- Memory complexity callout -->
-  <rect x="350" y="468" width="300" height="28" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1.5" filter="url(#glowGreen)"/>
-  <text x="500" y="487" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#86efac">Memory: O(N&#xb2;) &#x2192; O(N)</text>
 </svg>

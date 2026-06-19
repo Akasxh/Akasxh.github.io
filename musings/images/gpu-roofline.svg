@@ -1,147 +1,193 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 550">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="550" viewBox="0 0 1000 550" font-family="Montserrat, 'Segoe UI', system-ui, -apple-system, sans-serif">
   <defs>
-    <linearGradient id="bg-rf" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <filter id="glowRf">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <clipPath id="plotClipRf">
-      <rect x="120" y="40" width="830" height="420"/>
+    <!-- arrowheads -->
+    <marker id="arrowSlate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-end">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowAxis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-end">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+    </marker>
+    <clipPath id="plotClip">
+      <rect x="150" y="70" width="800" height="360"/>
     </clipPath>
   </defs>
 
-  <!-- Background -->
-  <rect width="1000" height="550" fill="url(#bg-rf)"/>
+  <!-- panel background: bright -->
+  <rect x="0" y="0" width="1000" height="550" fill="#FFFFFF"/>
+  <rect x="14" y="14" width="972" height="522" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
 
-  <!-- Grid lines -->
-  <g opacity="0.06" stroke="white" stroke-width="1">
-    <!-- Horizontal grid (log scale Y: positions for 1, 10, 100, 1000, 10000 TFLOPS) -->
-    <line x1="120" y1="420" x2="950" y2="420"/>
-    <line x1="120" y1="325" x2="950" y2="325"/>
-    <line x1="120" y1="230" x2="950" y2="230"/>
-    <line x1="120" y1="135" x2="950" y2="135"/>
-    <line x1="120" y1="40" x2="950" y2="40"/>
-    <!-- Vertical grid (log scale X: positions for 1, 10, 100, 1000) -->
-    <line x1="120" y1="40" x2="120" y2="460"/>
-    <line x1="397" y1="40" x2="397" y2="460"/>
-    <line x1="673" y1="40" x2="673" y2="460"/>
-    <line x1="950" y1="40" x2="950" y2="460"/>
+  <!-- Title -->
+  <text x="80" y="48" font-size="27" font-weight="700" fill="#0F172A">The Roofline Model</text>
+  <text x="476" y="48" font-size="15.5" fill="#64748B">Attainable performance vs. arithmetic intensity</text>
+  <text x="476" y="68" font-size="14" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#94A3B8">dense FP16 tensor cores &#183; A100 / H100 / B200</text>
+
+  <!-- ===== Plot frame (bright) ===== -->
+  <!-- faint grid -->
+  <g stroke="#EEF2F7" stroke-width="1">
+    <!-- horizontal decades: 0.1,1,10,100,1000,10000 -->
+    <line x1="150" y1="430" x2="950" y2="430"/>
+    <line x1="150" y1="358" x2="950" y2="358"/>
+    <line x1="150" y1="286" x2="950" y2="286"/>
+    <line x1="150" y1="214" x2="950" y2="214"/>
+    <line x1="150" y1="142" x2="950" y2="142"/>
+    <line x1="150" y1="70"  x2="950" y2="70"/>
+    <!-- vertical decades: 0.1,1,10,100,1000 -->
+    <line x1="150" y1="70" x2="150" y2="430"/>
+    <line x1="350" y1="70" x2="350" y2="430"/>
+    <line x1="550" y1="70" x2="550" y2="430"/>
+    <line x1="750" y1="70" x2="750" y2="430"/>
+    <line x1="950" y1="70" x2="950" y2="430"/>
   </g>
 
-  <!-- Axes -->
-  <line x1="120" y1="460" x2="950" y2="460" stroke="#475569" stroke-width="2"/>
-  <line x1="120" y1="40" x2="120" y2="460" stroke="#475569" stroke-width="2"/>
+  <!-- axes -->
+  <line x1="150" y1="430" x2="958" y2="430" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowAxis)"/>
+  <line x1="150" y1="430" x2="150" y2="60"  stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowAxis)"/>
 
-  <!-- Y-axis label -->
-  <text x="30" y="250" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#94a3b8" transform="rotate(-90, 30, 250)">Attainable Performance (TFLOPS)</text>
+  <!-- axis titles -->
+  <text x="550" y="520" text-anchor="middle" font-size="19" font-weight="600" fill="#334155">Arithmetic intensity <tspan font-family="'JetBrains Mono', ui-monospace, monospace" font-size="16" fill="#64748B">(FLOP / byte, log)</tspan></text>
+  <text x="34" y="260" text-anchor="middle" font-size="18" font-weight="600" fill="#334155" transform="rotate(-90, 34, 260)">Attainable performance <tspan font-family="'JetBrains Mono', ui-monospace, monospace" font-size="15" fill="#64748B">(TFLOP/s, log)</tspan></text>
 
-  <!-- X-axis label -->
-  <text x="535" y="530" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#94a3b8">Arithmetic Intensity (FLOP/Byte)</text>
+  <!-- X tick labels -->
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="14.5" fill="#64748B" text-anchor="middle">
+    <text x="150" y="452">0.1</text>
+    <text x="350" y="452">1</text>
+    <text x="550" y="452">10</text>
+    <text x="750" y="452">100</text>
+    <text x="945" y="452">1000</text>
+  </g>
+  <!-- Y tick labels -->
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="14.5" fill="#64748B" text-anchor="end">
+    <text x="140" y="435">0.1</text>
+    <text x="140" y="363">1</text>
+    <text x="140" y="291">10</text>
+    <text x="140" y="219">100</text>
+    <text x="140" y="147">1K</text>
+    <text x="140" y="75">10K</text>
+  </g>
+  <!-- tick marks -->
+  <g stroke="#94A3B8" stroke-width="1.5">
+    <line x1="150" y1="430" x2="150" y2="436"/>
+    <line x1="350" y1="430" x2="350" y2="436"/>
+    <line x1="550" y1="430" x2="550" y2="436"/>
+    <line x1="750" y1="430" x2="750" y2="436"/>
+    <line x1="950" y1="430" x2="950" y2="436"/>
+    <line x1="144" y1="430" x2="150" y2="430"/>
+    <line x1="144" y1="358" x2="150" y2="358"/>
+    <line x1="144" y1="286" x2="150" y2="286"/>
+    <line x1="144" y1="214" x2="150" y2="214"/>
+    <line x1="144" y1="142" x2="150" y2="142"/>
+    <line x1="144" y1="70"  x2="150" y2="70"/>
+  </g>
 
-  <!-- Y-axis ticks -->
-  <text x="108" y="425" text-anchor="end" font-family="monospace" font-size="13" fill="#64748b">1</text>
-  <text x="108" y="330" text-anchor="end" font-family="monospace" font-size="13" fill="#64748b">10</text>
-  <text x="108" y="235" text-anchor="end" font-family="monospace" font-size="13" fill="#64748b">100</text>
-  <text x="108" y="140" text-anchor="end" font-family="monospace" font-size="13" fill="#64748b">1000</text>
-  <text x="108" y="45" text-anchor="end" font-family="monospace" font-size="13" fill="#64748b">10000</text>
-
-  <!-- X-axis ticks -->
-  <text x="120" y="480" text-anchor="middle" font-family="monospace" font-size="13" fill="#64748b">1</text>
-  <text x="397" y="480" text-anchor="middle" font-family="monospace" font-size="13" fill="#64748b">10</text>
-  <text x="673" y="480" text-anchor="middle" font-size="13" font-family="monospace" fill="#64748b">100</text>
-  <text x="950" y="480" text-anchor="middle" font-family="monospace" font-size="13" fill="#64748b">1000</text>
-
-  <!-- Tick marks -->
-  <line x1="120" y1="460" x2="120" y2="467" stroke="#475569" stroke-width="1.5"/>
-  <line x1="397" y1="460" x2="397" y2="467" stroke="#475569" stroke-width="1.5"/>
-  <line x1="673" y1="460" x2="673" y2="467" stroke="#475569" stroke-width="1.5"/>
-  <line x1="950" y1="460" x2="950" y2="467" stroke="#475569" stroke-width="1.5"/>
-  <line x1="115" y1="420" x2="120" y2="420" stroke="#475569" stroke-width="1.5"/>
-  <line x1="115" y1="325" x2="120" y2="325" stroke="#475569" stroke-width="1.5"/>
-  <line x1="115" y1="230" x2="120" y2="230" stroke="#475569" stroke-width="1.5"/>
-  <line x1="115" y1="135" x2="120" y2="135" stroke="#475569" stroke-width="1.5"/>
-  <line x1="115" y1="40" x2="120" y2="40" stroke="#475569" stroke-width="1.5"/>
-
-  <!-- Log scale mapping:
-    X: log10(AI) mapped to [120, 950], so x = 120 + (log10(AI) - 0) * 276.67
-      AI=1 -> 120, AI=10 -> 397, AI=100 -> 673, AI=1000 -> 950
-    Y: log10(TFLOPS) mapped to [420, 40] (inverted), so y = 420 - (log10(TF) - 0) * 95
-      1 -> 420, 10 -> 325, 100 -> 230, 1000 -> 135, 10000 -> 40
-
-    A100: BW=2TB/s=2000 GB/s, Peak=312 TFLOPS FP16
-      Memory-bound slope: perf = AI * BW = AI * 2000 GFLOPS = AI * 2 TFLOPS
-      Ridge at AI = 312/2 = 156 FLOP/B => x = 120 + log10(156)*276.67 = 120 + 2.193*276.67 = 727
-      At AI=1: 2 TFLOPS => y = 420 - log10(2)*95 = 420 - 28.6 = 391
-      Ceiling: 312 TFLOPS => y = 420 - log10(312)*95 = 420 - 2.494*95 = 183
-
-    H100: BW=3.35 TB/s, Peak=1979 TFLOPS
-      Ridge at AI = 1979/3.35 = 591 => x = 120 + log10(591)*276.67 = 120 + 2.772*276.67 = 886
-      At AI=1: 3.35 TFLOPS => y = 420 - log10(3.35)*95 = 420 - 50 = 370
-      Ceiling: 1979 => y = 420 - log10(1979)*95 = 420 - 3.296*95 = 107
-
-    B200: BW=8 TB/s, Peak=4500 TFLOPS
-      Ridge at AI = 4500/8 = 562.5 => x = 120 + log10(562.5)*276.67 = 120 + 2.75*276.67 = 881
-      At AI=1: 8 TFLOPS => y = 420 - log10(8)*95 = 420 - 85.8 = 334
-      Ceiling: 4500 => y = 420 - log10(4500)*95 = 420 - 3.653*95 = 73
+  <!--
+    Coordinate maps (verified):
+      X(ai)  = 150 + (log10(ai)+1)*200      domain 0.1..1000
+      Y(tf)  = 430 - (log10(tf)+1)*72        domain 0.1..10000
+    Roofs  perf = (BW TB/s) * AI ,  capped at dense FP16 peak.
+      All ceilings are DENSE FP16 (consistent precision):
+      A100 : BW 2.00 TB/s, peak  312 TFLOP/s -> ridge AI=156  -> ridge px (788.6,178.4)
+      H100 : BW 3.35 TB/s, peak 1979 TFLOP/s -> ridge AI=591  -> ridge px (904.3,120.7)
+      B200 : BW 8.00 TB/s, peak 2250 TFLOP/s -> ridge AI=281  -> ridge px (839.8,116.6)
+    Ridge order by AI: A100(156) < B200(281) < H100(591). Motion is NOT monotonic:
+    Hopper pushes the ridge far right (big FP16 jump, modest BW jump); Blackwell pulls it
+    back left of Hopper because its 8 TB/s bandwidth outgrows its FP16 compute gain.
+    Left edge (AI=0.1) slope starts: A100(150,408.3) H100(150,392.2) B200(150,365.0)
   -->
 
-  <g clip-path="url(#plotClipRf)">
-    <!-- A100 shaded area -->
-    <path d="M 120,391 L 727,183 L 950,183 L 950,460 L 120,460 Z" fill="#4f46e5" opacity="0.06"/>
+  <g clip-path="url(#plotClip)">
+    <!-- B200 area fill (rose) -->
+    <path d="M150,365.0 L839.8,116.6 L950,116.6 L950,430 L150,430 Z" fill="#F43F5E" opacity="0.08"/>
+    <!-- H100 area fill (sky) -->
+    <path d="M150,392.2 L904.3,120.7 L950,120.7 L950,430 L150,430 Z" fill="#0EA5E9" opacity="0.09"/>
+    <!-- A100 area fill (indigo) -->
+    <path d="M150,408.3 L788.6,178.4 L950,178.4 L950,430 L150,430 Z" fill="#4F46E5" opacity="0.10"/>
 
-    <!-- H100 shaded area -->
-    <path d="M 120,370 L 886,107 L 950,107 L 950,460 L 120,460 Z" fill="#a855f7" opacity="0.05"/>
+    <!-- ridge vertical guides -->
+    <line x1="788.6" y1="178.4" x2="788.6" y2="430" stroke="#4F46E5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.45"/>
+    <line x1="839.8" y1="116.6" x2="839.8" y2="430" stroke="#F43F5E" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.40"/>
+    <line x1="904.3" y1="120.7" x2="904.3" y2="430" stroke="#0EA5E9" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.45"/>
 
-    <!-- B200 shaded area -->
-    <path d="M 120,334 L 881,73 L 950,73 L 950,460 L 120,460 Z" fill="#f59e0b" opacity="0.04"/>
+    <!-- Roof lines -->
+    <!-- A100 -->
+    <path d="M150,408.3 L788.6,178.4 L950,178.4" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- H100 -->
+    <path d="M150,392.2 L904.3,120.7 L950,120.7" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- B200 -->
+    <path d="M150,365.0 L839.8,116.6 L950,116.6" fill="none" stroke="#F43F5E" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
 
-    <!-- A100 roofline (indigo) -->
-    <path d="M 120,391 L 727,183 L 950,183" fill="none" stroke="#6366f1" stroke-width="3" filter="url(#glowRf)"/>
-    <!-- Ridge point -->
-    <circle cx="727" cy="183" r="8" fill="#6366f1" stroke="white" stroke-width="2" filter="url(#glowRf)"/>
+    <!-- ridge-point markers -->
+    <circle cx="788.6" cy="178.4" r="6" fill="#FFFFFF" stroke="#4F46E5" stroke-width="3"/>
+    <circle cx="904.3" cy="120.7" r="6" fill="#FFFFFF" stroke="#0EA5E9" stroke-width="3"/>
+    <circle cx="839.8" cy="116.6" r="6" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3"/>
 
-    <!-- H100 roofline (purple) -->
-    <path d="M 120,370 L 886,107 L 950,107" fill="none" stroke="#a855f7" stroke-width="3" filter="url(#glowRf)"/>
-    <!-- Ridge point -->
-    <circle cx="886" cy="107" r="8" fill="#a855f7" stroke="white" stroke-width="2" filter="url(#glowRf)"/>
-
-    <!-- B200 roofline (amber) -->
-    <path d="M 120,334 L 881,73 L 950,73" fill="none" stroke="#f59e0b" stroke-width="3" filter="url(#glowRf)"/>
-    <!-- Ridge point -->
-    <circle cx="881" cy="73" r="8" fill="#f59e0b" stroke="white" stroke-width="2" filter="url(#glowRf)"/>
+    <!-- ===== Example kernels ===== -->
+    <!-- Memory-bound: elementwise / vector add, AI ~ 0.25, sits ON the B200 memory slope (229.6,336.3) -->
+    <circle cx="229.6" cy="336.3" r="7" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Compute-bound: large GEMM, AI ~ 400, sits ON the B200 flat roof (870.4,116.6) -->
+    <rect x="863.4" y="109.6" width="14" height="14" rx="3" fill="#10B981" stroke="#FFFFFF" stroke-width="2"/>
   </g>
 
-  <!-- A100 ceiling label -->
-  <text x="815" y="200" text-anchor="end" font-family="monospace" font-size="12" fill="#818cf8">312 TFLOPS</text>
-  <!-- H100 ceiling label -->
-  <text x="820" y="100" text-anchor="end" font-family="monospace" font-size="12" fill="#c084fc">1979 TFLOPS</text>
-  <!-- B200 ceiling label -->
-  <text x="810" y="67" text-anchor="end" font-family="monospace" font-size="12" fill="#fbbf24">4500 TFLOPS</text>
+  <!-- ===== Region labels ===== -->
+  <!-- Memory-bound (under the slope, rotated to follow it ~ -21deg over this aspect) -->
+  <text x="360" y="350" text-anchor="middle" font-size="18" font-weight="700" fill="#334155" transform="rotate(-21, 360, 350)">MEMORY-BOUND</text>
+  <text x="360" y="370" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#94A3B8" transform="rotate(-21, 360, 370)">perf = BW &#215; intensity</text>
 
-  <!-- Arrow annotation -->
-  <path d="M 700,160 Q 780,130 850,95" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,3"/>
-  <polygon points="850,95 842,105 852,103" fill="#94a3b8"/>
-  <rect x="485" y="145" width="220" height="44" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
-  <text x="595" y="163" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" fill="#94a3b8">Each generation: ridge point</text>
-  <text x="595" y="180" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" fill="#94a3b8">moves right, harder to saturate</text>
+  <!-- Compute-bound (under flat roofs) -->
+  <text x="660" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#334155">COMPUTE-BOUND</text>
+  <text x="660" y="270" text-anchor="middle" font-size="13.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#94A3B8">perf = peak FLOP/s</text>
 
-  <!-- Legend -->
-  <rect x="140" y="55" width="200" height="105" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
-  <text x="165" y="78" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="bold" fill="#e2e8f0">GPU Generation</text>
-  <line x1="160" y1="95" x2="195" y2="95" stroke="#6366f1" stroke-width="3"/>
-  <circle cx="178" cy="95" r="4" fill="#6366f1"/>
-  <text x="205" y="100" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#e2e8f0">A100 (2 TB/s)</text>
-  <line x1="160" y1="118" x2="195" y2="118" stroke="#a855f7" stroke-width="3"/>
-  <circle cx="178" cy="118" r="4" fill="#a855f7"/>
-  <text x="205" y="123" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#e2e8f0">H100 (3.35 TB/s)</text>
-  <line x1="160" y1="141" x2="195" y2="141" stroke="#f59e0b" stroke-width="3"/>
-  <circle cx="178" cy="141" r="4" fill="#f59e0b"/>
-  <text x="205" y="146" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#e2e8f0">B200 (8 TB/s)</text>
+  <!-- Peak FLOP/s ceiling callouts (compact numerals at far-right shelf ends, mono).
+       Kept short (4 digits) and pushed to x>=914 so they clear the H100 ridge marker at x=904.
+       B200 (roof y116.6) labelled ABOVE its shelf, H100 (roof y120.7) BELOW its shelf: never collide.
+       GPU names live in the legend (top-left); colour is the key here. Trailing "TF" = TFLOP/s. -->
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="13" font-weight="700" text-anchor="end">
+    <text x="947" y="108" fill="#F43F5E">2250 TF</text>
+    <text x="947" y="140" fill="#0EA5E9">1979 TF</text>
+    <text x="947" y="194" fill="#4F46E5">312 TF</text>
+  </g>
 
-  <!-- Region labels -->
-  <text x="250" y="420" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#475569" transform="rotate(-42, 250, 420)">Memory Bound</text>
-  <text x="850" y="225" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#475569">Compute Bound</text>
+  <!-- ===== Ridge-motion annotation (honest, non-monotonic) ===== -->
+  <!-- Generation order A100 -> H100 -> B200. Hopper pushes the ridge far RIGHT; Blackwell pulls it
+       BACK LEFT of Hopper (its 8 TB/s bandwidth outgrows its FP16 compute gain). Two short arrows,
+       routed ABOVE the roofs so they never cross the ridge markers, show both moves explicitly. -->
+  <!-- rightward: A100 ridge -> H100 ridge -->
+  <path d="M772,170 C 800,150 860,130 900,124" fill="none" stroke="#64748B" stroke-width="2" marker-end="url(#arrowSlate)" opacity="0.85"/>
+  <!-- leftward: H100 ridge -> B200 ridge -->
+  <path d="M905,108 C 885,104 862,103 846,104" fill="none" stroke="#F43F5E" stroke-width="2" marker-end="url(#arrowSlate)" opacity="0.85"/>
+  <text x="922" y="98" text-anchor="start" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="11" font-weight="700" fill="#F43F5E">back left</text>
+  <g>
+    <rect x="458" y="150" width="280" height="58" rx="11" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4"/>
+    <text x="598" y="172" text-anchor="middle" font-size="14" font-weight="700" fill="#0F172A">Ridge = peak FLOP/s &#247; bandwidth</text>
+    <text x="598" y="192" text-anchor="middle" font-size="11.5" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#64748B">moves both ways: Hopper right, Blackwell left</text>
+  </g>
+
+  <!-- ===== Kernel callout: elementwise ===== -->
+  <line x1="229.6" y1="336.3" x2="232" y2="300" stroke="#94A3B8" stroke-width="1.3"/>
+  <g>
+    <rect x="166" y="262" width="200" height="40" rx="9" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1.4"/>
+    <circle cx="184" cy="282" r="5.5" fill="#F59E0B"/>
+    <text x="198" y="278" font-size="13.5" font-weight="700" fill="#0F172A">Vector add / elementwise</text>
+    <text x="198" y="294" font-size="12" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#64748B">AI &#8776; 0.25 &#183; memory-bound</text>
+  </g>
+
+  <!-- ===== Kernel callout: GEMM ===== -->
+  <line x1="870.4" y1="116.6" x2="828" y2="305" stroke="#94A3B8" stroke-width="1.3"/>
+  <g>
+    <rect x="700" y="306" width="186" height="40" rx="9" fill="#FFFFFF" stroke="#10B981" stroke-width="1.4"/>
+    <rect x="713" y="320" width="11" height="11" rx="2.5" fill="#10B981"/>
+    <text x="732" y="322" font-size="13.5" font-weight="700" fill="#0F172A">Large GEMM (matmul)</text>
+    <text x="732" y="338" font-size="12" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#64748B">AI &#8776; 400 &#183; compute-bound</text>
+  </g>
+
+  <!-- ===== Legend ===== -->
+  <g>
+    <rect x="166" y="92" width="196" height="92" rx="11" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4"/>
+    <text x="182" y="113" font-size="14" font-weight="700" fill="#0F172A">GPU roofline</text>
+    <line x1="182" y1="131" x2="212" y2="131" stroke="#4F46E5" stroke-width="3.2" stroke-linecap="round"/>
+    <text x="222" y="136" font-size="13.5" fill="#334155" font-family="'JetBrains Mono', ui-monospace, monospace">A100 &#183; 2 TB/s</text>
+    <line x1="182" y1="151" x2="212" y2="151" stroke="#0EA5E9" stroke-width="3.2" stroke-linecap="round"/>
+    <text x="222" y="156" font-size="13.5" fill="#334155" font-family="'JetBrains Mono', ui-monospace, monospace">H100 &#183; 3.35 TB/s</text>
+    <line x1="182" y1="171" x2="212" y2="171" stroke="#F43F5E" stroke-width="3.2" stroke-linecap="round"/>
+    <text x="222" y="176" font-size="13.5" fill="#334155" font-family="'JetBrains Mono', ui-monospace, monospace">B200 &#183; 8 TB/s</text>
+  </g>
 </svg>

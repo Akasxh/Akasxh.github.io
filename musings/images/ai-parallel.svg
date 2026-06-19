@@ -1,176 +1,201 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" font-family="Montserrat, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif">
   <defs>
-    <linearGradient id="bg-ai" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="leftPanel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1c1117"/>
-      <stop offset="100%" stop-color="#1a1520"/>
-    </linearGradient>
-    <linearGradient id="rightPanel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f1c14"/>
-      <stop offset="100%" stop-color="#101820"/>
-    </linearGradient>
-    <radialGradient id="goldNode" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#fef3c7"/>
-      <stop offset="50%" stop-color="#fbbf24"/>
-      <stop offset="100%" stop-color="#f59e0b"/>
+    <!-- dot grid -->
+    <pattern id="apDots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#EEF2F7"/>
+    </pattern>
+
+    <!-- arrowheads -->
+    <marker id="apArrowSlate" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 L3 5 Z" fill="#64748B"/>
+    </marker>
+    <marker id="apArrowEm" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 L3 5 Z" fill="#059669"/>
+    </marker>
+    <marker id="apArrowInd" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 L3 5 Z" fill="#4F46E5"/>
+    </marker>
+
+    <!-- soft solution glow -->
+    <radialGradient id="apGoalGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glowAi">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="bigGlowAi">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <radialGradient id="apGoalFill" cx="0.5" cy="0.42" r="0.62">
+      <stop offset="0%" stop-color="#ECFDF5"/>
+      <stop offset="100%" stop-color="#D1FAE5"/>
+    </radialGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="1100" height="500" fill="url(#bg-ai)"/>
+  <!-- ===== Canvas ===== -->
+  <rect width="1100" height="500" fill="#FFFFFF"/>
+  <rect x="14" y="14" width="1072" height="472" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="14" y="14" width="1072" height="472" rx="16" fill="url(#apDots)"/>
 
-  <!-- Left Panel: Today -->
-  <rect x="20" y="60" width="520" height="420" rx="12" fill="url(#leftPanel)" stroke="#ef4444" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="280" y="95" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#fca5a5">Today</text>
+  <!-- ===== Title ===== -->
+  <text x="46" y="58" font-size="29" font-weight="700" fill="#0F172A">One hard problem, two ways to think</text>
+  <text x="46" y="84" font-size="17" fill="#64748B">The bottleneck is not the number of problems, it is the number of minds working on them <tspan font-style="italic">at once</tspan>.</text>
 
-  <!-- Right Panel: With Superhuman AI -->
-  <rect x="560" y="60" width="520" height="420" rx="12" fill="url(#rightPanel)" stroke="#22c55e" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="820" y="95" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#86efac">With Superhuman AI</text>
+  <!-- divider between panels -->
+  <line x1="550" y1="110" x2="550" y2="466" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="2 7"/>
 
-  <!-- === LEFT PANEL: Expert Nodes === -->
-  <!-- Sparse connections first (behind nodes) -->
-  <line x1="130" y1="180" x2="280" y2="260" stroke="#475569" stroke-width="1.5" opacity="0.3"/>
-  <line x1="280" y1="180" x2="430" y2="260" stroke="#475569" stroke-width="1.5" opacity="0.3"/>
-  <line x1="430" y1="180" x2="280" y2="260" stroke="#475569" stroke-width="1.5" opacity="0.3"/>
-  <line x1="130" y1="360" x2="280" y2="260" stroke="#475569" stroke-width="1.5" opacity="0.3"/>
-  <line x1="130" y1="180" x2="130" y2="360" stroke="#475569" stroke-width="1" opacity="0.2"/>
-  <line x1="430" y1="360" x2="430" y2="180" stroke="#475569" stroke-width="1" opacity="0.2"/>
+  <!-- =========================================================
+       LEFT PANEL: ONE MIND, SEQUENTIAL
+       ========================================================= -->
+  <g>
+    <!-- panel chip -->
+    <rect x="46" y="104" width="232" height="34" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.5"/>
+    <circle cx="66" cy="121" r="6" fill="#4F46E5"/>
+    <text x="80" y="126" font-size="16.5" font-weight="700" fill="#3730A3">A single mind &#183; sequential</text>
 
-  <!-- Central node (dim) -->
-  <circle cx="280" cy="310" r="18" fill="#475569" opacity="0.4"/>
-  <text x="280" y="315" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8" fill="#94a3b8">Progress</text>
+    <!-- faint search-space lattice -->
+    <g stroke="#E2E8F0" stroke-width="1">
+      <line x1="96" y1="186" x2="500" y2="186"/>
+      <line x1="96" y1="240" x2="500" y2="240"/>
+      <line x1="96" y1="294" x2="500" y2="294"/>
+      <line x1="96" y1="348" x2="500" y2="348"/>
+      <line x1="130" y1="170" x2="130" y2="364"/>
+      <line x1="214" y1="170" x2="214" y2="364"/>
+      <line x1="298" y1="170" x2="298" y2="364"/>
+      <line x1="382" y1="170" x2="382" y2="364"/>
+      <line x1="466" y1="170" x2="466" y2="364"/>
+    </g>
+    <!-- unexplored lattice nodes -->
+    <g fill="#CBD5E1">
+      <circle cx="130" cy="186" r="3"/><circle cx="214" cy="186" r="3"/><circle cx="298" cy="186" r="3"/><circle cx="382" cy="186" r="3"/><circle cx="466" cy="186" r="3"/>
+      <circle cx="130" cy="240" r="3"/><circle cx="214" cy="240" r="3"/><circle cx="298" cy="240" r="3"/><circle cx="382" cy="240" r="3"/><circle cx="466" cy="240" r="3"/>
+      <circle cx="130" cy="294" r="3"/><circle cx="214" cy="294" r="3"/><circle cx="298" cy="294" r="3"/><circle cx="382" cy="294" r="3"/><circle cx="466" cy="294" r="3"/>
+      <circle cx="130" cy="348" r="3"/><circle cx="214" cy="348" r="3"/><circle cx="298" cy="348" r="3"/><circle cx="382" cy="348" r="3"/><circle cx="466" cy="348" r="3"/>
+    </g>
 
-  <!-- Expert nodes -->
-  <circle cx="130" cy="180" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="130" y="175" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Fusion</text>
-  <text x="130" y="190" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#94a3b8">Physics</text>
+    <!-- the long sequential walk through the search space (ends just short of the goal so the arrowhead reads cleanly) -->
+    <path d="M130 348 L214 348 L214 294 L298 294 L298 240 L382 240 L382 186 L449 186"
+          fill="none" stroke="#6366F1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+          marker-end="url(#apArrowInd)"/>
+    <!-- visited nodes on the walk -->
+    <g fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5">
+      <circle cx="214" cy="348" r="6"/><circle cx="214" cy="294" r="6"/>
+      <circle cx="298" cy="294" r="6"/><circle cx="298" cy="240" r="6"/>
+      <circle cx="382" cy="240" r="6"/><circle cx="382" cy="186" r="6"/>
+    </g>
 
-  <circle cx="280" cy="160" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="280" y="155" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Materials</text>
-  <text x="280" y="170" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#94a3b8">Science</text>
+    <!-- start: the lone reasoner -->
+    <circle cx="130" cy="348" r="18" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="130" y="353" text-anchor="middle" font-size="16" fill="#4F46E5">&#9737;</text>
+    <text x="130" y="392" text-anchor="middle" font-size="13.5" font-weight="600" fill="#334155">one reasoner</text>
 
-  <circle cx="430" cy="180" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="430" y="175" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Orbital</text>
-  <text x="430" y="190" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#94a3b8">Mechanics</text>
+    <!-- goal reached (small, slow) -->
+    <circle cx="466" cy="186" r="13" fill="#D1FAE5" stroke="#10B981" stroke-width="2.5"/>
+    <path d="M460 186 l4 4 l8 -9" fill="none" stroke="#059669" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <circle cx="130" cy="360" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="130" y="365" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Biology</text>
-
-  <circle cx="280" cy="410" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="280" y="405" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Computer</text>
-  <text x="280" y="420" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#94a3b8">Science</text>
-
-  <circle cx="430" cy="360" r="28" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-  <text x="430" y="355" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e2e8f0">Energy</text>
-  <text x="430" y="370" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#94a3b8">Systems</text>
-
-  <!-- Left panel annotation -->
-  <text x="280" y="465" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#94a3b8">~100s of experts per field</text>
-
-  <!-- === RIGHT PANEL: AI Agent Grid === -->
-  <!-- Dense connection web (behind nodes) -->
-  <g opacity="0.15" stroke="#22c55e" stroke-width="1">
-    <!-- Horizontal connections -->
-    <line x1="620" y1="160" x2="1040" y2="160"/>
-    <line x1="620" y1="200" x2="1040" y2="200"/>
-    <line x1="620" y1="240" x2="1040" y2="240"/>
-    <line x1="620" y1="280" x2="1040" y2="280"/>
-    <line x1="620" y1="320" x2="1040" y2="320"/>
-    <line x1="620" y1="360" x2="1040" y2="360"/>
-    <line x1="620" y1="400" x2="1040" y2="400"/>
-    <!-- Vertical connections -->
-    <line x1="640" y1="130" x2="640" y2="430"/>
-    <line x1="690" y1="130" x2="690" y2="430"/>
-    <line x1="740" y1="130" x2="740" y2="430"/>
-    <line x1="790" y1="130" x2="790" y2="430"/>
-    <line x1="840" y1="130" x2="840" y2="430"/>
-    <line x1="890" y1="130" x2="890" y2="430"/>
-    <line x1="940" y1="130" x2="940" y2="430"/>
-    <line x1="990" y1="130" x2="990" y2="430"/>
-    <!-- Diagonal connections -->
-    <line x1="620" y1="130" x2="1040" y2="430"/>
-    <line x1="1040" y1="130" x2="620" y2="430"/>
-    <line x1="620" y1="200" x2="900" y2="430"/>
-    <line x1="750" y1="130" x2="1040" y2="360"/>
-    <line x1="1040" y1="200" x2="750" y2="430"/>
-    <line x1="620" y1="360" x2="900" y2="130"/>
+    <!-- timeline: long -->
+    <line x1="96" y1="420" x2="500" y2="420" stroke="#94A3B8" stroke-width="2" marker-end="url(#apArrowSlate)"/>
+    <text x="96" y="442" font-size="12.5" fill="#94A3B8">time &#8594;</text>
+    <rect x="300" y="408" width="146" height="24" rx="12" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.3"/>
+    <text x="373" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="#E11D48">decades, one step at a time</text>
   </g>
 
-  <!-- Additional web connections to golden center -->
-  <g opacity="0.25" stroke="#fbbf24" stroke-width="1.5">
-    <line x1="640" y1="160" x2="820" y2="285"/>
-    <line x1="690" y1="200" x2="820" y2="285"/>
-    <line x1="740" y1="160" x2="820" y2="285"/>
-    <line x1="840" y1="160" x2="820" y2="285"/>
-    <line x1="940" y1="200" x2="820" y2="285"/>
-    <line x1="990" y1="240" x2="820" y2="285"/>
-    <line x1="990" y1="360" x2="820" y2="285"/>
-    <line x1="940" y1="400" x2="820" y2="285"/>
-    <line x1="840" y1="400" x2="820" y2="285"/>
-    <line x1="690" y1="400" x2="820" y2="285"/>
-    <line x1="640" y1="360" x2="820" y2="285"/>
-    <line x1="640" y1="280" x2="820" y2="285"/>
-    <line x1="990" y1="280" x2="820" y2="285"/>
+  <!-- =========================================================
+       RIGHT PANEL: THOUSANDS OF PARALLEL AI REASONERS
+       ========================================================= -->
+  <g>
+    <!-- panel chip -->
+    <rect x="600" y="104" width="372" height="34" rx="10" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1.5"/>
+    <circle cx="620" cy="121" r="6" fill="#10B981"/>
+    <text x="634" y="126" font-size="16.5" font-weight="700" fill="#047857">Thousands of AI reasoners &#183; in parallel</text>
+
+    <!-- the shared hard problem (fan-out source) -->
+    <rect x="588" y="252" width="60" height="60" rx="13" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+    <text x="618" y="277" text-anchor="middle" font-size="13" font-weight="700" fill="#3730A3">hard</text>
+    <text x="618" y="294" text-anchor="middle" font-size="13" font-weight="700" fill="#3730A3">problem</text>
+    <text x="618" y="334" text-anchor="middle" font-size="12.5" fill="#64748B">decomposed</text>
+
+    <!-- solution / convergence target -->
+    <circle cx="930" cy="282" r="58" fill="url(#apGoalGlow)"/>
+    <circle cx="930" cy="282" r="34" fill="url(#apGoalFill)" stroke="#10B981" stroke-width="2.5"/>
+    <path d="M919 282 l7 8 l15 -17" fill="none" stroke="#059669" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="930" y="338" text-anchor="middle" font-size="13.5" font-weight="700" fill="#047857">solution</text>
+
+    <!-- fan-out: many agents explore branches of the search space simultaneously, then converge -->
+    <!-- branch routing paths (problem -> agent -> solution) -->
+    <g fill="none" stroke-linecap="round">
+      <!-- agent y positions: 168,196,224,252,282,312,340,368,396 ; agent x = 760 -->
+      <g stroke="#8B5CF6" stroke-width="2" stroke-opacity="0.55">
+        <path d="M648 268 C700 200, 712 168, 748 168"/>
+        <path d="M648 272 C700 220, 712 196, 748 196"/>
+        <path d="M648 276 C702 240, 712 224, 748 224"/>
+      </g>
+      <g stroke="#6366F1" stroke-width="2" stroke-opacity="0.6">
+        <path d="M648 282 C706 262, 712 252, 748 252"/>
+        <path d="M648 282 C710 282, 720 282, 748 282"/>
+        <path d="M648 282 C706 302, 712 312, 748 312"/>
+      </g>
+      <g stroke="#0EA5E9" stroke-width="2" stroke-opacity="0.55">
+        <path d="M648 288 C702 324, 712 340, 748 340"/>
+        <path d="M648 292 C700 344, 712 368, 748 368"/>
+        <path d="M648 296 C700 364, 712 396, 748 396"/>
+      </g>
+
+      <!-- converge: agents -> solution -->
+      <g stroke="#10B981" stroke-width="2" stroke-opacity="0.5">
+        <path d="M772 168 C840 168, 866 234, 900 268"/>
+        <path d="M772 196 C842 196, 868 244, 902 272"/>
+        <path d="M772 224 C846 224, 872 252, 900 276"/>
+        <path d="M772 252 C850 252, 880 264, 898 278"/>
+        <path d="M772 282 C854 282, 884 282, 896 282"/>
+        <path d="M772 312 C850 312, 880 300, 898 286"/>
+        <path d="M772 340 C846 340, 872 312, 900 288"/>
+        <path d="M772 368 C842 368, 868 320, 902 292"/>
+        <path d="M772 396 C840 396, 866 330, 900 296"/>
+      </g>
+    </g>
+
+    <!-- the parallel AI agents (reasoner nodes), colored by exploration cluster -->
+    <g stroke="#FFFFFF" stroke-width="1.6">
+      <!-- violet cluster -->
+      <g fill="#8B5CF6">
+        <circle cx="760" cy="168" r="11"/><circle cx="760" cy="196" r="11"/><circle cx="760" cy="224" r="11"/>
+      </g>
+      <!-- indigo cluster -->
+      <g fill="#6366F1">
+        <circle cx="760" cy="252" r="11"/><circle cx="760" cy="282" r="12"/><circle cx="760" cy="312" r="11"/>
+      </g>
+      <!-- sky cluster -->
+      <g fill="#0EA5E9">
+        <circle cx="760" cy="340" r="11"/><circle cx="760" cy="368" r="11"/><circle cx="760" cy="396" r="11"/>
+      </g>
+    </g>
+    <!-- reasoner glyph on each agent (small spark) -->
+    <g fill="#FFFFFF" font-size="11" text-anchor="middle" font-weight="700" font-family="Montserrat, system-ui, Arial, sans-serif">
+      <text x="760" y="173">&#9670;</text><text x="760" y="201">&#9670;</text><text x="760" y="229">&#9670;</text>
+      <text x="760" y="257">&#9670;</text><text x="760" y="288">&#9670;</text><text x="760" y="317">&#9670;</text>
+      <text x="760" y="345">&#9670;</text><text x="760" y="373">&#9670;</text><text x="760" y="401">&#9670;</text>
+    </g>
+
+    <!-- "x1000s" multiplier badge, placed up-and-right of the agent column so it never overlaps the title chip -->
+    <line x1="797" y1="166" x2="775" y2="172" stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round"/>
+    <g>
+      <rect x="792" y="148" width="74" height="24" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+      <text x="829" y="165" text-anchor="middle" font-size="13" font-weight="700" fill="#334155" font-family="'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace">&#215; 1000s</text>
+    </g>
+
+    <!-- timeline: short -->
+    <line x1="588" y1="420" x2="964" y2="420" stroke="#94A3B8" stroke-width="2" marker-end="url(#apArrowSlate)"/>
+    <text x="588" y="442" font-size="12.5" fill="#94A3B8">time &#8594;</text>
+    <rect x="640" y="408" width="232" height="24" rx="12" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.3"/>
+    <text x="756" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="#047857">years, sub-problems solved simultaneously</text>
   </g>
 
-  <!-- AI agent dots (grid of small circles) -->
-  <g fill="#6366f1">
-    <!-- Row 1 -->
-    <circle cx="640" cy="160" r="8" opacity="0.8"/><circle cx="690" cy="160" r="8" opacity="0.7"/>
-    <circle cx="740" cy="160" r="8" opacity="0.85"/><circle cx="790" cy="160" r="8" opacity="0.75"/>
-    <circle cx="840" cy="160" r="8" opacity="0.8"/><circle cx="890" cy="160" r="8" opacity="0.7"/>
-    <circle cx="940" cy="160" r="8" opacity="0.85"/><circle cx="990" cy="160" r="8" opacity="0.75"/>
-    <!-- Row 2 -->
-    <circle cx="640" cy="200" r="8" opacity="0.7"/><circle cx="690" cy="200" r="8" opacity="0.85"/>
-    <circle cx="740" cy="200" r="8" opacity="0.75"/><circle cx="790" cy="200" r="8" opacity="0.8"/>
-    <circle cx="840" cy="200" r="8" opacity="0.7"/><circle cx="890" cy="200" r="8" opacity="0.85"/>
-    <circle cx="940" cy="200" r="8" opacity="0.75"/><circle cx="990" cy="200" r="8" opacity="0.8"/>
-    <!-- Row 3 -->
-    <circle cx="640" cy="240" r="8" opacity="0.85"/><circle cx="690" cy="240" r="8" opacity="0.75"/>
-    <circle cx="740" cy="240" r="8" opacity="0.8"/><circle cx="840" cy="240" r="8" opacity="0.85"/>
-    <circle cx="890" cy="240" r="8" opacity="0.75"/><circle cx="940" cy="240" r="8" opacity="0.8"/>
-    <circle cx="990" cy="240" r="8" opacity="0.7"/>
-    <!-- Row 4 -->
-    <circle cx="640" cy="280" r="8" opacity="0.75"/><circle cx="690" cy="280" r="8" opacity="0.8"/>
-    <circle cx="740" cy="280" r="8" opacity="0.7"/><circle cx="840" cy="280" r="8" opacity="0.75"/>
-    <circle cx="890" cy="280" r="8" opacity="0.8"/><circle cx="940" cy="280" r="8" opacity="0.7"/>
-    <circle cx="990" cy="280" r="8" opacity="0.85"/>
-    <!-- Row 5 -->
-    <circle cx="640" cy="320" r="8" opacity="0.8"/><circle cx="690" cy="320" r="8" opacity="0.7"/>
-    <circle cx="740" cy="320" r="8" opacity="0.85"/><circle cx="790" cy="320" r="8" opacity="0.75"/>
-    <circle cx="840" cy="320" r="8" opacity="0.8"/><circle cx="890" cy="320" r="8" opacity="0.7"/>
-    <circle cx="940" cy="320" r="8" opacity="0.85"/><circle cx="990" cy="320" r="8" opacity="0.75"/>
-    <!-- Row 6 -->
-    <circle cx="640" cy="360" r="8" opacity="0.7"/><circle cx="690" cy="360" r="8" opacity="0.85"/>
-    <circle cx="740" cy="360" r="8" opacity="0.75"/><circle cx="790" cy="360" r="8" opacity="0.8"/>
-    <circle cx="840" cy="360" r="8" opacity="0.7"/><circle cx="890" cy="360" r="8" opacity="0.85"/>
-    <circle cx="940" cy="360" r="8" opacity="0.75"/><circle cx="990" cy="360" r="8" opacity="0.8"/>
-    <!-- Row 7 -->
-    <circle cx="640" cy="400" r="8" opacity="0.85"/><circle cx="690" cy="400" r="8" opacity="0.75"/>
-    <circle cx="740" cy="400" r="8" opacity="0.8"/><circle cx="790" cy="400" r="8" opacity="0.7"/>
-    <circle cx="840" cy="400" r="8" opacity="0.85"/><circle cx="890" cy="400" r="8" opacity="0.75"/>
-    <circle cx="940" cy="400" r="8" opacity="0.8"/><circle cx="990" cy="400" r="8" opacity="0.7"/>
+  <!-- ===== big contrast arrow between panels ===== -->
+  <g>
+    <line x1="512" y1="240" x2="588" y2="240" stroke="#10B981" stroke-width="3" marker-end="url(#apArrowEm)"/>
+    <rect x="498" y="206" width="104" height="22" rx="11" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.3"/>
+    <text x="550" y="222" text-anchor="middle" font-size="12.5" font-weight="700" fill="#047857" font-family="'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace">parallelize</text>
   </g>
 
-  <!-- Golden central node (right panel) -->
-  <circle cx="820" cy="285" r="28" fill="url(#goldNode)" filter="url(#bigGlowAi)"/>
-  <text x="820" y="282" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="bold" fill="#451a03">Civilization</text>
-  <text x="820" y="294" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="bold" fill="#451a03">Progress</text>
-
-  <!-- Right panel annotation -->
-  <text x="820" y="455" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#94a3b8">1000s of parallel AI agents</text>
-
-  <!-- Divider arrow -->
-  <polygon points="545,250 555,240 555,245 570,245 570,255 555,255 555,260" fill="#475569" opacity="0.6"/>
+  <!-- ===== footer takeaway ===== -->
+  <text x="46" y="476" font-size="14" fill="#64748B">
+    <tspan font-weight="700" fill="#334155">Capacity = (number of reasoning agents) &#215; (quality of each).</tspan>
+    <tspan dx="6">Humans cap the first term; superhuman AI removes the cap.</tspan>
+  </text>
 </svg>
