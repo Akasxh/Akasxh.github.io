@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Best KV Cache Eviction Is the One You Never Have to Do - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">The Best KV Cache Eviction Is the One You Never Have to Do</h1>
+      <div class="post-meta">Jun 30, 2026 <span class="reading-time">10 min read</span></div>
+      <div class="post-categories"><span>ML Systems</span> <span>Attention</span> <span>Inference</span></div>
+      <div class="post-body">
+
+        <p>I spend most of my time trying to throw things away. My bachelor's thesis is on KV-cache optimization for long-context transformers, and day to day that means staring at a cache that grows by one entry per generated token and deciding which entries I can drop without the model noticing. <a href="https://arxiv.org/abs/2309.17453" target="_blank">StreamingLLM</a> keeps a few sink tokens and a recent window. H2O keeps the "heavy hitters." SnapKV clusters what the prompt actually attended to and keeps that. Every one of these methods accepts the same premise: the cache grows, so be clever about what you evict.</p>
+
+        <p>Then I read <em>Unlimited OCR Works</em>, a technical report out of Baidu, and it quietly dissolved that premise for an entire class of tasks. Not by evicting better. By never letting the decode cache grow in the first place, and getting <em>higher</em> accuracy for it. That second part is the one I cannot stop thinking about, so this post is me working out why, and what it means for the kind of work I actually do.</p>
+
+        <h2>The Premise I Optimize Under</h2>
+
+        <p>Quick grounding, because the whole point lives here. When an LLM decodes autoregressively, it caches the key and value tensors of every token it has already seen so it does not recompute them. For a prompt (or, in OCR, an encoded image) of length L_m, after generating T tokens the cache holds L_m + T entries. It grows linearly, forever, and decoding is bandwidth-bound: every single step you reload the entire cache from HBM to attend over it.</p>
+
+        <p>I have <a href="post4.html">written before</a> about the two classic ways people fight this. Grouped Query Attention shrinks it at the architecture level by sharing KV heads. PagedAttention manages it at the systems level so you stop wasting memory to fragmentation. Cache eviction is the third axis, and it is the one I live in: keep the cache, but throw out the entries that are not pulling their weight. The entire game reduces to one question. Which entries are load-bearing?</p>
+
+        <h2>What "Unlimited OCR" Actually Does</h2>
+
+        <p>The setup is an OCR decoder that generates text conditioned on a big block of reference tokens: a compressed image (their DeepEncoder squeezes a 1024&times;1024 page down to about 256 visual tokens) plus the prompt. Call that reference block length L_m. They take <a href="https://github.com/deepseek-ai/DeepSeek-OCR" target="_blank">DeepSeek-OCR</a> as a baseline, a 3B-total, 0.5B-activated Mixture-of-Experts model, and replace <em>every</em> decoder attention layer with what they call Reference Sliding Window Attention (R-SWA).</p>
+
+        <p>R-SWA splits attention into two regions with different rules:</p>
+
+        <p><strong>Reference tokens are global and frozen.</strong> Every generated token attends to all of them, always. They are encoded once and never enter any sliding state, so the visual features never get progressively blurred. This is the key difference from plain sliding-window attention, which would happily let the window chew through the image tokens too and degrade recognition.</p>
+
+        <p><strong>Output tokens slide.</strong> For the text it is generating, a token only attends to the previous n tokens through a causal sliding window, where n defaults to 128. Anything older than that on the output side is simply gone.</p>
+
+        <figure>
+          <img loading="lazy" src="images/rswa-mask.svg" alt="Two attention-mask grids compared. Left, vanilla causal attention: reference columns plus a growing lower-triangle of output history, so the KV cache grows as L_m plus T. Right, R-SWA: reference columns stay fully attended while output tokens attend only a constant-width recent window, so older output is evicted and the KV cache stays constant at L_m plus n." class="post-image" style="width:100%; max-width:800px; margin:0 auto; display:block;">
+          <figcaption>R-SWA keeps the reference block fully visible (frozen, global) and bounds the output side to a width-n causal window. The vanilla cache grows into a full triangle; the R-SWA cache is a constant L_m + n.</figcaption>
+        </figure>
+
+        <p>The cache arithmetic falls right out of that picture. Standard attention pays L_m + T and climbs with every token. R-SWA pins the prefix and caps the output side at the window, so it is bounded by a constant no matter how long the document is:</p>
+
+<pre><code># standard MHA decoder: cache grows with every generated token
+C_MHA(T)   = L_m + T
+
+# R-SWA: prefix pinned, output side capped at the window n
+C_R-SWA(T) = L_m + min(n, T)   ≤   L_m + n        # n = 128 by default
+
+# implemented as a fixed-capacity queue over the decode region:
+#   - reference tokens (visual + prompt) are pinned, never evicted
+#   - each new output token evicts the oldest token still in the window
+</code></pre>
+
+        <p>A constant decode cache means constant per-step latency and flat memory, which is how they parse dozens of pages in a single forward pass under a 32K budget instead of looping page-by-page and resetting memory each time. Their kernel study makes it concrete: the baseline's per-call attention latency climbs (with ugly spikes when the cache crosses alignment boundaries) while R-SWA's stays pinned flat across 6000+ decode steps.</p>
+
+        <h2>The Part That Is Not a Memory Trick</h2>
+
+        <p>If that were the whole story, R-SWA would be a clean efficiency win with the usual asterisk: you traded a little quality for a lot of memory. Here is the asterisk that is not there.</p>
+
+        <div class="insight-box">
+          <strong>Key result:</strong> On OmniDocBench v1.5, the constant-cache model scores <strong>93.23</strong> overall against the full-attention baseline's <strong>87.01</strong> &mdash; a 6.22-point gain &mdash; while using a bounded cache instead of an unbounded one. The authors' own phrasing: replacing all standard attention with R-SWA of width 128 is "both effective and lossless." Bounding the window did not cost accuracy. It bought it.
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>OmniDocBench v1.5</th><th>DeepSeek-OCR (full attn)</th><th>Unlimited-OCR (R-SWA)</th><th>&Delta;</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Overall &uarr;</td><td>87.01</td><td>93.23</td><td>+6.22</td></tr>
+            <tr><td>Text edit distance &darr;</td><td>0.073</td><td>0.038</td><td>&minus;0.035</td></tr>
+            <tr><td>Formula CDM &uarr;</td><td>83.37</td><td>92.61</td><td>+9.24</td></tr>
+            <tr><td>Table TEDS &uarr;</td><td>84.97</td><td>90.93</td><td>+5.96</td></tr>
+          </tbody>
+        </table>
+
+        <p>The explanation they offer is the interesting bit. Full attention over a very long output gives the model more and more rope to drift, and they note it "could lead to divergence as the output length increases." The bounded window keeps every token anchored to the source instead of to its own lengthening history. So this is not quality-for-memory. The decode cache I would have been carefully protecting was, for this task, partly <em>hurting</em> the model.</p>
+
+        <h2>Why This Breaks My Mental Model</h2>
+
+        <p>The reason R-SWA works is a statement about the task, not about the architecture. For transcription &mdash; OCR, and the authors argue ASR and translation fall in the same bucket &mdash; a generated token barely needs the rest of the generated text. It needs the source in full, and a small window of what it just wrote to know where it is on the page. They frame it as human working memory: when you copy a book, your eyes stay on the source and a few characters of context, and you let the distant output fade. There is no reason to re-read everything you have already transcribed.</p>
+
+        <p>Which means the decode-side KV cache I would have been so careful to evict was, for this class of tasks, never load-bearing. My eviction policies spend all their cleverness deciding <em>which</em> past output tokens to keep. R-SWA's answer for reference-grounded parsing is: essentially none beyond the last 128, and a fixed window beats any learned or heuristic policy &mdash; because it also deletes that divergence failure mode I was not even pricing in.</p>
+
+        <h2>Eviction Fights the Model. R-SWA Co-Designs With It.</h2>
+
+        <p>Here is the lesson that actually changes how I think about my own work, and it is sharper than "attention can be cheaper."</p>
+
+        <p>Inference-time eviction is always fighting what the model learned. StreamingLLM, H2O, SnapKV all run on a model that was <em>trained with full attention</em>. That model learned to sometimes lean on far-away tokens, and eviction has to guess, at serving time, when that reliance is safe to break. You are patching a mismatch between how the model was trained and how you want to run it, and the patch is necessarily a heuristic that is sometimes wrong.</p>
+
+        <p>R-SWA does not patch. It <em>trains</em> with the bounded window across all layers &mdash; they continue-train the DeepSeek checkpoint for a few thousand steps with the new attention. The model never learns to depend on tokens that will not be there at inference. That is the entire reason it can be lossless: there is no mismatch left to fight. Eviction asks "what can I safely drop from a model that wanted to see everything?" R-SWA asks "what if it never wanted everything in the first place?"</p>
+
+        <p>That reframes the research question for me. The honest first question is not "what is my best eviction heuristic." It is "is my task reference-grounded, and if so, can I bake the bounded window into training and delete the eviction logic entirely?"</p>
+
+        <h2>Where I Stay Honest About It</h2>
+
+        <p>Now the part where I make myself slow down, because the clean version of this idea is also the wrong one. This is not "eviction is dead."</p>
+
+        <p>R-SWA works because the task is reference-grounded: there is a fixed, complete source the model can always see, and the output is a near-monotonic transcription of it. The economics depend on that too &mdash; keeping <em>all</em> the reference tokens global forever is only affordable because DeepEncoder compresses a page to ~256 tokens. Take away the cheap, complete, always-visible source and the trick loses its footing.</p>
+
+        <p>For open-ended generation the situation inverts. Multi-step reasoning, long chains of thought, agent trajectories, code with genuine long-range dependencies &mdash; there the model's own history <em>is</em> the context. There is no external source to anchor to; the generated text is the source. Bound the window there and you really do lose information the model needs. That is exactly the regime where eviction, paging, and quantization keep earning their keep, because the cache is load-bearing and the only question left is how to carry it cheaply.</p>
+
+        <p>So the takeaway is not "stop evicting." It is one question earlier than that: before you evict, ask whether your cache should be growing at all. If your task is reference-grounded, the best eviction policy is the one you get to delete, because you trained a constant cache instead of a clever way to prune a growing one.</p>
+
+        <h2>What I Would Take to My Own Bench</h2>
+
+        <p>Concretely, for the reference-grounded pipelines I touch, and in my sparse-attention experiments, the first move now is not a smarter scoring function for which KV entries to keep. It is an ablation: how far back into its own output does a token actually need to see before quality stops moving? If the answer is "a couple hundred tokens," that was never an eviction problem. It is a training-time window I should bake in.</p>
+
+        <p>And the implementation is almost insultingly simple: a fixed-capacity FIFO over the decode region with the prefix pinned. That simplicity is a feature. With my <a href="https://github.com/Akasxh/gpucheck" target="_blank">gpucheck</a> habit, constant memory and constant per-step latency are exactly the kind of properties that are easy to assert in a test and hard to fake &mdash; far easier to trust than "our eviction heuristic usually keeps the right tokens."</p>
+
+        <p>I came into this report expecting an OCR trick. I left it slightly annoyed at myself, in the good way. For a whole family of tasks I had been answering "which entries do I evict" when the better question was "why is this cache growing at all." The best eviction, it turns out, is the one you engineered yourself out of needing &mdash; you just have to be honest enough about your task to know when you have actually earned it.</p>
+
+        <div class="paper-ref">
+          <div class="paper-title">Unlimited OCR Works: Welcome the Era of One-shot Long-horizon Parsing</div>
+          <div class="paper-authors">Baidu Inc., 2026</div>
+          <a href="https://arxiv.org/abs/2606.23050" target="_blank">arxiv:2606.23050</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">Efficient Streaming Language Models with Attention Sinks (StreamingLLM)</div>
+          <div class="paper-authors">Xiao et al., ICLR 2024</div>
+          <a href="https://arxiv.org/abs/2309.17453" target="_blank">arxiv:2309.17453</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
