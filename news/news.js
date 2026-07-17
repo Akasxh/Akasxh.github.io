@@ -65,7 +65,7 @@
   },
   {
     date: "2025-10-17",
-    summary: "Placed in the <span class=\"news-highlight\">top 50</span> globally in the <a href=\"https://unstop.com/hackathons/amazon-ml-challenge-2025-amazon-1560375\" target=\"_blank\" rel=\"noopener\">Amazon ML Challenge</a>."
+    summary: "Placed in the <span class=\"news-highlight\">top 50</span> globally (rank 24) in the <a href=\"https://unstop.com/hackathons/amazon-ml-challenge-2025-amazon-1560375\" target=\"_blank\" rel=\"noopener\">Amazon ML Challenge</a>."
   },
   {
     date: "2025-06-10",
