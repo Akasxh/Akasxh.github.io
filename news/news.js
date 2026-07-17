@@ -61,7 +61,7 @@
   },
   {
     date: "2025-09-02",
-    summary: "Selected for the 30-day <a href=\"https://shanhaiwoo.com/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">ShanHaiWoo</span> blockchain residency</a> in Singapore."
+    summary: "Selected for the 30-day <a href=\"https://shanhaiwoo.com/\" target=\"_blank\" rel=\"noopener\"><span class=\"news-highlight\">ShanHaiWoo</span> residency</a> in Singapore."
   },
   {
     date: "2025-10-17",
