@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RL Didn't Teach Your Model to Think - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">RL Didn't Teach Your Model to Think</h1>
+      <div class="post-meta">Aug 2, 2026 <span class="reading-time">8 min read</span></div>
+      <div class="post-categories"><span>Paper Presentation</span> <span>Reinforcement Learning</span> <span>Reasoning</span></div>
+      <div class="post-body">
+
+        <p>I decided the NCR region needed a proper machine learning reading club. Not a talk series, not a networking mixer, but a small room where a handful of people actually <em>read</em> the paper, line by line, and argue about it. So I started one. This post is about the first session, the talk I gave, and the paper that made me question the single biggest training trend of 2025.</p>
+
+        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
+          <strong>The event.</strong> This was Session 01 of the <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">ML Reading Club NCR</a>, which I started and co-host with <strong>Ankit Dwivedi</strong> and <strong>Anjanay Saxena</strong>, in Noida. I organised it end to end and lined up the venue myself: our venue partner was <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric (lyric.tech)</a>. We capped it at 15 to 20 people on purpose, so it stays a real discussion with whiteboard derivations and honest disagreement rather than a lecture. 18 people showed up for the first one. A short recap is on <a href="https://x.com/SAkasxh/status/2083628510074265863" target="_blank" rel="noopener">my X post here</a>.
+        </div>
+
+        <p>My talk was Talk 2 of 2 that evening, and I picked a paper I had a personal stake in. I use PPO in my own work (a hallucination aware reranker at the IIT Patna AIML Lab), so a paper arguing that RL might not do what everyone thinks it does deserved a careful thirty minutes.</p>
+
+        <h2>The question</h2>
+
+        <p>Through 2025, the recipe behind the reasoning boom was RL with verifiable rewards, or RLVR. You take a base model, give it math or code problems where an answer can be checked by a program, and reward it for being correct. DeepSeek-R1 made this famous. The story everyone told was: RL <em>taught</em> the model to reason.</p>
+
+        <p>The paper I presented asks the uncomfortable version of that: did RLVR actually teach the model anything new, or did it just make the model better at showing what the base model could already do? The honest test is simple to state. Take the base model and the RL-tuned model, and don't just ask each one once. Ask them a thousand times.</p>
+
+        <h2>pass@k, and the crossover</h2>
+
+        <p>The tool is <strong>pass@k</strong>: give the model k attempts at a problem and count it solved if <em>any</em> attempt is correct. Think of it as an exam. pass@1 is exam day, one shot. pass@1024 locks the student in a room with 1,024 tries and asks a different question entirely: does the knowledge exist in there at all?</p>
+
+        <p>Here is the result that turns the room quiet.</p>
+
+        <div class="insight-box">
+          <strong>The crossover.</strong> At pass@1 the RL model is clearly ahead (roughly 0.15 vs 0.07 on a hard math set). As you increase k, the gap shrinks, and somewhere around k of a few hundred the lines cross. At pass@1024 the plain base model <em>overtakes</em> the RL model (about 0.76 vs 0.63). The one-line takeaway I gave the room: <em>the base model was never less capable. It was less concentrated.</em>
+        </div>
+
+        <p>This holds across Qwen and LLaMA families, at 7B through 32B, across six RL algorithms and ten benchmarks. It shows up in code too, where hidden unit tests mean a correct answer cannot be a lucky guess. Same shape everywhere.</p>
+
+        <h2>Sharpening, not expanding</h2>
+
+        <p>So what is RL actually doing? It is <strong>sharpening the distribution, not expanding it</strong>. RL concentrates probability onto the paths that get rewarded. That is a real win at pass@1, which is the number products actually ship on. But the flip side is that the unrewarded paths fade, and the model loses coverage. On some problems the base model could find a solution and the RL-tuned model effectively cannot anymore. In the paper's tables, the set of problems only RL can solve and the base cannot is, strikingly, about zero.</p>
+
+        <p>My favourite moment from the deck was reading a raw base-model transcript out loud. Before any RL, the base model sets up a problem, derives a negative count of people, writes "the number of residents cannot be negative, there is an error in our calculations, let us re-evaluate," switches approach, and boxes the correct answer. Reflection and self-correction, from the base model, with no RL anywhere in sight.</p>
+
+        <h2>The invisible leash</h2>
+
+        <p>The clean intuition for <em>why</em> is a one-liner about gradients. On-policy RL (REINFORCE, PPO, GRPO) can only learn from the model's own samples. If the model never once produces a particular solution, there is no term in the update for it, so the training can never create it from nothing. A companion paper, <em>The Invisible Leash</em>, makes this a theorem: the trained policy's reachable set stays inside the base model's. If the base assigns a correct solution probability zero, RLVR cannot discover it.</p>
+
+        <p>The lovely historical kicker: the very paper that introduced GRPO, DeepSeekMath, quietly said this back in February 2024. It reported that its RL improved Maj@K but not Pass@K, and that the gain came from making correct answers more likely to surface, not from new capability. Eleven months before R1. The lesson I left the room with: read section five of papers, not just the abstract.</p>
+
+        <h2>So how did 2025 and 2026 models get so good?</h2>
+
+        <p>This is the part I did not want to skip, because "RL is a mirage" is too cynical and also wrong. Models genuinely got better, and the theory tells you exactly where the real gains came from: from methods that add capability from <em>outside</em> the model's own samples.</p>
+
+        <ul>
+          <li><strong>Distillation.</strong> Training on a teacher's traces places probability on sequences the student would never have sampled. It is the one operation the RL gradient cannot do, and it is why DeepSeek found that distilling R1 into small models beat running RL on them directly.</li>
+          <li><strong>Search that keeps novelty outside the weights.</strong> FunSearch and AlphaEvolve found genuinely new mathematics, including the first improvement to 4x4 matrix multiplication in 56 years, by putting an LLM inside an evolutionary loop where good ideas accumulate outside the model.</li>
+          <li><strong>Heavy parallel search plus verification.</strong> The IMO 2025 gold results and GPT-5 tightening a proof in convex optimization came from wide sampling, process rewards, and expert or automated verification.</li>
+        </ul>
+
+        <p>Every one of those is a route the theory leaves wide open. My closing line: the ceiling was real, and the answer was not more GRPO. The field changed the game.</p>
+
+        <h2>What I actually take away</h2>
+
+        <p>RL is not pointless. pass@1 is the metric your product lives on, and packaging capability into a single reliable attempt is genuine value. The claim is narrower and sharper than the hype: RL buys you <em>reliability</em>, not new <em>boundaries</em>. If your task has a checker, price base-model-plus-sampling against an RL model before you assume RL wins. And if you want new capability, reach for a teacher or search, not another RL run.</p>
+
+        <div class="deck-embed" style="margin:2rem 0; padding:1.25rem; border:1px solid rgba(255,255,255,0.12); border-radius:14px; background:rgba(255,255,255,0.03);">
+          <p style="margin:0 0 0.75rem; font-weight:600;">The slides I presented (34-slide deck)</p>
+          <iframe src="rl-didnt-teach-your-model-to-think.pdf" title="RL Didn't Teach Your Model to Think - slides" style="width:100%; height:520px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; background:#fff;"></iframe>
+          <p style="margin:0.85rem 0 0;"><a href="rl-didnt-teach-your-model-to-think.pdf" target="_blank" rel="noopener">Open the full deck (PDF) &rarr;</a></p>
+        </div>
+
+        <div class="paper-ref">
+          <div class="paper-title">Does RL Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?</div>
+          <div class="paper-authors">Yue et al., NeurIPS 2025 (Oral)</div>
+          <a href="https://arxiv.org/abs/2504.13837" target="_blank" rel="noopener">arxiv:2504.13837</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">The Invisible Leash: Why RLVR May Not Escape Its Origin</div>
+          <div class="paper-authors">2025</div>
+          <a href="https://arxiv.org/abs/2507.14843" target="_blank" rel="noopener">arxiv:2507.14843</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">DeepSeekMath (section 5.2.2, the 2024 foreshadowing)</div>
+          <div class="paper-authors">Shao et al., 2024</div>
+          <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener">arxiv:2402.03300</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">FunSearch: Mathematical discoveries from program search with LLMs</div>
+          <div class="paper-authors">Romera-Paredes et al., Nature, 2023</div>
+          <a href="https://www.nature.com/articles/s41586-023-06924-6" target="_blank" rel="noopener">Nature, 2023</a>
+        </div>
+
+        <p style="margin-top:1.75rem; opacity:0.85;">If you are in Delhi NCR and this is your idea of a good evening, the <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">ML Reading Club NCR</a> runs again soon. Thanks to <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric</a> for the venue, and to Ankit and Anjanay for building it with me.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>

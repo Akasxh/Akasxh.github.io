@@ -1,5 +1,9 @@
 ﻿window.AKASH_NEWS = [
   {
+    date: "2026-08-01",
+    summary: "Started the <span class=\"news-highlight\">ML Reading Club NCR</span> in Noida with Ankit Dwivedi and Anjanay Saxena, venue partner <a href=\"https://lyric.tech\" target=\"_blank\" rel=\"noopener\">Lyric</a>, and gave the first session's <a href=\"musings/post12.html\">paper presentation on why RL sharpens rather than teaches</a> (<a href=\"https://luma.com/v7bm4m7q\" target=\"_blank\" rel=\"noopener\">event</a>)."
+  },
+  {
     date: "2026-06-14",
     summary: "Won <span class=\"news-highlight\">1st place</span> at the UCWS Hackathon in Singapore with <span class=\"news-highlight\">Re-Forge</span>, a multi-agent AI system, fully sponsored from India and backed by 130+ community supporters (<a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7472127175358558208/\" target=\"_blank\" rel=\"noopener\">event</a>)."
   },
