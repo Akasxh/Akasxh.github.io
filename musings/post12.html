@@ -37,19 +37,18 @@
         </figure>
 
         <div class="insight-box" style="background:rgba(120,140,255,0.08);">
-          <strong>The event.</strong> This was Session 01 of the <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">ML Reading Club NCR</a>, which I started and co-host with <strong>Ankit Dwivedi</strong> and <strong>Anjanay Saxena</strong>, in Noida. I organised it end to end and lined up the venue myself: our venue partner was <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric (lyric.tech)</a>. We capped it at 15 to 20 people on purpose, so it stays a real discussion with whiteboard derivations and honest disagreement rather than a lecture. 18 people showed up for the first one. A short recap is on <a href="https://x.com/SAkasxh/status/2083628510074265863?s=20" target="_blank" rel="noopener">my X post here</a>.
+          <strong>The event.</strong> This was Session 01 of the <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">ML Reading Club NCR</a>, which I started and co-host with <strong>Ankit Dwivedi</strong> and <strong>Anjanay Saxena</strong>, in Noida. I organised it end to end and lined up the venue myself: our venue partner was <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric (lyric.tech)</a>. We kept it deliberately small, a real discussion with whiteboard derivations and honest disagreement rather than a lecture. Just 8 of us in the room for the first one. A short recap is on <a href="https://x.com/SAkasxh/status/2083628510074265863?s=20" target="_blank" rel="noopener">my X post here</a>.
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; align-items:start; margin:1.25rem 0;">
-          <figure style="margin:0;">
-            <img loading="lazy" src="images/rlc-group.png" alt="ML Reading Club NCR Session 01 group photo" style="width:100%; border-radius:12px; display:block;">
-            <figcaption>Session 01, the room. Kept small on purpose, 18 of us.</figcaption>
-          </figure>
-          <figure style="margin:0;">
-            <img loading="lazy" src="images/rlc-poster.png" alt="ML Reading Club NCR poster, venue partner Lyric" style="width:100%; border-radius:12px; display:block;">
-            <figcaption>Venue partner <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric</a>. Proof it happened: <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">the event on Luma</a>.</figcaption>
-          </figure>
+        <div style="text-align:center; margin:1.25rem 0;">
+          <img loading="lazy" src="images/rlc-poster.png" alt="ML Reading Club NCR, venue partner Lyric" style="width:100%; max-width:340px; border-radius:12px; display:inline-block;">
+          <div style="font-size:0.85em; opacity:0.75; margin-top:6px;">Session 01, venue partner <a href="https://lyric.tech" target="_blank" rel="noopener">Lyric</a> &middot; <a href="https://luma.com/v7bm4m7q" target="_blank" rel="noopener">Event on Luma</a></div>
         </div>
+
+        <div style="display:flex; justify-content:center; margin:1.5rem 0;">
+          <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Event worked out wonderful, <br><br>I spoke on:<br><br> &quot;Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs&#13;Beyond the Base Model?&quot;<br><br>And my boi <a href="https://x.com/AnkitDwivedi25?ref_src=twsrc%5Etfw">@AnkitDwivedi25</a> spoke on DPO! <a href="https://t.co/vwEwhVj8oR">https://t.co/vwEwhVj8oR</a> <a href="https://t.co/p31MVCNCCt">pic.twitter.com/p31MVCNCCt</a></p>&mdash; S Akash (@SAkasxh) <a href="https://x.com/SAkasxh/status/2083628510074265863?ref_src=twsrc%5Etfw">August 1, 2026</a></blockquote>
+        </div>
+        <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
 
         <p>My talk was Talk 2 of 2 that evening, and I picked a paper I had a personal stake in. I use PPO in my own work (a hallucination aware reranker at the IIT Patna AIML Lab), so a paper arguing that RL might not do what everyone thinks it does deserved a careful thirty minutes.</p>
 
@@ -99,15 +98,45 @@
 
         <p>RL is not pointless. pass@1 is the metric your product lives on, and packaging capability into a single reliable attempt is genuine value. The claim is narrower and sharper than the hype: RL buys you <em>reliability</em>, not new <em>boundaries</em>. If your task has a checker, price base-model-plus-sampling against an RL model before you assume RL wins. And if you want new capability, reach for a teacher or search, not another RL run.</p>
 
-        <h2>A few slides from the talk</h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; margin:1rem 0 1.1rem;">
-          <figure style="margin:0;"><img loading="lazy" src="images/slides/slide-1.png" alt="Title slide: RL didn't teach your model to think" style="width:100%; border:1px solid rgba(0,0,0,0.1); border-radius:10px; display:block;"><figcaption>The paper: Yue et al., NeurIPS 2025 Oral.</figcaption></figure>
-          <figure style="margin:0;"><img loading="lazy" src="images/slides/slide-7.png" alt="AlphaGo's Move 37" style="width:100%; border:1px solid rgba(0,0,0,0.1); border-radius:10px; display:block;"><figcaption>Move 37: RL at its best genuinely discovers.</figcaption></figure>
-          <figure style="margin:0;"><img loading="lazy" src="images/slides/slide-14.png" alt="The pass@k crossover chart" style="width:100%; border:1px solid rgba(0,0,0,0.1); border-radius:10px; display:block;"><figcaption>The crossover: the base overtakes at large k.</figcaption></figure>
-          <figure style="margin:0;"><img loading="lazy" src="images/slides/slide-19.png" alt="Sharpening, not expanding" style="width:100%; border:1px solid rgba(0,0,0,0.1); border-radius:10px; display:block;"><figcaption>RL sharpens the distribution, it does not expand it.</figcaption></figure>
-          <figure style="margin:0;"><img loading="lazy" src="images/slides/slide-32.png" alt="Epilogue: how 2025 and 2026 models got so good" style="width:100%; border:1px solid rgba(0,0,0,0.1); border-radius:10px; display:block;"><figcaption>Epilogue: where the real gains came from.</figcaption></figure>
+        <h2>The full deck</h2>
+        <p style="opacity:0.85; margin-bottom:0.6rem;">All 34 slides, scroll straight through them here.</p>
+        <div style="max-height:78vh; overflow-y:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(0,0,0,0.12); border-radius:12px; background:#fff; padding:8px;">
+          <img loading="lazy" src="images/slides/slide-01.png" alt="Slide 1" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-02.png" alt="Slide 2" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-03.png" alt="Slide 3" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-04.png" alt="Slide 4" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-05.png" alt="Slide 5" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-06.png" alt="Slide 6" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-07.png" alt="Slide 7" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-08.png" alt="Slide 8" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-09.png" alt="Slide 9" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-10.png" alt="Slide 10" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-11.png" alt="Slide 11" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-12.png" alt="Slide 12" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-13.png" alt="Slide 13" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-14.png" alt="Slide 14" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-15.png" alt="Slide 15" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-16.png" alt="Slide 16" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-17.png" alt="Slide 17" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-18.png" alt="Slide 18" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-19.png" alt="Slide 19" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-20.png" alt="Slide 20" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-21.png" alt="Slide 21" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-22.png" alt="Slide 22" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-23.png" alt="Slide 23" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-24.png" alt="Slide 24" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-25.png" alt="Slide 25" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-26.png" alt="Slide 26" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-27.png" alt="Slide 27" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-28.png" alt="Slide 28" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-29.png" alt="Slide 29" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-30.png" alt="Slide 30" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-31.png" alt="Slide 31" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-32.png" alt="Slide 32" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-33.png" alt="Slide 33" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides/slide-34.png" alt="Slide 34" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
         </div>
-        <p><a href="rl-didnt-teach-your-model-to-think.pdf" target="_blank" rel="noopener">Open the full 34-slide deck (PDF) &rarr;</a></p>
+        <p style="margin-top:0.85rem;"><a href="rl-didnt-teach-your-model-to-think.pdf" target="_blank" rel="noopener">Open the deck as a PDF &rarr;</a></p>
 
         <div class="paper-ref">
           <div class="paper-title">Does RL Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?</div>
