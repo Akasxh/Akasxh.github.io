@@ -24,7 +24,7 @@
       <h1 class="hero-title">Projects<span class="dot">.</span></h1>
       <p class="hero-thesis">GPU kernels, ML inference, and systems I have shipped, published, and won with. Each one earns its place with a measured result.</p>
       <div class="hero-legend">
-        <span class="count">10 builds</span>
+        <span class="count">13 builds</span>
         <span class="legend-item" data-cat="research"><i></i>Research</span>
         <span class="legend-item" data-cat="systems"><i></i>Systems</span>
         <span class="legend-item" data-cat="ml"><i></i>ML</span>
@@ -33,6 +33,40 @@
     </header>
 
     <div class="projects-grid">
+
+      <a class="card" href="projects/sofie.html">
+        <article>
+          <div class="card__head">
+            <span class="card__cat" data-cat="systems"><i></i>Systems</span>
+            <span class="card__tag">CHEP 2026</span>
+            <svg width="280" height="120" viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SOFIE emits dependency-light C++ that runs on CPU and GPU backends via alpaka">
+              <rect x="0.75" y="0.75" width="278.5" height="118.5" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+              <text x="16" y="26" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="700" fill="#4F46E5">SOFIE</text>
+              <text x="16" y="38" font-family="ui-monospace,Menlo,monospace" font-size="7" fill="#64748B">trained model to C++</text>
+              <rect x="16" y="48" width="46" height="26" rx="5" fill="#6366F1" opacity="0.10" stroke="#6366F1" stroke-width="1.5"/>
+              <text x="39" y="64" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#4F46E5">model</text>
+              <path d="M62 61 L84 61" stroke="#94A3B8" stroke-width="1.5"/>
+              <rect x="84" y="46" width="52" height="30" rx="5" fill="#0284C7" opacity="0.10" stroke="#0284C7" stroke-width="1.5"/>
+              <text x="110" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="7.5" fill="#0284C7">codegen</text>
+              <text x="110" y="68" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="6.5" fill="#64748B">BLAS only</text>
+              <path d="M136 61 L156 61" stroke="#94A3B8" stroke-width="1.5"/>
+              <rect x="156" y="44" width="44" height="15" rx="4" fill="#059669" opacity="0.10" stroke="#059669" stroke-width="1.3"/>
+              <text x="178" y="55" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="7" fill="#059669">CPU</text>
+              <rect x="156" y="63" width="44" height="15" rx="4" fill="#7C3AED" opacity="0.10" stroke="#7C3AED" stroke-width="1.3"/>
+              <text x="178" y="74" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="7" fill="#7C3AED">GPU</text>
+              <rect x="212" y="47" width="52" height="30" rx="6" fill="#4F46E5" opacity="0.10" stroke="#4F46E5" stroke-width="1.5"/>
+              <text x="238" y="61" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="9" font-weight="700" fill="#4F46E5">&gt; ONNX</text>
+              <text x="238" y="71" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="6" fill="#475569">on CPU</text>
+              <text x="16" y="110" font-family="ui-monospace,Menlo,monospace" font-size="7.5" fill="#64748B">CERN ROOT/TMVA &middot; alpaka &middot; CHEP 2026 oral</text>
+            </svg>
+          </div>
+          <div class="card__body">
+            <h2 class="card__title">SOFIE: Fast ML Inference for HEP</h2>
+            <p class="card__desc">CERN's ROOT/TMVA engine that emits dependency-light C++ inference code from trained models. Through GSoC 2025 I added vendor-agnostic GPU execution via alpaka and sofieBLAS, so one generated model runs across CPU and GPU. Presented as an oral at CHEP 2026.</p>
+            <div class="card__badges"><span>CERN</span><span>C++</span><span>alpaka</span><span>sofieBLAS</span><span>CHEP 2026 Oral</span></div>
+          </div>
+        </article>
+      </a>
 
       <a class="card" href="projects/moa.html">
         <article>

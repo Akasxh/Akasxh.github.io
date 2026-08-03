@@ -1,5 +1,9 @@
 ﻿window.AKASH_NEWS = [
   {
+    date: "2026-05-28",
+    summary: "Our CERN work on <span class=\"news-highlight\">SOFIE</span> was presented as an oral at the <span class=\"news-highlight\">28th Conference on Computing in High Energy and Nuclear Physics (CHEP 2026)</span> in Bangkok: \"Accelerating ML Inference on heterogeneous architectures using SOFIE and alpaka\", where I built the GPU/alpaka backend and sofieBLAS as a co-author (<a href=\"projects/sofie.html\">details</a>)."
+  },
+  {
     date: "2026-08-01",
     summary: "Started the <span class=\"news-highlight\">ML Reading Club NCR</span> in Noida with Ankit Dwivedi and Anjanay Saxena, venue partner <a href=\"https://lyric.tech\" target=\"_blank\" rel=\"noopener\">Lyric</a>, and gave the first session's <a href=\"musings/post12.html\">paper presentation on why RL sharpens rather than teaches</a> (<a href=\"https://luma.com/v7bm4m7q\" target=\"_blank\" rel=\"noopener\">event</a>)."
   },
