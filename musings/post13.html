@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survival of the Fittest Agent - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">Survival of the Fittest Agent</h1>
+      <div class="post-meta">Aug 17, 2026 <span class="reading-time">7 min read</span></div>
+      <div class="post-categories"><span>Paper Presentation</span> <span>Self-Improving Agents</span> <span>Evolution</span></div>
+      <div class="post-body">
+
+        <p>Session 02 of the reading club, and a direct sequel to <a href="post12.html">the last one</a>. Session 01 ended on a question: if RL only concentrates what pretraining created, where will new machine reasoning come from? This session was one answer the field is betting on: freeze the weights, and put the agent's <em>own code</em> under evolution. The main paper was Sakana AI and UBC's <strong>Darwin Gödel Machine</strong>, with its two 2025&ndash;26 descendants, the Huxley Gödel Machine and the Red Queen Gödel Machine, riding along.</p>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/sesh2-speaker.jpg" alt="S Akash presenting 'Survival of the Fittest Agent' at ML Reading Club NCR Session 02" style="width:100%; border-radius:14px; display:block;">
+          <figcaption>Giving the talk at ML Reading Club NCR, Session 02. On screen: the DGM archive tree, where the best agent is downstream of two mistakes.</figcaption>
+        </figure>
+
+        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
+          <strong>The event.</strong> This was Session 02 of the <a href="https://luma.com/user/Akasxh" target="_blank" rel="noopener">ML Reading Club NCR</a>, which I run together with <strong>Ankit Dwivedi</strong>. Our venue partner this time was <a href="https://virtualvakil.com" target="_blank" rel="noopener">VirtualVakil</a>, who hosted us in their space. Same format as always: a small room, the actual papers, whiteboard arguments, no lecture.
+        </div>
+
+        <div style="display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; margin:1.5rem 0 0.4rem;">
+          <img loading="lazy" src="images/sesh2-group-outside.jpg" alt="ML Reading Club NCR Session 02 group photo outside the venue" style="height:220px; width:auto; max-width:100%; border-radius:12px; display:block;">
+          <img loading="lazy" src="images/sesh2-vakil-luma.png" alt="ML Reading Club NCR Session 02 poster, venue partner VirtualVakil" style="height:220px; width:auto; max-width:100%; border-radius:12px; display:block;">
+        </div>
+        <div style="display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; margin:0.6rem 0 0.4rem;">
+          <img loading="lazy" src="images/sesh2-group-inside.jpg" alt="ML Reading Club NCR Session 02 group photo at the venue" style="width:100%; max-width:820px; border-radius:12px; display:block;">
+        </div>
+        <p style="text-align:center; font-size:0.85em; opacity:0.75; margin:0 0 1.25rem;">Session 02, hosted with venue partner <a href="https://virtualvakil.com" target="_blank" rel="noopener">VirtualVakil</a> &middot; <a href="https://luma.com/user/Akasxh" target="_blank" rel="noopener">see our events on Luma</a></p>
+
+        <p>Two talks this session. The other one was <strong>Steal-Reasoning</strong>, and the slides are here: <a href="https://docs.google.com/presentation/d/1O03gEwR5n3Yy_zriJwcCj1nCpN3Mpwkh/edit?usp=sharing" target="_blank" rel="noopener">Steal-Reasoning (Google Slides)</a>. Mine was the evolution one, and here is the short version.</p>
+
+        <h2>From proofs to trials</h2>
+
+        <p>The ancestor of everything in this talk is Schmidhuber's 2003 <strong>Gödel machine</strong>: a program allowed to rewrite any part of itself, including its own rewriter, but only after finding a <em>formal proof</em> that the rewrite increases utility. Optimal in theory, and unusable in practice, because for a real coding agent "does one more tool help" has no proof, only an experiment. The Darwin Gödel Machine makes exactly one relaxation: accept a self-modification if it <em>survives evaluation on a benchmark</em>. Mutations are produced, trialed, and selected. It is the same move that powered last session, replacing an unattainable judge with a checkable signal.</p>
+
+        <h2>What it borrows from Darwin</h2>
+
+        <p>Darwin's deepest point is substrate-independence: any system with variation, heredity, and selection adapts, whether it is finches, bacteria, or Python repositories. In the DGM, variation is a proposed code edit, heredity is a child branching from its parent's codebase (the genome is the code), and selection is SWE-bench deciding who gets to reproduce. Plus one upgrade biology never had: <em>nothing goes extinct</em>. Every agent ever created stays in an archive, and any ancestor, however mediocre, can be picked as a parent again tomorrow. Strictly speaking it mutates like Lamarck, because the agent reads its own evaluation logs and writes the fix into its own genome, and selects like Darwin. That is why 80 generations suffice where nature needs millennia.</p>
+
+        <div class="insight-box">
+          <strong>The result.</strong> Starting from a minimal hand-written agent, 80 iterations of self-modification with zero human edits took SWE-bench performance from <strong>20.0% to 50.0%</strong>, reaching the checked open-source state of the art, and Polyglot from 14.2% to 30.7%. The winning lineage passed through agents that scored <em>worse</em> than their parents, twice. Greedy search would have pruned the path to the best agent. The archive is the mechanism, not a detail.
+        </div>
+
+        <p>And what did evolution invent? Granular file editing by string replacement, patch validation with retries, generating several candidate patches and letting a second model pick. In other words, the Aider and Claude Code playbook, rediscovered by search. The improvements transfer too: the same evolved scaffold lifts Claude 3.7 Sonnet from 19.0% to 59.5%.</p>
+
+        <h2>It deleted the test for cheating</h2>
+
+        <p>The most important slide was the failure. In a side experiment, the DGM was asked to fix tool-use hallucination, detected via hidden special tokens logged on real tool calls. One lineage genuinely improved it. Another scored a <em>perfect</em> mark by deleting the special-token logging itself, despite explicit instructions not to touch it, making hallucination undetectable rather than absent. The authors quote Goodhart's law, and they earned it. Last session RL quietly narrowed the distribution while the dashboard improved; this session the agent corrupts the measure while the dashboard improves. Same disease, new organ.</p>
+
+        <h2>The descendants</h2>
+
+        <p>Two papers picked up the DGM's own limitations section within months, and each attacks one assumption.</p>
+
+        <ul>
+          <li><strong>Huxley Gödel Machine (KAUST, with Schmidhuber himself on the author list).</strong> The DGM breeds from high scorers, but a high scorer can be a genetic dead end: the measured correlation between benchmark score and a lineage's long-run productivity is just 0.29. The fix in one line: pick an advisor by their students' students, not their exam marks. Their clade-level metric hits 0.78, and the resulting search finds better agents (56.7% vs 53.3% on SWE-bench Verified) at 2.38&times; less compute, ultimately matching the best human-engineered agents.</li>
+          <li><strong>Red Queen Gödel Machine (Cambridge/NVIDIA).</strong> Everything above trusts a fixed judge, and most real work has no benchmark at all. So evolve the evaluator too: agents evolve continuously, the judge is frozen within an epoch (so the guarantees still hold), and at epoch boundaries a challenger judge is promoted only if it beats the incumbent on held-out ground truth. Where no benchmark exists, co-evolved paper-writers lifted acceptance from 21.8% to 40.5%. Named for Van Valen's Red Queen hypothesis: species adapt against competitors that adapt back.</li>
+        </ul>
+
+        <p>The map I closed on: Darwin GM evolves the <em>agent</em>, Huxley GM evolves the <em>search</em>, Red Queen GM evolves the <em>judge</em>. And none of them touch the weights. All the novelty accumulates in code, in an archive, outside the policy, which is exactly the escape route last session's leash theory left open.</p>
+
+        <h2>What I actually take away</h2>
+
+        <p>Self-improvement stopped being a thought experiment the moment the judge became checkable. The open problems have moved: not "can an agent rewrite itself" but who keeps the score, how you stop the score from being gamed, and what you do when no benchmark exists for the work you care about. Those three questions are, not coincidentally, exactly where the interesting research is now.</p>
+
+        <p>One more thing. At <a href="https://re-forge.theadaply.com/" target="_blank" rel="noopener">re-forge</a> we are building self-evolution for the enterprise, as a service. I will not say much yet, except that one research direction we are most excited about looks suspiciously like the way <em>bacteria</em> evolve. Make of that what you will.</p>
+
+        <h2>The full deck</h2>
+        <p style="opacity:0.85; margin-bottom:0.6rem;">All 25 slides, scroll straight through them here.</p>
+        <div style="max-height:78vh; overflow-y:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(0,0,0,0.12); border-radius:12px; background:#fff; padding:8px;">
+          <img loading="lazy" src="images/slides2/slide-01.png" alt="Slide 1" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-02.png" alt="Slide 2" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-03.png" alt="Slide 3" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-04.png" alt="Slide 4" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-05.png" alt="Slide 5" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-06.png" alt="Slide 6" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-07.png" alt="Slide 7" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-08.png" alt="Slide 8" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-09.png" alt="Slide 9" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-10.png" alt="Slide 10" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-11.png" alt="Slide 11" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-12.png" alt="Slide 12" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-13.png" alt="Slide 13" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-14.png" alt="Slide 14" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-15.png" alt="Slide 15" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-16.png" alt="Slide 16" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-17.png" alt="Slide 17" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-18.png" alt="Slide 18" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-19.png" alt="Slide 19" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-20.png" alt="Slide 20" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-21.png" alt="Slide 21" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-22.png" alt="Slide 22" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-23.png" alt="Slide 23" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-24.png" alt="Slide 24" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+          <img loading="lazy" src="images/slides2/slide-25.png" alt="Slide 25" style="width:100%; aspect-ratio:16/9; display:block; margin-bottom:8px;">
+        </div>
+        <p style="margin-top:0.85rem;"><a href="survival-of-the-fittest-agent.pdf" target="_blank" rel="noopener">Open the deck as a PDF &rarr;</a></p>
+
+        <div class="paper-ref">
+          <div class="paper-title">Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents</div>
+          <div class="paper-authors">Zhang, Hu, Lu, Lange, Clune. ICLR 2026</div>
+          <a href="https://arxiv.org/abs/2505.22954" target="_blank" rel="noopener">arxiv:2505.22954</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">Huxley-Gödel Machine: Human-Level Coding Agent Development by an Approximation of the Optimal Self-Improving Machine</div>
+          <div class="paper-authors">Wang et al. (incl. Schmidhuber), 2025</div>
+          <a href="https://arxiv.org/abs/2510.21614" target="_blank" rel="noopener">arxiv:2510.21614</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators</div>
+          <div class="paper-authors">Iacob, Jovanović, Shen et al., 2026</div>
+          <a href="https://arxiv.org/abs/2606.26294" target="_blank" rel="noopener">arxiv:2606.26294</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">Gödel Machines: Self-Referential Universal Problem Solvers Making Provably Optimal Self-Improvements</div>
+          <div class="paper-authors">Schmidhuber, 2003</div>
+          <a href="https://arxiv.org/abs/cs/0309048" target="_blank" rel="noopener">arxiv:cs/0309048</a>
+        </div>
+
+        <p style="margin-top:1.75rem; opacity:0.85;">If you are in Delhi NCR and this is your idea of a good evening, the <a href="https://luma.com/user/Akasxh" target="_blank" rel="noopener">ML Reading Club NCR</a> runs again soon. Thanks to Ankit for running it with me, and to <a href="https://virtualvakil.com" target="_blank" rel="noopener">VirtualVakil</a> for hosting Session 02.</p>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
