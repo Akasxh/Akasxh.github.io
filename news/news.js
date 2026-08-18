@@ -1,5 +1,9 @@
 ﻿window.AKASH_NEWS = [
   {
+    date: "2026-04-14",
+    summary: "Presented a poster, <span class=\"news-highlight\">Bridging Runtime Gaps in LLVM: Vendor-Agnostic Dispatch for ML Kernels</span>, at the <a href=\"https://llvm.swoogo.com/2026eurollvm/\" target=\"_blank\" rel=\"noopener\">2026 EuroLLVM Developers' Meeting</a> in Dublin as an <span class=\"news-highlight\">LLVM Foundation travel grantee</span> (<a href=\"musings/post14.html\">writeup + poster</a>)."
+  },
+  {
     date: "2026-05-28",
     summary: "Our CERN work on <span class=\"news-highlight\">SOFIE</span> was presented as an oral at the <span class=\"news-highlight\">28th Conference on Computing in High Energy and Nuclear Physics (CHEP 2026)</span> in Bangkok: \"Accelerating ML Inference on heterogeneous architectures using SOFIE and alpaka\", where I built the GPU/alpaka backend and sofieBLAS as a co-author (<a href=\"projects/sofie.html\">details</a>)."
   },
