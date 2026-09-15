@@ -54,7 +54,7 @@
 
         <h2>Stage 2: root cause, or why did you have to ask twice</h2>
 
-        <p>Once the sessions are in, every prompt and every recurring tool chain is embedded and projected into a two-dimensional map. Nearby points are the same work being asked for again, often in different words, by different people, in different repositories. The map in the screenshot below clusters 391 prompts from one workspace into eight kinds of work, from code cleanup to git and infrastructure maintenance.</p>
+        <p>Once the sessions are in, every prompt and every recurring tool chain is embedded and projected into a two-dimensional map. Nearby points are the same work being asked for again, often in different words, by different people, in different repositories. The map in the screenshot below groups 391 points, each a prompt or a recurring pattern, from one workspace into eight kinds of work, from code cleanup to git and infrastructure maintenance.</p>
 
         <p>The clusters are the starting point, not the answer. For each group of prompts that look alike, the pipeline reads the trajectory around them and asks a narrow question: what did the agent do after the first ask that made the second ask necessary? Sometimes it edited the wrong file. Sometimes it did the right thing but skipped a step the team always expects, like running the linter or updating a changelog. Sometimes the user simply was not happy with the result and said so. Each of those is a different root cause, and each one needs a different fix, so the analysis keeps them apart rather than lumping everything into "the agent was wrong".</p>
 
@@ -78,14 +78,14 @@
 
         <p>This pipeline produces many skills, and "many" is a problem of its own. A skill that reads well can still make the agent slower, or fix one situation while breaking another. So the last stage builds a benchmark, and it builds it from the team's own history. Every task in it is a real prompt that somebody typed, and every number attached to it is measured from what actually happened next: how long the turn took, how many tokens it burned, how many tool calls it needed, and whether it finished without an error. There are no estimates in that table.</p>
 
-        <p>With that in place, the question "did this skill help" has a plain answer. Replay the tasks the skill is meant for, with and without it, and compare. In the workspace below, 218 tasks are in the set, the median task takes about two minutes and 2.5 million tokens, and 71% of turns end clean. That 29% of turns with an error in them is exactly where the second prompts come from.</p>
+        <p>With that in place, the question "did this skill help" has a plain answer: the same tasks, measured again once the skill is in place. In the workspace below, 218 tasks are in the set, the median task takes about two minutes and 2.5 million tokens, and 71% of turns end clean. That 29% of turns with an error in them is where many of the second prompts come from.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-benchmark.png" alt="re-forge Benchmark view: a SWE-bench-style task set extracted from the organisation's own captured sessions, with measured time, tokens and clean rate" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
           <figcaption>The benchmark, broken down by the same categories as the vector space. General status chat is cheap and almost always clean; code cleanup is where the time and the errors go.</figcaption>
         </figure>
 
-        <p>All four screenshots are a snapshot of a single workspace, mine, over the capture window. The numbers will look different for every team, which is the point: the benchmark is theirs, not a public leaderboard.</p>
+        <p>All four screenshots are a snapshot of a single workspace, the re-forge team's own, over the capture window. The numbers will look different for every team, which is the point: the benchmark is theirs, not a public leaderboard.</p>
 
         <h2>The research behind it</h2>
 
@@ -98,7 +98,7 @@
           <figcaption>Figure 1 of the paper. Left, the evolution loop that passes code on. Right, one lifetime, where a failure climbs from note to rule to hook. The barrier in the middle lets code through and wipes memory.</figcaption>
         </figure>
 
-        <p>The honest headline is that this single-seed run was too small to tell the two arms apart, and the paper says so in its first paragraph. What it did measure is what shaped re-forge:</p>
+        <p>The honest headline is that this single-seed run was too small to tell the two arms apart, and the paper says so in its abstract. What it did measure is what shaped re-forge:</p>
 
         <ul>
           <li><strong>A note the agent writes for itself is much weaker than a rule a person writes.</strong> Replaying tasks it had already failed, a 7B model applied a correct hand-written rule at 59.3% against an 11.1% base rate. Its own notes reached 25.9%. That is why re-forge does not let the agent freely author its own memory: it clusters evidence across sessions and puts a human review in front of every promotion.</li>

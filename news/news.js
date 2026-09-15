@@ -1,5 +1,9 @@
 ﻿window.AKASH_NEWS = [
   {
+    date: "2026-09-15",
+    summary: "Wrote up <span class=\"news-highlight\">re-forge</span> (<a href=\"https://theadaply.com\" target=\"_blank\" rel=\"noopener\">The Adaply</a>), the startup I am building: capture a team's Claude Code sessions, find what was asked twice, turn it into skills, benchmark them. Also our paper <span class=\"news-highlight\">Adaptation Without Inheritance</span> with <a href=\"https://github.com/Shine-5705\" target=\"_blank\" rel=\"noopener\">Shine Gupta</a>, submitted to NeurIPS 2026 (<a href=\"musings/post15.html\">writeup + paper</a>)."
+  },
+  {
     date: "2026-04-14",
     summary: "Presented a poster, <span class=\"news-highlight\">Bridging Runtime Gaps in LLVM: Vendor-Agnostic Dispatch for ML Kernels</span>, at the <a href=\"https://llvm.swoogo.com/2026eurollvm/\" target=\"_blank\" rel=\"noopener\">2026 EuroLLVM Developers' Meeting</a> in Dublin as an <span class=\"news-highlight\">LLVM Foundation travel grantee</span> (<a href=\"musings/post14.html\">writeup + poster</a>)."
   },
