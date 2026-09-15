@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every Prompt You Typed Twice Is a Skill You Don't Have Yet - Musings by S Akash</title>
+  <title>The Best Agent Is the One That Survived Your Benchmark - Musings by S Akash</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
@@ -24,23 +24,23 @@
   <main class="page-container">
     <a href="index.html" class="back-link">&larr; Back to all posts</a>
     <article class="post-shell">
-      <h1 class="post-title">Every Prompt You Typed Twice Is a Skill You Don't Have Yet</h1>
-      <div class="post-meta">Sep 15, 2026 <span class="reading-time">8 min read</span></div>
-      <div class="post-categories"><span>Startup</span> <span>Self-Improving Agents</span> <span>AI</span></div>
+      <h1 class="post-title">The Best Agent Is the One That Survived Your Benchmark</h1>
+      <div class="post-meta">Sep 15, 2026 <span class="reading-time">9 min read</span></div>
+      <div class="post-categories"><span>Startup</span> <span>Self-Improving Agents</span> <span>Evolution</span></div>
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
         <a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">Read the paper (PDF) &rarr;</a>
         <a href="https://theadaply.com" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:rgba(79,70,229,0.08); color:#4f46e5; border:1px solid rgba(79,70,229,0.35); text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">theadaply.com &rarr;</a>
       </div>
       <div class="post-body">
 
-        <p><strong>re-forge</strong> (<a href="https://theadaply.com" target="_blank" rel="noopener">The Adaply</a>) is the startup I am building. It captures two to three weeks of a team's Claude Code sessions, finds the moments where somebody had to ask for the same thing twice, works out <em>why</em>, and turns the recurring fix into a skill the agent carries from then on. Because that produces a lot of skills, it also builds a benchmark out of the team's own real prompts, so every skill has to prove it helps. The research question underneath, whether what an agent learns from its own failures should be inherited or measured on its own, is the subject of our paper <em>Adaptation Without Inheritance</em>, joint work with <a href="https://github.com/Shine-5705" target="_blank" rel="noopener">Shine Gupta</a>, submitted to NeurIPS 2026. This post explains the whole idea, one stage at a time, with screenshots of the app as it stands today.</p>
+        <p><strong>re-forge</strong> (<a href="https://theadaply.com" target="_blank" rel="noopener">The Adaply</a>) is the startup I am building, and its goal is easy to state: the best possible coding agent for your team, not a generic one. It captures two to three weeks of a team's Claude Code sessions, finds where the agent fell short and <em>why</em>, turns what it finds into candidate changes to the agent's configuration, and then runs an evolutionary search over those configurations against a benchmark built from the team's own real prompts. Configurations that survive the benchmark are kept. The rest are discarded. Skills and automations come out of this, but they are the raw material, not the product. The product is the agent that survived. The research question underneath, whether what an agent learns during its own lifetime should be inherited by the next generation or measured on its own, is the subject of our paper <em>Adaptation Without Inheritance</em>, joint work with <a href="https://github.com/Shine-5705" target="_blank" rel="noopener">Shine Gupta</a>, submitted to NeurIPS 2026. This post explains the whole idea, one stage at a time, with screenshots of the app as it stands today.</p>
 
         <h2>The problem</h2>
 
-        <p>Anyone who uses a coding agent all day knows the feeling. You ask for something, the agent does most of it, and you type a second message: <em>no, the other config file</em>, or <em>you forgot to run the tests</em>, or <em>I already gave you the login</em>. Then the session ends, and tomorrow, in a fresh session, you type the same correction again. Every one of those second prompts is a fix that nobody wrote down. Multiply it by a team and by a few weeks, and a meaningful share of the tokens a company pays for is spent re-explaining things the agent was already told.</p>
+        <p>Anyone who uses a coding agent all day knows the feeling. You ask for something, the agent does most of it, and you type a second message: <em>no, the other config file</em>, or <em>you forgot to run the tests</em>, or <em>I already gave you the login</em>. Then the session ends, and tomorrow, in a fresh session, you type the same correction again. Every one of those second prompts is evidence that the agent you have is not the best agent you could have. Multiply it by a team and by a few weeks, and a meaningful share of the tokens a company pays for is spent re-explaining things the agent was already told. The usual answer is to hand-tune: write a rule here, add a hook there, and hope. Nobody measures whether the agent got better, and nobody can, because there is nothing to measure it against.</p>
 
         <div class="insight-box">
-          <strong>The idea in one line.</strong> A prompt you had to type twice is a skill you do not have yet. re-forge finds those prompts, finds the cause, writes the skill, and measures whether it worked.
+          <strong>The idea in one line.</strong> Treat your agent's configuration as something to evolve, not to hand-tune. Measure it on your own prompts, change it, measure again, and keep only what survives.
         </div>
 
         <h2>Stage 1: capture everything for two to three weeks</h2>
@@ -56,42 +56,52 @@
 
         <p>Once the sessions are in, every prompt and every recurring tool chain is embedded and projected into a two-dimensional map. Nearby points are the same work being asked for again, often in different words, by different people, in different repositories. The map in the screenshot below groups 391 points, each a prompt or a recurring pattern, from one workspace into eight kinds of work, from code cleanup to git and infrastructure maintenance.</p>
 
-        <p>The clusters are the starting point, not the answer. For each group of prompts that look alike, the pipeline reads the trajectory around them and asks a narrow question: what did the agent do after the first ask that made the second ask necessary? Sometimes it edited the wrong file. Sometimes it did the right thing but skipped a step the team always expects, like running the linter or updating a changelog. Sometimes the user simply was not happy with the result and said so. Each of those is a different root cause, and each one needs a different fix, so the analysis keeps them apart rather than lumping everything into "the agent was wrong".</p>
+        <p>The clusters are the starting point, not the answer. For each group of prompts that look alike, the pipeline reads the trajectory around them and asks a narrow question: what did the agent do after the first ask that made the second ask necessary? Sometimes it edited the wrong file. Sometimes it did the right thing but skipped a step the team always expects, like running the linter or updating a changelog. Sometimes the user simply was not happy with the result and said so. Each of those is a different root cause, and each one calls for a different change to the agent, so the analysis keeps them apart rather than lumping everything into "the agent was wrong".</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-vector-space.png" alt="re-forge Vector space view: 391 prompts embedded and clustered into 8 groups, with a panel titled Same intent, asked twice" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
           <figcaption>The vector space. On the right, one recurring pattern: the same config file edited three times in a row, seen six times across sessions. The panel at the bottom is literally titled <em>same intent, asked twice</em>.</figcaption>
         </figure>
 
-        <h2>Stage 3: turn the fix into a skill</h2>
+        <h2>Stage 3: turn each root cause into a candidate change</h2>
 
         <p>A root cause that shows up once is noise. One that shows up in two sessions is a candidate, and one that shows up in three or more is worth fixing. re-forge ranks every recurring chain by how automatable it looks and how much it would save, then moves it along a short ladder: <strong>observed</strong> (seen in two or more sessions), <strong>ready for review</strong> (three or more), and <strong>approved</strong>, at which point a draft automation is written. A human looks at each candidate and either promotes it or archives it as noise. Nothing installs itself.</p>
 
-        <p>The output of the ladder is a skill: the fix, written down once, in the form the agent reads at the start of every session. If the team always wants tests run after an edit to a certain directory, that becomes a rule. If the same three-command sequence keeps being typed by hand, that becomes an automation. The agent stops needing to be told, and the second prompt stops being typed.</p>
+        <p>The output of the ladder is a candidate change to the agent's configuration: a rule, a skill, or an automation, written down once in the form the agent reads at the start of every session. If the team always wants tests run after an edit to a certain directory, that is a candidate rule. If the same three-command sequence keeps being typed by hand, that is a candidate automation. I say <em>candidate</em> on purpose. At this point each one is a well-evidenced guess about what would make the agent better. Nothing has been proven yet, and a product that stopped here would just be a machine for generating plausible config files.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-patterns.png" alt="re-forge Patterns view: recurring tool chains ranked by automatability, moving from Observed to Ready for review to Approved" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
-          <figcaption>The pattern ladder in one workspace: 91 observed, 24 ready for review, 4 approved with an automation drafted. Each card shows how often the chain occurred and the estimated saving.</figcaption>
+          <figcaption>The candidate ladder in one workspace: 91 observed, 24 ready for review, 4 approved with an automation drafted. Each card shows how often the chain occurred and the estimated saving. Estimated, not yet measured; that is what the next two stages are for.</figcaption>
         </figure>
 
         <h2>Stage 4: a benchmark built from your own prompts</h2>
 
-        <p>This pipeline produces many skills, and "many" is a problem of its own. A skill that reads well can still make the agent slower, or fix one situation while breaking another. So the last stage builds a benchmark, and it builds it from the team's own history. Every task in it is a real prompt that somebody typed, and every number attached to it is measured from what actually happened next: how long the turn took, how many tokens it burned, how many tool calls it needed, and whether it finished without an error. There are no estimates in that table.</p>
+        <p>Stage 3 produces many candidates, and "many" is a problem of its own. A change that reads well can still make the agent slower, or fix one situation while breaking another, and two changes that each help on their own can hurt together. To choose between them you need a yardstick, so re-forge builds one, and it builds it from the team's own history. Every task in the benchmark is a real prompt that somebody typed, and every number attached to it is measured from what actually happened next: how long the turn took, how many tokens it burned, how many tool calls it needed, and whether it finished without an error. There are no estimates in that table.</p>
 
-        <p>With that in place, the question "did this skill help" has a plain answer: the same tasks, measured again once the skill is in place. In the workspace below, 218 tasks are in the set, the median task takes about two minutes and 2.5 million tokens, and 71% of turns end clean. That 29% of turns with an error in them is where many of the second prompts come from.</p>
+        <p>This is the selection pressure for everything that follows. In the workspace below, 218 tasks are in the set, the median task takes about two minutes and 2.5 million tokens, and 71% of turns end clean. That 29% of turns with an error in them is where many of the second prompts come from, and it is the number the next stage exists to move.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-benchmark.png" alt="re-forge Benchmark view: a SWE-bench-style task set extracted from the organisation's own captured sessions, with measured time, tokens and clean rate" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
           <figcaption>The benchmark, broken down by the same categories as the vector space. General status chat is cheap and almost always clean; code cleanup is where the time and the errors go.</figcaption>
         </figure>
 
-        <p>All four screenshots are a snapshot of a single workspace, the re-forge team's own, over the capture window. The numbers will look different for every team, which is the point: the benchmark is theirs, not a public leaderboard.</p>
+        <p>All four screenshots are a snapshot of a single workspace, the re-forge team's own, over the capture window. The numbers will look different for every team, which is the point: the benchmark is theirs, not a public leaderboard, and an agent that does well on it is good at <em>their</em> work.</p>
+
+        <h2>Stage 5: evolve the configuration, keep the survivors</h2>
+
+        <p>An agent's configuration is everything it runs with: its skills, rules, hooks, and settings. There are far more combinations than anyone could test by hand, and the candidates from stage 3 interact, so picking them one at a time does not find the best agent. re-forge treats the configuration as a population to evolve instead. The current agent is the parent. Children are made by applying candidate changes, singly and in combination. Every child is scored on the benchmark from stage 4, the ones that do best survive and become the next parents, and the rest are thrown away. Then it goes round again.</p>
+
+        <p>What comes out is not a pile of skills. It is one configuration, and a record of every benchmark it survived. That record is the only kind of evidence for "this is the best agent for us" that I trust, because it was earned on the team's own prompts, against alternatives that were actually tried and actually lost.</p>
+
+        <div class="insight-box">
+          <strong>Why evolution and not a checklist.</strong> A checklist of best practices is somebody else's answer to somebody else's benchmark. Evolution against your own benchmark finds the configuration that is best for your team, including the combinations nobody would have thought to try, and it keeps finding it as the work changes.
+        </div>
 
         <h2>The research behind it</h2>
 
-        <p>The product rests on one question I could not answer from the product alone: if an agent learns something from its own failures during a lifetime, should the next generation inherit that learning, or should it be measured separately? That is the question <em>Adaptation Without Inheritance</em> asks, and it borrows the answer's shape from biology. What your body learns in your lifetime does not get written into the genes your children inherit. Biologists call that separation the Weismann barrier.</p>
+        <p>Stage 5 is the loop on the left of Figure 1 below: an archive of configurations, a parent, a mutator, a scored child. It rests on one question I could not answer from the product alone. The agents in that loop also learn during their own lifetime, from the failures they hit inside a session. Should the next generation inherit that learning, or should only the configuration be inherited and the learning measured separately? That is the question <em>Adaptation Without Inheritance</em> asks, and it borrows the answer's shape from biology. What your body learns in your lifetime does not get written into the genes your children inherit. Biologists call that separation the Weismann barrier.</p>
 
-        <p>We built the same barrier into a population of self-improving coding agents in the Darwin G&ouml;del Machine lineage. The <strong>germline</strong>, the agent's code and a few tuning numbers, crosses into the child. The <strong>soma</strong>, everything the agent writes down for itself from its own failures during a life of 25 tasks, is destroyed at the generation boundary. Inside one life, a failure can climb a ladder from a <em>note</em>, to a <em>rule</em> once it recurs and the fix is shown to replay, to a <em>hook</em>, a small program. Readers of the previous section will recognise the shape: observed, ready for review, approved. Re-testing the best agents twice, once with memory wiped and once intact, separates what they innately are from what they learned.</p>
+        <p>We built the same barrier into a population of self-improving coding agents in the Darwin G&ouml;del Machine lineage. The <strong>germline</strong>, the agent's code and a few tuning numbers, crosses into the child. The <strong>soma</strong>, everything the agent writes down for itself from its own failures during a life of 25 tasks, is destroyed at the generation boundary. Inside one life, a failure can climb a ladder from a <em>note</em>, to a <em>rule</em> once it recurs and the fix is shown to replay, to a <em>hook</em>, a small program. Readers of stage 3 will recognise the shape: observed, ready for review, approved. Re-testing the best agents twice, once with memory wiped and once intact, separates what they innately are from what they learned, which is exactly the separation stage 5 depends on: the benchmark has to score the configuration, not whatever the agent happened to scribble down during the run.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/awi-figure1.png" alt="Figure 1 of the paper: an archive picks a parent, a blind mutator writes a child, the child is scored; inside one lifetime a failure climbs from note to rule to hook; code crosses the Weismann barrier into the next generation while memory is reset" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12); background:#fff; padding:12px 8px;">
@@ -101,8 +111,8 @@
         <p>The honest headline is that this single-seed run was too small to tell the two arms apart, and the paper says so in its abstract. What it did measure is what shaped re-forge:</p>
 
         <ul>
-          <li><strong>A note the agent writes for itself is much weaker than a rule a person writes.</strong> Replaying tasks it had already failed, a 7B model applied a correct hand-written rule at 59.3% against an 11.1% base rate. Its own notes reached 25.9%. That is why re-forge does not let the agent freely author its own memory: it clusters evidence across sessions and puts a human review in front of every promotion.</li>
-          <li><strong>Memory is not free.</strong> A scored agent cost roughly three times as much with memory as without, and over half of that spend went to the inner loop rather than to attempting tasks. That is why every skill has to earn its place on the benchmark.</li>
+          <li><strong>A note the agent writes for itself is much weaker than a rule a person writes.</strong> Replaying tasks it had already failed, a 7B model applied a correct hand-written rule at 59.3% against an 11.1% base rate. Its own notes reached 25.9%. That is why re-forge does not let the agent freely author its own memory and inherit it: candidate changes are clustered from evidence across sessions, reviewed by a person, and then have to survive the benchmark.</li>
+          <li><strong>Memory is not free.</strong> A scored agent cost roughly three times as much with memory as without, and over half of that spend went to the inner loop rather than to attempting tasks. That is why every change has to earn its place on the benchmark, and why cost is part of the score.</li>
           <li><strong>Instruments fail silently.</strong> We documented nine ways the harness printed a plausible wrong number under a passing test suite, and a tenth in the repair. The top rung of the ladder fired 96 times and installed nothing, because of a gap between what a checker enforced and what the prompt asked for. That is why every number in the benchmark is measured rather than estimated, and why the app shows you the evidence behind each pattern instead of a score.</li>
         </ul>
 
@@ -144,7 +154,7 @@
         </div>
         <div class="paper-ref">
           <div class="paper-title">re-forge, by The Adaply</div>
-          <div class="paper-authors">Capture your team's agent sessions, find what is asked twice, turn it into skills, benchmark them</div>
+          <div class="paper-authors">Capture your team's agent sessions, evolve the agent's configuration against a benchmark of your own prompts, keep what survives</div>
           <a href="https://theadaply.com" target="_blank" rel="noopener">theadaply.com</a>
         </div>
 
