@@ -25,43 +25,117 @@
     <a href="index.html" class="back-link">&larr; Back to all posts</a>
     <article class="post-shell">
       <h1 class="post-title">Every Prompt You Typed Twice Is a Skill You Don't Have Yet</h1>
-      <div class="post-meta">Sep 15, 2026 <span class="reading-time">Work in progress</span></div>
-      <div class="post-categories"><span>re-forge</span> <span>Agents</span> <span>Research</span></div>
+      <div class="post-meta">Sep 15, 2026 <span class="reading-time">8 min read</span></div>
+      <div class="post-categories"><span>Startup</span> <span>Self-Improving Agents</span> <span>AI</span></div>
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
         <a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">Read the paper (PDF) &rarr;</a>
         <a href="https://theadaply.com" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:rgba(79,70,229,0.08); color:#4f46e5; border:1px solid rgba(79,70,229,0.35); text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">theadaply.com &rarr;</a>
       </div>
       <div class="post-body">
 
-        <p><strong>re-forge</strong> (<a href="https://theadaply.com" target="_blank" rel="noopener">The Adaply</a>) is the startup I am building. It captures two to three weeks of a team's Claude Code sessions, finds the moments where people had to ask for the same thing twice, works out <em>why</em>, and turns the recurring fixes into skills the agent carries from then on. Because that produces a lot of skills, it also builds a benchmark out of the team's own real prompts to check that each one actually helps. The research question underneath it, whether what an agent learns from its own failures inside one lifetime should be inherited or measured separately, is the subject of our paper <em>Adaptation Without Inheritance</em>, joint work with <a href="https://github.com/Shine-5705" target="_blank" rel="noopener">Shine Gupta</a>, submitted to NeurIPS 2026.</p>
+        <p><strong>re-forge</strong> (<a href="https://theadaply.com" target="_blank" rel="noopener">The Adaply</a>) is the startup I am building. It captures two to three weeks of a team's Claude Code sessions, finds the moments where somebody had to ask for the same thing twice, works out <em>why</em>, and turns the recurring fix into a skill the agent carries from then on. Because that produces a lot of skills, it also builds a benchmark out of the team's own real prompts, so every skill has to prove it helps. The research question underneath, whether what an agent learns from its own failures should be inherited or measured on its own, is the subject of our paper <em>Adaptation Without Inheritance</em>, joint work with <a href="https://github.com/Shine-5705" target="_blank" rel="noopener">Shine Gupta</a>, submitted to NeurIPS 2026. This post explains the whole idea, one stage at a time, with screenshots of the app as it stands today.</p>
 
-        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
-          <strong>This page is a work in progress.</strong> The full writeup of how the pipeline works, stage by stage, is being written right now. The paper link above and the screenshots below are final.
+        <h2>The problem</h2>
+
+        <p>Anyone who uses a coding agent all day knows the feeling. You ask for something, the agent does most of it, and you type a second message: <em>no, the other config file</em>, or <em>you forgot to run the tests</em>, or <em>I already gave you the login</em>. Then the session ends, and tomorrow, in a fresh session, you type the same correction again. Every one of those second prompts is a fix that nobody wrote down. Multiply it by a team and by a few weeks, and a meaningful share of the tokens a company pays for is spent re-explaining things the agent was already told.</p>
+
+        <div class="insight-box">
+          <strong>The idea in one line.</strong> A prompt you had to type twice is a skill you do not have yet. re-forge finds those prompts, finds the cause, writes the skill, and measures whether it worked.
         </div>
 
-        <h2>The product, in four screens</h2>
+        <h2>Stage 1: capture everything for two to three weeks</h2>
+
+        <p>The first thing re-forge does is boring on purpose. A small desktop app sits next to Claude Code and records every session: each prompt, every tool call the agent made in response, which files it touched, how many tokens it spent, and how the turn ended. Nothing is sampled and nothing is summarised at this stage, because the interesting signal is in the details of what happened <em>between</em> one prompt and the next. Two to three weeks is enough for the same situations to come round more than once, which is what the later stages need.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-sessions.png" alt="re-forge Sessions view: a captured Claude Code session with its full trajectory, prompts interleaved with tool calls and token counts" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
-          <figcaption><strong>1. Capture.</strong> Every Claude Code session, prompt by prompt, with the tool calls and tokens each one cost.</figcaption>
+          <figcaption>One captured session. Each row is a prompt, with the number of tool calls it triggered and the tokens it cost. Three of the four prompts here are the user correcting the agent.</figcaption>
         </figure>
+
+        <h2>Stage 2: root cause, or why did you have to ask twice</h2>
+
+        <p>Once the sessions are in, every prompt and every recurring tool chain is embedded and projected into a two-dimensional map. Nearby points are the same work being asked for again, often in different words, by different people, in different repositories. The map in the screenshot below clusters 391 prompts from one workspace into eight kinds of work, from code cleanup to git and infrastructure maintenance.</p>
+
+        <p>The clusters are the starting point, not the answer. For each group of prompts that look alike, the pipeline reads the trajectory around them and asks a narrow question: what did the agent do after the first ask that made the second ask necessary? Sometimes it edited the wrong file. Sometimes it did the right thing but skipped a step the team always expects, like running the linter or updating a changelog. Sometimes the user simply was not happy with the result and said so. Each of those is a different root cause, and each one needs a different fix, so the analysis keeps them apart rather than lumping everything into "the agent was wrong".</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-vector-space.png" alt="re-forge Vector space view: 391 prompts embedded and clustered into 8 groups, with a panel titled Same intent, asked twice" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
-          <figcaption><strong>2. Root cause.</strong> Every prompt embedded and clustered. Nearby points are the same work being asked again.</figcaption>
+          <figcaption>The vector space. On the right, one recurring pattern: the same config file edited three times in a row, seen six times across sessions. The panel at the bottom is literally titled <em>same intent, asked twice</em>.</figcaption>
         </figure>
+
+        <h2>Stage 3: turn the fix into a skill</h2>
+
+        <p>A root cause that shows up once is noise. One that shows up in two sessions is a candidate, and one that shows up in three or more is worth fixing. re-forge ranks every recurring chain by how automatable it looks and how much it would save, then moves it along a short ladder: <strong>observed</strong> (seen in two or more sessions), <strong>ready for review</strong> (three or more), and <strong>approved</strong>, at which point a draft automation is written. A human looks at each candidate and either promotes it or archives it as noise. Nothing installs itself.</p>
+
+        <p>The output of the ladder is a skill: the fix, written down once, in the form the agent reads at the start of every session. If the team always wants tests run after an edit to a certain directory, that becomes a rule. If the same three-command sequence keeps being typed by hand, that becomes an automation. The agent stops needing to be told, and the second prompt stops being typed.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-patterns.png" alt="re-forge Patterns view: recurring tool chains ranked by automatability, moving from Observed to Ready for review to Approved" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
-          <figcaption><strong>3. Skills.</strong> Recurring chains are promoted from observed, to reviewed, to approved automations.</figcaption>
+          <figcaption>The pattern ladder in one workspace: 91 observed, 24 ready for review, 4 approved with an automation drafted. Each card shows how often the chain occurred and the estimated saving.</figcaption>
         </figure>
+
+        <h2>Stage 4: a benchmark built from your own prompts</h2>
+
+        <p>This pipeline produces many skills, and "many" is a problem of its own. A skill that reads well can still make the agent slower, or fix one situation while breaking another. So the last stage builds a benchmark, and it builds it from the team's own history. Every task in it is a real prompt that somebody typed, and every number attached to it is measured from what actually happened next: how long the turn took, how many tokens it burned, how many tool calls it needed, and whether it finished without an error. There are no estimates in that table.</p>
+
+        <p>With that in place, the question "did this skill help" has a plain answer. Replay the tasks the skill is meant for, with and without it, and compare. In the workspace below, 218 tasks are in the set, the median task takes about two minutes and 2.5 million tokens, and 71% of turns end clean. That 29% of turns with an error in them is exactly where the second prompts come from.</p>
 
         <figure style="margin:1.5rem 0;">
           <img loading="lazy" src="images/reforge-benchmark.png" alt="re-forge Benchmark view: a SWE-bench-style task set extracted from the organisation's own captured sessions, with measured time, tokens and clean rate" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
-          <figcaption><strong>4. Benchmark.</strong> A task set built from the team's own prompts, every number measured from what actually happened next.</figcaption>
+          <figcaption>The benchmark, broken down by the same categories as the vector space. General status chat is cheap and almost always clean; code cleanup is where the time and the errors go.</figcaption>
         </figure>
 
-        <p style="margin-top:0.85rem;"><a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener">Read the paper as a PDF &rarr;</a></p>
+        <p>All four screenshots are a snapshot of a single workspace, mine, over the capture window. The numbers will look different for every team, which is the point: the benchmark is theirs, not a public leaderboard.</p>
+
+        <h2>The research behind it</h2>
+
+        <p>The product rests on one question I could not answer from the product alone: if an agent learns something from its own failures during a lifetime, should the next generation inherit that learning, or should it be measured separately? That is the question <em>Adaptation Without Inheritance</em> asks, and it borrows the answer's shape from biology. What your body learns in your lifetime does not get written into the genes your children inherit. Biologists call that separation the Weismann barrier.</p>
+
+        <p>We built the same barrier into a population of self-improving coding agents in the Darwin G&ouml;del Machine lineage. The <strong>germline</strong>, the agent's code and a few tuning numbers, crosses into the child. The <strong>soma</strong>, everything the agent writes down for itself from its own failures during a life of 25 tasks, is destroyed at the generation boundary. Inside one life, a failure can climb a ladder from a <em>note</em>, to a <em>rule</em> once it recurs and the fix is shown to replay, to a <em>hook</em>, a small program. Readers of the previous section will recognise the shape: observed, ready for review, approved. Re-testing the best agents twice, once with memory wiped and once intact, separates what they innately are from what they learned.</p>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/awi-figure1.png" alt="Figure 1 of the paper: an archive picks a parent, a blind mutator writes a child, the child is scored; inside one lifetime a failure climbs from note to rule to hook; code crosses the Weismann barrier into the next generation while memory is reset" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12); background:#fff; padding:12px 8px;">
+          <figcaption>Figure 1 of the paper. Left, the evolution loop that passes code on. Right, one lifetime, where a failure climbs from note to rule to hook. The barrier in the middle lets code through and wipes memory.</figcaption>
+        </figure>
+
+        <p>The honest headline is that this single-seed run was too small to tell the two arms apart, and the paper says so in its first paragraph. What it did measure is what shaped re-forge:</p>
+
+        <ul>
+          <li><strong>A note the agent writes for itself is much weaker than a rule a person writes.</strong> Replaying tasks it had already failed, a 7B model applied a correct hand-written rule at 59.3% against an 11.1% base rate. Its own notes reached 25.9%. That is why re-forge does not let the agent freely author its own memory: it clusters evidence across sessions and puts a human review in front of every promotion.</li>
+          <li><strong>Memory is not free.</strong> A scored agent cost roughly three times as much with memory as without, and over half of that spend went to the inner loop rather than to attempting tasks. That is why every skill has to earn its place on the benchmark.</li>
+          <li><strong>Instruments fail silently.</strong> We documented nine ways the harness printed a plausible wrong number under a passing test suite, and a tenth in the repair. The top rung of the ladder fired 96 times and installed nothing, because of a gap between what a checker enforced and what the prompt asked for. That is why every number in the benchmark is measured rather than estimated, and why the app shows you the evidence behind each pattern instead of a score.</li>
+        </ul>
+
+        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
+          <strong>Three things transfer from the paper to the product.</strong> Check that the machinery was actually running before you read a null. Keep a map from every number to the command that regenerates it. Expect silent failure by default.
+        </div>
+
+        <h2>Read the paper</h2>
+
+        <p><a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener">Open the PDF in a new tab &rarr;</a> or read all 17 pages inline below.</p>
+
+        <details id="paper-pages" style="margin:0 0 1.5rem;" ontoggle="if(this.open){this.querySelectorAll('img').forEach(function(i){i.loading='eager';});}">
+          <summary style="cursor:pointer; font-weight:600; color:#4f46e5; padding:10px 14px; border:1px solid rgba(79,70,229,0.35); border-radius:12px; background:rgba(79,70,229,0.06);">Show the paper inline (17 pages)</summary>
+          <div style="margin-top:10px; max-height:78vh; overflow-y:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(0,0,0,0.12); border-radius:12px; background:#fff; padding:8px;">
+            <img loading="lazy" src="images/paper-awi/page-01.png" alt="Paper page 1" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-02.png" alt="Paper page 2" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-03.png" alt="Paper page 3" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-04.png" alt="Paper page 4" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-05.png" alt="Paper page 5" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-06.png" alt="Paper page 6" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-07.png" alt="Paper page 7" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-08.png" alt="Paper page 8" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-09.png" alt="Paper page 9" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-10.png" alt="Paper page 10" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-11.png" alt="Paper page 11" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-12.png" alt="Paper page 12" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-13.png" alt="Paper page 13" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-14.png" alt="Paper page 14" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-15.png" alt="Paper page 15" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-16.png" alt="Paper page 16" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:8px;">
+            <img loading="lazy" src="images/paper-awi/page-17.png" alt="Paper page 17" style="width:100%; aspect-ratio:935/1210; display:block; margin-bottom:0;">
+          </div>
+        </details>
 
         <div class="paper-ref">
           <div class="paper-title">Adaptation Without Inheritance</div>
