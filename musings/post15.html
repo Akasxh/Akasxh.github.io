@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Every Prompt You Typed Twice Is a Skill You Don't Have Yet - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">Every Prompt You Typed Twice Is a Skill You Don't Have Yet</h1>
+      <div class="post-meta">Sep 15, 2026 <span class="reading-time">Work in progress</span></div>
+      <div class="post-categories"><span>re-forge</span> <span>Agents</span> <span>Research</span></div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
+        <a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:#4f46e5; color:white; text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">Read the paper (PDF) &rarr;</a>
+        <a href="https://theadaply.com" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; background:rgba(79,70,229,0.08); color:#4f46e5; border:1px solid rgba(79,70,229,0.35); text-decoration:none; font-size:0.85rem; font-weight:600; font-family:'Montserrat',sans-serif; transition:opacity 0.2s;">theadaply.com &rarr;</a>
+      </div>
+      <div class="post-body">
+
+        <p><strong>re-forge</strong> (<a href="https://theadaply.com" target="_blank" rel="noopener">The Adaply</a>) is the startup I am building. It captures two to three weeks of a team's Claude Code sessions, finds the moments where people had to ask for the same thing twice, works out <em>why</em>, and turns the recurring fixes into skills the agent carries from then on. Because that produces a lot of skills, it also builds a benchmark out of the team's own real prompts to check that each one actually helps. The research question underneath it, whether what an agent learns from its own failures inside one lifetime should be inherited or measured separately, is the subject of our paper <em>Adaptation Without Inheritance</em>, joint work with <a href="https://github.com/Shine-5705" target="_blank" rel="noopener">Shine Gupta</a>, submitted to NeurIPS 2026.</p>
+
+        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
+          <strong>This page is a work in progress.</strong> The full writeup of how the pipeline works, stage by stage, is being written right now. The paper link above and the screenshots below are final.
+        </div>
+
+        <h2>The product, in four screens</h2>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/reforge-sessions.png" alt="re-forge Sessions view: a captured Claude Code session with its full trajectory, prompts interleaved with tool calls and token counts" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
+          <figcaption><strong>1. Capture.</strong> Every Claude Code session, prompt by prompt, with the tool calls and tokens each one cost.</figcaption>
+        </figure>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/reforge-vector-space.png" alt="re-forge Vector space view: 391 prompts embedded and clustered into 8 groups, with a panel titled Same intent, asked twice" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
+          <figcaption><strong>2. Root cause.</strong> Every prompt embedded and clustered. Nearby points are the same work being asked again.</figcaption>
+        </figure>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/reforge-patterns.png" alt="re-forge Patterns view: recurring tool chains ranked by automatability, moving from Observed to Ready for review to Approved" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
+          <figcaption><strong>3. Skills.</strong> Recurring chains are promoted from observed, to reviewed, to approved automations.</figcaption>
+        </figure>
+
+        <figure style="margin:1.5rem 0;">
+          <img loading="lazy" src="images/reforge-benchmark.png" alt="re-forge Benchmark view: a SWE-bench-style task set extracted from the organisation's own captured sessions, with measured time, tokens and clean rate" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
+          <figcaption><strong>4. Benchmark.</strong> A task set built from the team's own prompts, every number measured from what actually happened next.</figcaption>
+        </figure>
+
+        <p style="margin-top:0.85rem;"><a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener">Read the paper as a PDF &rarr;</a></p>
+
+        <div class="paper-ref">
+          <div class="paper-title">Adaptation Without Inheritance</div>
+          <div class="paper-authors">S Akash and Shine Gupta. Submitted to NeurIPS 2026</div>
+          <a href="../papers/adaptation-without-inheritance.pdf" target="_blank" rel="noopener">PDF</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">re-forge, by The Adaply</div>
+          <div class="paper-authors">Capture your team's agent sessions, find what is asked twice, turn it into skills, benchmark them</div>
+          <a href="https://theadaply.com" target="_blank" rel="noopener">theadaply.com</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
