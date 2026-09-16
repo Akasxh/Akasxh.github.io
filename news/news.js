@@ -1,7 +1,7 @@
 ﻿window.AKASH_NEWS = [
   {
     date: "2026-09-15",
-    summary: "Wrote up <span class=\"news-highlight\">re-forge</span> (<a href=\"https://theadaply.com\" target=\"_blank\" rel=\"noopener\">The Adaply</a>), the startup I am building: evolve the best possible coding agent for a team, with configurations that have to survive a benchmark built from the team's own Claude Code sessions. Also our paper <span class=\"news-highlight\">Adaptation Without Inheritance</span> with <a href=\"https://github.com/Shine-5705\" target=\"_blank\" rel=\"noopener\">Shine Gupta</a>, submitted to NeurIPS 2026 (<a href=\"musings/post15.html\">writeup + paper</a>)."
+    summary: "Building <span class=\"news-highlight\">re-forge</span> at <a href=\"https://theadaply.com\" target=\"_blank\" rel=\"noopener\">The Adaply</a>: evolving the best possible coding agent for a team against a benchmark built from its own sessions (<a href=\"musings/post15.html\">writeup + paper</a>)."
   },
   {
     date: "2026-04-14",
