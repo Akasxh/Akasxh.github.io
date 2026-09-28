@@ -33,7 +33,7 @@
   },
   {
     date: "2026-03-01",
-    summary: "Joined <a href=\"https://autostep.ai/\" target=\"_blank\" rel=\"noopener\">Autostep (YC S25)</a> with <a href=\"https://www.linkedin.com/in/aidan-pratt/\" target=\"_blank\" rel=\"noopener\">Aidan Pratt</a> as a <span class=\"news-highlight\">founding engineer</span>, building systems that find and automate repetitive, high-cost work."
+    summary: "Joined <a href=\"https://autostep.ai/\" target=\"_blank\" rel=\"noopener\">Autostep (YC P26 &amp; Neo)</a> with <a href=\"https://www.linkedin.com/in/aidan-pratt/\" target=\"_blank\" rel=\"noopener\">Aidan Pratt</a> as a <span class=\"news-highlight\">founding engineer</span>, building systems that find and automate repetitive, high-cost work."
   },
   {
     date: "2026-04-18",
