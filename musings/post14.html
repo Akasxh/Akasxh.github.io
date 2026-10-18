@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The First Binary That Works Is Not the Best One - Musings by S Akash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="background-shapes" aria-hidden="true">
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+    <div class="blur-orb"></div>
+  </div>
+  <nav class="floating-nav" aria-label="Primary">
+    <div class="floating-nav__container">
+      <a href="../index.html" class="floating-nav__link">Home</a>
+      <a href="../projects.html" class="floating-nav__link">Projects</a>
+      <a href="index.html" class="floating-nav__link floating-nav__link--active">Blog</a>
+    </div>
+  </nav>
+  <main class="page-container">
+    <a href="index.html" class="back-link">&larr; Back to all posts</a>
+    <article class="post-shell">
+      <h1 class="post-title">The First Binary That Works Is Not the Best One</h1>
+      <div class="post-meta">Aug 19, 2026 <span class="reading-time">6 min read</span></div>
+      <div class="post-categories"><span>Compilers</span> <span>GPU Computing</span> <span>Conference</span></div>
+      <div class="post-body">
+
+        <p>In April I flew to Dublin to present a poster at the <a href="https://llvm.swoogo.com/2026eurollvm/" target="_blank" rel="noopener">2026 EuroLLVM Developers' Meeting</a>, supported by an <strong>LLVM Foundation student travel grant</strong>. My first LLVM meeting, my first time in Ireland, and a poster arguing one very specific thing: when LLVM's offloading runtime has several GPU binaries to choose from, it loads the first one that works, and it should load the best one instead. This post is the poster, the argument, and the trip.</p>
+
+        <div class="insight-box" style="background:rgba(120,140,255,0.08);">
+          <strong>The poster.</strong> <em>Bridging Runtime Gaps in LLVM: Vendor-Agnostic Dispatch for ML Kernels</em>, presented at EuroLLVM 2026, Dublin, April 14&ndash;15. It grew directly out of my GPU work on <a href="../projects/sofie.html">TMVA SOFIE at CERN</a>, where the same kernel ships for CUDA, ROCm, and CPU targets and somebody has to decide which one runs. Code lives at <a href="https://github.com/Akasxh/libkdl" target="_blank" rel="noopener">github.com/Akasxh/libkdl</a>.
+        </div>
+
+        <figure style="margin:1.5rem 0;">
+          <a href="eurollvm-2026-poster.pdf" target="_blank" rel="noopener">
+            <img loading="lazy" src="images/eurollvm-poster.png" alt="EuroLLVM 2026 poster: Bridging Runtime Gaps in LLVM, Vendor-Agnostic Dispatch for ML Kernels, by S Akash" style="width:100%; border-radius:14px; display:block; border:1px solid rgba(0,0,0,0.12);">
+          </a>
+          <figcaption>The poster. Click it to open the full-resolution PDF.</figcaption>
+        </figure>
+
+        <h2>The gap</h2>
+
+        <p>MLIR will happily compile one <code>gpu.module</code> for three or more GPU vendors at once: <code>gpu-module-to-binary</code> packs a CUBIN for NVIDIA, an HSACO for AMD, and a host fallback into a single <code>OffloadBinary</code>. Which is lovely, right up to the moment the program runs. At runtime the loader walks the images and picks <em>the first one that does not fail</em>. There is no metadata vocabulary to describe what each variant needs, no measurement of how the variants actually perform, and no mechanism for "best compatible" at all. First-wins, blind.</p>
+
+        <p>If you read my <a href="post10.html">C++26 reflection post</a>, this is the same disease seen from the compiler side: we are good at producing many specialized variants of a kernel, and bad at deciding between them at the moment it matters.</p>
+
+        <h2>Measure before you fix</h2>
+
+        <p>Phase 1 of the work was refusing to guess. I profiled what dispatch actually costs on the CUDA driver path, and the breakdown is lopsided: a cold <code>cuModuleLoadData</code> is about <strong>36&nbsp;&mu;s</strong>, roughly 90% of the cold path, while actually <em>selecting</em> among candidate variants costs <strong>3&ndash;6 nanoseconds</strong>, under 0.02% of a dispatch. Even at 100 variants, selection stays three orders of magnitude below driver overhead.</p>
+
+        <div class="insight-box">
+          <strong>The insight.</strong> Selection is free relative to driver costs. So the question is not <em>whether</em> the runtime can afford to choose, it is <em>what information should drive the choice</em>. The poster proposes two answers that compose: a small metadata vocabulary (<code>min_sm</code>, <code>min_gfx</code>, <code>requires_features</code>, <code>variant_priority</code>) so the compiler can rank variants structurally, and a profiler so the runtime can rank them empirically.
+        </div>
+
+        <h2>A degenerate bandit, in the best way</h2>
+
+        <p>Choosing among kernel variants with measured feedback is a multi-armed bandit problem, and my favourite part of the work is noticing that it is a <em>degenerate</em> one. Standard algorithms like UCB1 and Thompson Sampling earn their complexity when arms are many or rewards drift. Kernel dispatch has neither: fewer than ten arms, execution-time noise under 5%, and a cacheable context key of (kernel, shape, device). So the provably right strategy is embarrassingly simple: round-robin warmup over all variants, then lock in the winner permanently. With 3 variants and 3 warmup rounds, convergence is guaranteed in <strong>9 dispatches</strong>, with zero marginal regret afterwards.</p>
+
+        <p>Against baselines, profiled dispatch reaches <strong>83% of oracle</strong> performance with <strong>7.3&times; less cumulative regret than random</strong>, and the rankings genuinely flip per input shape: the big-tile variant wins on one shape, the cache-optimized one on another. Context matters, and a static priority list cannot capture it.</p>
+
+        <h2>Five upstream signals</h2>
+
+        <p>The strongest slide for an LLVM audience was not mine, it was theirs: five independent places where the community is already bumping into this exact gap. XeVM landing means new vendor images are arriving fast (#148286). liboffload openly does first-wins selection (#186088). <code>isMetadataCompatible</code> has no policy behind it (#185663). Chapel users are asking for dispatch (#75356). And an RFC leaves the policy slot explicitly empty (#88170). Five signals pointing at the same hole; the poster is a proposal for what should fill it.</p>
+
+        <h2>Dublin</h2>
+
+        <p>The meeting itself was two days at the Clayton Hotel on Burlington Road, and the honest highlight was the poster session. There is no better code review than standing next to your own diagram while people who maintain the offloading runtime walk up and poke at it. The hallway track at an LLVM meeting is exactly as good as everyone says: the distance between "person whose commit you read last month" and "person holding a coffee next to you" collapses to zero. I left with sharper objections than I arrived with, which is the point of going.</p>
+
+        <p>Being able to be there at all came down to the LLVM Foundation's travel grant program, which covers students who otherwise could not make the trip. If you are a student working anywhere near LLVM, apply. It is the difference between reading the mailing list and being in the room.</p>
+
+        <p style="margin-top:0.85rem;"><a href="eurollvm-2026-poster.pdf" target="_blank" rel="noopener">Open the poster as a PDF &rarr;</a></p>
+
+        <div class="paper-ref">
+          <div class="paper-title">Bridging Runtime Gaps in LLVM: Vendor-Agnostic Dispatch for ML Kernels</div>
+          <div class="paper-authors">S Akash. Poster, 2026 EuroLLVM Developers' Meeting, Dublin</div>
+          <a href="https://github.com/Akasxh/libkdl" target="_blank" rel="noopener">github.com/Akasxh/libkdl</a>
+        </div>
+        <div class="paper-ref">
+          <div class="paper-title">2026 EuroLLVM Developers' Meeting</div>
+          <div class="paper-authors">April 14&ndash;15, 2026. Dublin, Ireland</div>
+          <a href="https://llvm.swoogo.com/2026eurollvm/" target="_blank" rel="noopener">llvm.swoogo.com/2026eurollvm</a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+  <footer class="blog-footer">&copy; 2026 S Akash</footer>
+</body>
+</html>
